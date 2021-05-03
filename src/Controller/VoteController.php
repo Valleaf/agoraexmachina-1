@@ -51,7 +51,7 @@ class VoteController extends AbstractController
 	/**
 	 * @Route("/{slug}/workshop/proposal/{proposal}/vote/delete/{vote}", name="vote_delete", methods={"GET"})
 	 */
-	public function delete(Request $request, Vote $vote): Response
+	public function delete(Request $request, Vote $vote, string $slug): Response
 	{
 		$entityManager = $this->getDoctrine()->getManager();
 		$entityManager->remove($vote);

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Form\UserAddFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -39,8 +40,8 @@ class SecurityController extends AbstractController
 	/**
 	 * @Route("/admin/user", name="user_admin")
 	 */
-	public function admin()
-	{
+	public function admin(): Response
+    {
 		$users = $this->getDoctrine()
 				->getRepository(User::class)
 				->findAll();
@@ -51,12 +52,44 @@ class SecurityController extends AbstractController
 				]
 				);		
 	}
+
+    /**
+     * @Route("/admin/user/add", name="user_add")
+     */
+	public function addUser(UserPasswordEncoderInterface $passwordEncoder,Request $request)
+    {
+        $user = new User();
+        $form = $this->createForm(UserAddFormType::class,$user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            //TODO:: Utiliser messages
+            $this->addFlash("success", "Création effectuée avec succès");
+        }
+        //TODO: regrouper les formulaires et les twig edit et add
+        return $this->render('security/add.html.twig', [
+            'userForm' => $form->createView(),
+        ]);
+
+    }
 	
 	/**
 	 * @Route("/admin/user/delete/{id}", name="user_delete") 
 	 */
-	public function delete(int $id)
-	{
+	public function delete(int $id): RedirectResponse
+    {
 		$user = $this->getDoctrine()
 				->getRepository(User::class)
 				->find($id);
@@ -73,8 +106,8 @@ class SecurityController extends AbstractController
 	/**
 	 * @Route("/admin/user/edit/{id}", name="user_admin_edit")
 	 */
-	public function edit(Request $request, int $id)
-	{
+	public function edit(Request $request, int $id): Response
+    {
 		$user = $this->getDoctrine()
 				->getRepository(User::class)
 				->find($id);

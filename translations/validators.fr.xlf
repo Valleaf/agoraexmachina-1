@@ -22,9 +22,9 @@
                 <source>length.max.40</source>
                 <target>40 caractères maximum</target>
             </trans-unit>
-            <trans-unit id="length.max.1024">
-                <source>length.max.1024</source>
-                <target>1024 caractères maximum</target>
+            <trans-unit id="length.max.1048576">
+                <source>length.max.1048576</source>
+                <target>1048576 caractères maximum</target>
             </trans-unit>
 			<trans-unit id="name.alreadyexists">
 				<source>name.alreadyexists</source>

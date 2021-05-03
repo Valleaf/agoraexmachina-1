@@ -2,6 +2,7 @@
 namespace App\Form;
 
 use App\Entity\Category;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use \Symfony\Component\Form\AbstractType;
 use \Symfony\Component\Form\FormBuilderInterface;
 use \Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,7 +18,7 @@ class CategoryType extends AbstractType
 	{
 		$builder
 				->add('name')
-				->add('description', TextareaType::class)
+				->add('description', CKEditorType::class)
 				->add('imageFile', VichImageType::class, [
                     'required' => false,
                     'allow_delete' => true,

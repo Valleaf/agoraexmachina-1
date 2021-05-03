@@ -3,7 +3,6 @@
 Nous avons planifié un ensemble de développements à effectuer, visant à améliorer l'installation et le fonctionnement d'**AEM**. Prière d'ajouter devant les lignes concernées [SOUMIS]. Les référents passeront si tout va bien la ligne à [FAIT].
 
 ##V1.0
-* Mise à jour sur Symfony  5.
 * Normalisation complète de l'installation permettant que cela puisse se faire dans les meilleures conditions possibles.
     * Rendre possible l'installation sans composer (certaines plateformes d'hébergement fonctionnant peu ou mal avec **SSH**)
     * permettre l'installation de la base de données en `utf8_unicode_ci` (des serveurs de base de données ne supportant pas `utf8mb4`. Rq : ceci peut également être réglé dans les prérequis en identifiant précisément les versions php et mySQL.
@@ -62,7 +61,6 @@ C'est le moment de définir :
 
 * Le profil **Webmestre** dont l'objet est la maintenance technique globale de la plateforme et donc accès aux informations de debug (différente du profil **Administrateur** qui n'a accès qu'aux infos de base relatives à la plateforme).
 * Un profil **Administrateur restreint** est ajouté. Il est associé à une ou plusieurs catégories et peut ainsi n'administrer que la partie des votes le concernant. Par exemple, cohabitent au sein de la même plateforme une association et une mairie dont l'une demande régulièrement des subventions à l'autre. Il paraît logique que la ville n'ait jamais vent des votations effectuées par l'association, et inversement. Éventuellement, un **Administrateur restreint** peut être inscrit en tant que votant dans une ou plusieurs autres catégories. Il aura alors les informations relatives aux votes. Il peut bien sûr être désigné en délégation (voir plus haut).
-* Un profil **Modérateur** dont le travail consiste à réguler la parole sur la plateforme. On peut restreindre son champ d'action à un **Thème**, une **Catégorie**, ou à un **Atelier**.
 
 ##V1.3
 

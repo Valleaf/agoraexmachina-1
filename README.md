@@ -1,4 +1,4 @@
-AgoraExMachina - Plateforme de démocratie liquide
+﻿AgoraExMachina - Plateforme de démocratie liquide
 ==========================================================
 
 Présentation générale
@@ -23,7 +23,8 @@ Languages utilisés
 *********************
 * HTML5
 * CSS 3
-* PHP 5
+* PHP 7
+* MySql 5
 * Javascript
 
 

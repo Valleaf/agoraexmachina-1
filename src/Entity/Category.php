@@ -43,13 +43,13 @@ class Category
 	 */
 	private $updatedAt;
 	/**
-	 * @ORM\Column(type="string", length=1024)
+	 * @ORM\Column(type="string", length=1048576)
 	 * @Assert\NotBlank
 	 * @Assert\Length(
 	 * 	min = 6,
 	 * 	minMessage = "length.min.6",
-	 * 	max = 1024,
-	 * 	maxMessage = "length.max.1024"
+	 * 	max = 1048576,
+	 * 	maxMessage = "length.max.1048576"
 	 * )
 	 */
 	private $description;

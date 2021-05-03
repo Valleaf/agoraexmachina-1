@@ -29,6 +29,8 @@
 
 `php bin/console doctrine:schema:update -force`
 
+`php bin/console doctrine:fixtures:load`
+
 ### With composer.phar
 
 `php composer.phar install` in the agoraexmachina directory
