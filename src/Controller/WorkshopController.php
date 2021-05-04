@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Document;
 use App\Entity\Workshop;
 use App\Entity\Category;
+use App\Form\DocumentType;
+use App\Form\WorkshopDocumentsType;
 use App\Form\WorkshopType;
 use App\Repository\WorkshopRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -151,5 +154,30 @@ class WorkshopController extends AbstractController
 				'workshop'	 => $workshop,
 		]);
 	}
+
+    /**
+     * @Route("/admin/workshop/addDocument/{workshop}", name="workshop_add_document")
+     */
+	public function addDocument(Request $request, Workshop $workshop): Response
+    {
+        $document = new Document();
+        $form = $this->createForm(DocumentType::class, $document);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+
+            $workshop->addDocument($document);
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash("success", "edit.success");
+            return $this->redirectToRoute("workshop_edit", ["workshop" => $workshop->getId()]);
+        }
+
+        return $this->render('workshop/add-document.html.twig', [
+            'form'		 => $form->createView(),
+            'workshop'	 => $workshop,
+        ]);
+    }
 
 }

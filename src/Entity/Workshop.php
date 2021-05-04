@@ -15,16 +15,17 @@ class Workshop
 {
 
 	public function __construct()
-         	{
-         		$d1						 = new \DateTime();
-         		$this->dateBegin		 = $d1;
-         		$d2						 = new \DateTime();
-         		$this->dateEnd			 = $d2->modify('+1 month');
-         		$this->quorumRequired	 = 0;
-         		$this->rightsDelegation	 = true;
-         		$this->proposals		 = new ArrayCollection();
-         		$this->delegations		 = new ArrayCollection();
-         	}
+                        	{
+                        		$d1						 = new \DateTime();
+                        		$this->dateBegin		 = $d1;
+                        		$d2						 = new \DateTime();
+                        		$this->dateEnd			 = $d2->modify('+1 month');
+                        		$this->quorumRequired	 = 0;
+                        		$this->rightsDelegation	 = true;
+                        		$this->proposals		 = new ArrayCollection();
+                        		$this->delegations		 = new ArrayCollection();
+                                $this->documents         = new ArrayCollection();
+                        	}
 
 	/**
 	 * @ORM\Id()
@@ -104,228 +105,233 @@ class Workshop
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Document::class, mappedBy="workshop", orphanRemoval=true,cascade={"persist"})
+     */
+    private $documents;
+
 	public function getId(): ?int
-         	{
-         		return $this->id;
-         	}
+                        	{
+                        		return $this->id;
+                        	}
 
 	public function getName(): ?string
-         	{
-         		return $this->name;
-         	}
+                        	{
+                        		return $this->name;
+                        	}
 
 	public function setName(string $name): self
-         	{
-         		$this->name = $name;
-         
-         		return $this;
-         	}
+                        	{
+                        		$this->name = $name;
+                        
+                        		return $this;
+                        	}
 
 	public function getDescription(): ?string
-         	{
-         		return $this->description;
-         	}
+                        	{
+                        		return $this->description;
+                        	}
 
 	public function setDescription(string $description): self
-         	{
-         		$this->description = $description;
-         
-         		return $this;
-         	}
+                        	{
+                        		$this->description = $description;
+                        
+                        		return $this;
+                        	}
 
 	public function getDateBegin(): ?\DateTimeInterface
-         	{
-         		return $this->dateBegin;
-         	}
+                        	{
+                        		return $this->dateBegin;
+                        	}
 
 	public function setDateBegin(\DateTimeInterface $dateBegin): self
-         	{
-         		$this->dateBegin = $dateBegin;
-         
-         		return $this;
-         	}
+                        	{
+                        		$this->dateBegin = $dateBegin;
+                        
+                        		return $this;
+                        	}
 
 	public function getDateEnd(): ?\DateTimeInterface
-         	{
-         		return $this->dateEnd;
-         	}
+                        	{
+                        		return $this->dateEnd;
+                        	}
 
 	public function setDateEnd(\DateTimeInterface $dateEnd): self
-         	{
-         		$this->dateEnd = $dateEnd;
-         
-         		return $this;
-         	}
+                        	{
+                        		$this->dateEnd = $dateEnd;
+                        
+                        		return $this;
+                        	}
 
 	public function getRightsSeeWorkshop(): ?string
-         	{
-         		return $this->rightsSeeWorkshop;
-         	}
+                        	{
+                        		return $this->rightsSeeWorkshop;
+                        	}
 
 	public function setRightsSeeWorkshop(string $rightsSeeWorkshop): self
-         	{
-         		$this->rightsSeeWorkshop = $rightsSeeWorkshop;
-         
-         		return $this;
-         	}
+                        	{
+                        		$this->rightsSeeWorkshop = $rightsSeeWorkshop;
+                        
+                        		return $this;
+                        	}
 
 	public function getRightsVoteProposals(): ?string
-         	{
-         		return $this->rightsVoteProposals;
-         	}
+                        	{
+                        		return $this->rightsVoteProposals;
+                        	}
 
 	public function setRightsVoteProposals(string $rightsVoteProposals): self
-         	{
-         		$this->rightsVoteProposals = $rightsVoteProposals;
-         
-         		return $this;
-         	}
+                        	{
+                        		$this->rightsVoteProposals = $rightsVoteProposals;
+                        
+                        		return $this;
+                        	}
 
 	public function getRightsWriteProposals(): ?string
-         	{
-         		return $this->rightsWriteProposals;
-         	}
+                        	{
+                        		return $this->rightsWriteProposals;
+                        	}
 
 	public function setRightsWriteProposals(string $rightsWriteProposals): self
-         	{
-         		$this->rightsWriteProposals = $rightsWriteProposals;
-         
-         		return $this;
-         	}
+                        	{
+                        		$this->rightsWriteProposals = $rightsWriteProposals;
+                        
+                        		return $this;
+                        	}
 
 	public function getQuorumRequired(): ?int
-         	{
-         		return $this->quorumRequired;
-         	}
+                        	{
+                        		return $this->quorumRequired;
+                        	}
 
 	public function setQuorumRequired(?int $quorumRequired): self
-         	{
-         		$this->quorumRequired = $quorumRequired;
-         
-         		return $this;
-         	}
+                        	{
+                        		$this->quorumRequired = $quorumRequired;
+                        
+                        		return $this;
+                        	}
 
 	public function getRightsDelegation(): ?bool
-         	{
-         		return $this->rightsDelegation;
-         	}
+                        	{
+                        		return $this->rightsDelegation;
+                        	}
 
 	public function setRightsDelegation(bool $rightsDelegation): self
-         	{
-         		$this->rightsDelegation = $rightsDelegation;
-         
-         		return $this;
-         	}
+                        	{
+                        		$this->rightsDelegation = $rightsDelegation;
+                        
+                        		return $this;
+                        	}
 
 	public function getCategory(): ?Category
-         	{
-         		return $this->category;
-         	}
+                        	{
+                        		return $this->category;
+                        	}
 
 	public function setCategory(?category $category): self
-         	{
-         		$this->category = $category;
-         
-         		return $this;
-         	}
+                        	{
+                        		$this->category = $category;
+                        
+                        		return $this;
+                        	}
 
 	public function setImageFile(File $image = null)
-         	{
-         		$this->imageFile = $image;
-         
-         		// VERY IMPORTANT:
-         		// It is required that at least one field changes if you are using Doctrine,
-         		// otherwise the event listeners won't be called and the file is lost
-         		if($image)
-         		{
-         			// if 'updatedAt' is not defined in your entity, use another property
-         			$this->updatedAt = new \DateTime('now');
-         		}
-         	}
+                        	{
+                        		$this->imageFile = $image;
+                        
+                        		// VERY IMPORTANT:
+                        		// It is required that at least one field changes if you are using Doctrine,
+                        		// otherwise the event listeners won't be called and the file is lost
+                        		if($image)
+                        		{
+                        			// if 'updatedAt' is not defined in your entity, use another property
+                        			$this->updatedAt = new \DateTime('now');
+                        		}
+                        	}
 
 	public function getImageFile()
-         	{
-         		return $this->imageFile;
-         	}
+                        	{
+                        		return $this->imageFile;
+                        	}
 
 	public function setImage($image)
-         	{
-         		$this->image = $image;
-         	}
+                        	{
+                        		$this->image = $image;
+                        	}
 
 	public function getImage()
-         	{
-         		return $this->image;
-         	}
+                        	{
+                        		return $this->image;
+                        	}
 
 	/**
 	 * @return Collection|Proposals[]
 	 */
 	public function getProposals(): Collection
-         	{
-         		return $this->proposals;
-         	}
+                        	{
+                        		return $this->proposals;
+                        	}
 
 	public function addProposal(Proposal $proposal): self
-         	{
-         		if( ! $this->Proposals->contains($proposal))
-         		{
-         			$this->Proposals[] = $proposal;
-         			$proposal->setWorkshop($this);
-         		}
-         
-         		return $this;
-         	}
+                        	{
+                        		if( ! $this->Proposals->contains($proposal))
+                        		{
+                        			$this->Proposals[] = $proposal;
+                        			$proposal->setWorkshop($this);
+                        		}
+                        
+                        		return $this;
+                        	}
 
 	public function removeProposal(Proposal $proposal): self
-         	{
-         		if($this->Proposals->contains($proposal))
-         		{
-         			$this->Proposals->removeElement($proposal);
-         			// set the owning side to null (unless already changed)
-         			if($proposal->getWorkshop() === $this)
-         			{
-         				$proposal->setWorkshop(null);
-         			}
-         		}
-         
-         		return $this;
-         	}
+                        	{
+                        		if($this->Proposals->contains($proposal))
+                        		{
+                        			$this->Proposals->removeElement($proposal);
+                        			// set the owning side to null (unless already changed)
+                        			if($proposal->getWorkshop() === $this)
+                        			{
+                        				$proposal->setWorkshop(null);
+                        			}
+                        		}
+                        
+                        		return $this;
+                        	}
 
 
 	/**
 	 * @return Collection|Delegation[]
 	 */
 	public function getDelegations(): Collection
-         	{
-         		return $this->delegations;
-         	}
+                        	{
+                        		return $this->delegations;
+                        	}
 
 	public function addDelegation(Delegation $delegation): self
-         	{
-         		if( ! $this->delegations->contains($delegation))
-         		{
-         			$this->delegations[] = $delegation;
-         			$delegation->setWorkshop($this);
-         		}
-         
-         		return $this;
-         	}
+                        	{
+                        		if( ! $this->delegations->contains($delegation))
+                        		{
+                        			$this->delegations[] = $delegation;
+                        			$delegation->setWorkshop($this);
+                        		}
+                        
+                        		return $this;
+                        	}
 
 	public function removeDelegation(Delegation $delegation): self
-         	{
-         		if($this->delegations->contains($delegation))
-         		{
-         			$this->delegations->removeElement($delegation);
-         			// set the owning side to null (unless already changed)
-         			if($delegation->getWorkshop() === $this)
-         			{
-         				$delegation->setWorkshop(null);
-         			}
-         		}
-         
-         		return $this;
-         	}
+                        	{
+                        		if($this->delegations->contains($delegation))
+                        		{
+                        			$this->delegations->removeElement($delegation);
+                        			// set the owning side to null (unless already changed)
+                        			if($delegation->getWorkshop() === $this)
+                        			{
+                        				$delegation->setWorkshop(null);
+                        			}
+                        		}
+                        
+                        		return $this;
+                        	}
 
     public function getUser(): ?User
     {
@@ -335,6 +341,36 @@ class Workshop
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Document[]
+     */
+    public function getDocuments(): Collection
+    {
+        return $this->documents;
+    }
+
+    public function addDocument(Document $document): self
+    {
+        if (!$this->documents->contains($document)) {
+            $this->documents[] = $document;
+            $document->setWorkshop($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDocument(Document $document): self
+    {
+        if ($this->documents->removeElement($document)) {
+            // set the owning side to null (unless already changed)
+            if ($document->getWorkshop() === $this) {
+                $document->setWorkshop(null);
+            }
+        }
 
         return $this;
     }

@@ -21,12 +21,13 @@ class DefaultController extends AbstractController
 		]);
 	}
 
+
+
 	/**
 	 * @Route("/admin", name="admin", methods={"GET"});
 	 */
 	public function admin()
 	{
-
 		return $this->render('admin.html.twig', [
 				'users'		 => $this->getDoctrine()->getRepository(User::class)->findAll(),
 				'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),

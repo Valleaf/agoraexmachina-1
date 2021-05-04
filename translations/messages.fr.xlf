@@ -393,6 +393,10 @@
 				<source>siteproposepar</source>
 				<target>Ce site vous est proposé par</target>
 			</trans-unit>
-		</body>
+            <trans-unit id="add_document">
+                <source>add_document</source>
+				<target>Ajouter un document</target>
+            </trans-unit>
+        </body>
 	</file>
 </xliff>

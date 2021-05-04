@@ -85,3 +85,5 @@ nb-configuration.xml
 .phpunit.result.cache
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
+*.jpg
+*.pdf
