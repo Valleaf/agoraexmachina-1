@@ -25,8 +25,6 @@
 
 `composer install --nodev --optimize --autoloader`
 
-`sudo composer require symfony/dotenv:^4.4`
-
 `php bin/console doctrine:schema:update —force`
 
 `php bin/console doctrine:fixtures:load`
@@ -37,18 +35,15 @@
 
 `php composer.phar install --nodev --optimize --autoloader`
 
-`php composer.phar require symfony/dotenv:^4.4`
-
 `php bin/console doctrine:schema:update —force`
+
+`php bin/console doctrine:fixtures:load`
 
 ### Procédure post-installation
 
 * Dans un navigateur, se placer dans l’interface d’administration de AEM (http://mondomaine.com/agoraexmachina)
-* Ajouter un compte (en haut à droite, **Signin**)
-* Cliquer sur **or create an account**
-* Créer votre compte 
-* Dans l'interface phpMyadmin (ou en ligne de commande), ajoutez `["ROLE_ADMIN"]` dans la table `user`, colonne `roles`. Cette action vous permet de devenir administrateur.
-* Vous devrez peut-être vous loguer à nouveau avec votre nouveau statut.
+* Se connecter en admin (en haut à droite, **Signin**)
+* L'identifiant est **admin@agora.com** et le mot de passe **agora**
 
 ### Et ensuite
 
