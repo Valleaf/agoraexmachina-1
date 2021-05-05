@@ -33,7 +33,7 @@
 												<th scope="col" width="5%">#</th>
 												<th scope="col" width="15%">{{ 'userFrom' | trans }}</th>
 												<th scope="col" width="15%">{{ 'userTo' | trans }}</th>
-												<th scope="col" width="25%">{{ 'category' | trans }}</th>
+												<th scope="col" width="25%">{{ 'theme' | trans }}</th>
 												<th scope="col" width="25%">{{ 'workshop' | trans }}</th>
 												<th scope="col" width="15%">{{ 'actions' | trans }}</th>
 											</tr>
@@ -44,7 +44,7 @@
 												<th scope="row">{{ d.id }}</th>
 												<td>{{ d.UserFrom.username }}</td>
 												<td>{{ d.UserTo.username }}</td>
-												<td>{{ 'category' | trans }} {{ (d.category != "") ? d.category.name : "" }}</td>
+												<td>{{ 'theme' | trans }} {{ (d.theme != "") ? d.theme.name : "" }}</td>
 												<td>{{ 'workshop' | trans }} {{ (d.workshop != "") ? d.workshop.name : "" }}</td>
 												<td><a class="btn btn-secondary" href="#">{{ 'delete' | trans }}</a></td>
 											</tr>
@@ -60,7 +60,7 @@
 												<th scope="col" width="5%">#</th>
 												<th scope="col" width="15%">{{ 'userFrom' | trans }}</th>
 												<th scope="col" width="15%">{{ 'userTo' | trans }}</th>
-												<th scope="col" width="25%">{{ 'category' | trans }}</th>
+												<th scope="col" width="25%">{{ 'theme' | trans }}</th>
 												<th scope="col" width="25%">{{ 'workshop' | trans }}</th>
 												<th scope="col" width="15%">{{ 'actions' | trans }}</th>
 											</tr>
@@ -71,7 +71,7 @@
 												<th scope="row">{{ d.id }}</th>
 												<td>{{ d.UserFrom.username }}</td>
 												<td>{{ d.UserTo.username }}</td>
-												<td>{{ 'category' | trans }} {{ (d.category != "") ? d.category.name : "" }}</td>
+												<td>{{ 'theme' | trans }} {{ (d.theme != "") ? d.theme.name : "" }}</td>
 												<td>{{ 'workshop' | trans }} {{ (d.workshop != "") ? d.workshop.name : "" }}</td>
 												<td><a class="btn btn-secondary" href="{{ path('delegation_delete', {'delegation' : d.id}) }}">{{ 'delete' | trans }}</a></td>
 											</tr>

@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
+use App\Entity\Theme;
 use App\Entity\User;
 use App\Entity\Workshop;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,7 +17,7 @@ class DefaultController extends AbstractController
 	public function index()
 	{
 		return $this->render('index.html.twig', [
-				'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),
+				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 		]);
 	}
 
@@ -30,7 +30,7 @@ class DefaultController extends AbstractController
 	{
 		return $this->render('admin.html.twig', [
 				'users'		 => $this->getDoctrine()->getRepository(User::class)->findAll(),
-				'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),
+				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 				'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
 		]);
 	}

@@ -70,10 +70,10 @@ class Workshop
 	 */
 	private $rightsDelegation;
 	/**
-	 * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="workshops")
+	 * @ORM\ManyToOne(targetEntity="Theme", inversedBy="workshops")
 	 * @ORM\JoinColumn(nullable=false)
 	 */
-	private $category;
+	private $theme;
 	/**
 	 * @ORM\Column(type="string", length=255, nullable=true)
 	 * @var string
@@ -223,14 +223,14 @@ class Workshop
                         		return $this;
                         	}
 
-	public function getCategory(): ?Category
+	public function getTheme(): ?Theme
                         	{
-                        		return $this->category;
+                        		return $this->theme;
                         	}
 
-	public function setCategory(?category $category): self
+	public function setTheme(?Theme $theme): self
                         	{
-                        		$this->category = $category;
+                        		$this->theme = $theme;
                         
                         		return $this;
                         	}

@@ -4,9 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Delegation;
 use App\Entity\User;
-use App\Entity\Category;
+use App\Entity\Theme;
 use App\Entity\Workshop;
-use App\Form\DelegationCategoryType;
+use App\Form\DelegationThemeType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,16 +35,16 @@ class DelegationController extends AbstractController
 	}
 
 	/**
-	 * @Route("/delegation/category/{category}/add", name="delegation_add_category", methods={"GET", "POST"})
+	 * @Route("/delegation/theme/{theme}/add", name="delegation_add_theme", methods={"GET", "POST"})
 	 */
-	public function addCategory(Request $request, Category $category): Response
+	public function addtheme(Request $request, Theme $theme): Response
 	{
 		$entityManager = $this->getDoctrine()->getManager();
 
 		$delegation = $entityManager->getRepository(Delegation::Class)->findOneBy(
 			[
 				'userFrom'	 => $this->getUser(),
-				'category'	 => $category
+				'theme'	 => $theme
 		]);
 
 		//case insert
@@ -53,9 +53,9 @@ class DelegationController extends AbstractController
 
 
 		$delegation->setUserFrom($this->getUser());
-		$delegation->setCategory($category);
+		$delegation->settheme($theme);
 
-		$form = $this->createForm(DelegationCategoryType::class, $delegation);
+		$form = $this->createForm(DelegationThemeType::class, $delegation);
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid())
@@ -68,7 +68,7 @@ class DelegationController extends AbstractController
 			return $this->redirectToRoute('delegation_index');
 		}
 
-		return $this->render('delegation/add.category.html.twig', [
+		return $this->render('add.theme.html.twig', [
 				'form' => $form->createView()
 		]);
 	}

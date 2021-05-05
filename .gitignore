@@ -87,3 +87,7 @@ nb-configuration.xml
 ###< symfony/phpunit-bridge ###
 *.jpg
 *.pdf
+*.png
+
+# Images and documents #
+/public/img/upload

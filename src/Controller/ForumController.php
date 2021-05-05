@@ -5,7 +5,7 @@ namespace App\Controller;
 use App\Entity\Forum;
 use App\Entity\Workshop;
 use App\Entity\Proposal;
-use App\Entity\Category;
+use App\Entity\Theme;
 use App\Form\ForumType;
 use App\Form\ForumAnswerType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +22,7 @@ class ForumController extends AbstractController
 	public function index(Request $request, string $slug, Workshop $workshop): Response
 	{
 		return $this->render('forum/index.html.twig', [
-				'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),
+				'theme' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 				'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
 				'workshop'	 => $workshop,
 				'forums'	 => $this->getDoctrine()->getRepository(Forum::class)->FindBy(['workshop' => $workshop]),
@@ -51,7 +51,7 @@ class ForumController extends AbstractController
 		}
 
 		return $this->render('forum/add.html.twig', [
-				'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),
+				'theme' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 				'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
 				'workshop'	 => $proposal->getWorkshop(),
 				'proposal'	 => $proposal,
@@ -76,7 +76,7 @@ class ForumController extends AbstractController
 		}
 
 		return $this->render('forum/edit.html.twig', [
-				'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),
+				'theme' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 				'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
 				'workshop'	 => $workshop,
 				'form'		 => $form->createView(),
@@ -119,7 +119,7 @@ class ForumController extends AbstractController
 		}
 
 		return $this->render('forum/answer.html.twig', [
-				'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),
+				'theme' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 				'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
 				'workshop'	 => $proposal->getWorkshop(),
 				'proposal'	 => $proposal,

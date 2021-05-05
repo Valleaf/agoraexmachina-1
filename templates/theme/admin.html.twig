@@ -7,13 +7,13 @@
 			<main class="col-11 col-lg-10 ml-sm-auto">
 				<div class="row mb-2" >
 					<div class="col-12">
-						<h4>{{'admin' | trans }} : {{ 'categories' | trans }}</h4>
+						<h4>{{'admin' | trans }} : {{ 'themes' | trans }}</h4>
 
 					</div>
 				</div>
 				<div class="row mb-2" >
 					<div class="col-12">
-						<a href="{{ path('category_add') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{ 'add' | trans }}</a>
+						<a href="{{ path('theme_add') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{ 'add' | trans }}</a>
 					</div>
 				</div>
 				<div class="row mb-2" >
@@ -35,19 +35,19 @@
 											</tr>
 										</thead>
 										<tbody>
-											{% for category in categories %}
+											{% for theme in themes %}
 												<tr>
 													<td>
-														{% if category.image %}
-															<img src="{{ vich_uploader_asset(category, 'imageFile') | imagine_filter('categories_list')}}" />
+														{% if theme.image %}
+															<img src="{{ vich_uploader_asset(theme, 'imageFile') | imagine_filter('themes_list')}}" />
 														{% else %}
 															<img src="{{ asset('img/logo_aem-sm.png')}}" />
 														{% endif %}
 													</td>
-													<td>{{ category.name}}</td>												
+													<td>{{ theme.name}}</td>												
 													<td>
-														<a href="{{ path('category_edit', {'category' : category.id}) }}" class="text-primary"><i class="fas fa-edit"></i></a> 
-														<a href="{{ path('category_delete', {'category' : category.id}) }}" class="text-primary"  data-toggle="deleteConfirmation"><i class="fas fa-trash-alt"></i></a> 
+														<a href="{{ path('theme_edit', {'theme' : theme.id}) }}" class="text-primary"><i class="fas fa-edit"></i></a>
+														<a href="{{ path('theme_delete', {'theme' : theme.id}) }}" class="text-primary"  data-toggle="deleteConfirmation"><i class="fas fa-trash-alt"></i></a>
 												</tr>
 											{% endfor %}
 										</tbody>

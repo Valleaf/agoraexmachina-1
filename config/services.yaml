@@ -15,7 +15,7 @@ parameters:
             administrator:
                 email: crlbazin@gmail.com
                 
-    categories_images_directory: '/public/img/upload/categories'
+    themes_images_directory: '/public/img/upload/themes'
     workshops_images_directory: '/public/img/upload/workshops'
     workshops_documents_directory: '/public/pdf/upload/workshops'
     # ici vos autres variables

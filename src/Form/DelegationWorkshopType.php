@@ -2,7 +2,7 @@
 namespace App\Form;
 
 use App\Entity\Delegation;
-use App\Entity\Category;
+use App\Entity\Theme;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;

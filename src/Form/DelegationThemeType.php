@@ -2,7 +2,7 @@
 namespace App\Form;
 
 use App\Entity\Delegation;
-use App\Entity\Category;
+use App\Entity\Theme;
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -11,7 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use \Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
-class DelegationCategoryType extends AbstractType
+class DelegationThemeType extends AbstractType
 {
 
 	public function buildForm(FormBuilderInterface $builder, array $options)

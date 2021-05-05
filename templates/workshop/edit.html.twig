@@ -12,7 +12,7 @@
 				</div>
 				<div class="row mb-2" >
 					<div class="col-12">
-						<a href="{{ path('workshop_admin') }}" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> {{ 'list_of' | trans }} {{ 'categories' | trans | lower }}</a>
+						<a href="{{ path('workshop_admin') }}" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> {{ 'list_of' | trans }} {{ 'themes' | trans | lower }}</a>
 						<a href="{{ path('workshop_delete', {'workshop' : form.vars.value.id}) }}" class="btn btn-danger btn-sm" data-toggle="deleteConfirmation"><i class="fas fa-trash-alt"></i> {{ 'delete' | trans }}</a>
 						<a href="{{ path('workshop_add_document', {'workshop' : form.vars.value.id}) }}" class="btn btn-info btn-sm"><i class="fas fa-plus-square"></i> {{ 'add_document' | trans }}</a>
 						<a href="{{ path('workshop_edit_document', {'workshop' : form.vars.value.id}) }}" class="btn btn-info btn-sm"><i class="fas fa-edit"></i> {{ 'edit_document' | trans }}</a>

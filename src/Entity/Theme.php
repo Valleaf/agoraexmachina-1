@@ -10,11 +10,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\ThemeRepository")
  * @UniqueEntity(fields={"name"}, message="name.alreadyexists")
  * @Vich\Uploadable
  */
-class Category
+class Theme
 {
 	/**
 	 * @ORM\Id()
@@ -33,7 +33,7 @@ class Category
 	 */
 	private $image;
 	/**
-	 * @Vich\UploadableField(mapping="categories_images", fileNameProperty="image")
+	 * @Vich\UploadableField(mapping="themes_images", fileNameProperty="image")
 	 * @var File
 	 */
 	private $imageFile;
@@ -54,11 +54,11 @@ class Category
 	 */
 	private $description;
 	/**
-	 * @ORM\OneToMany(targetEntity="App\Entity\Workshop", mappedBy="category", orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="App\Entity\Workshop", mappedBy="theme", orphanRemoval=true)
 	 */
 	private $workshops;
 	/**
-	 * @ORM\OneToMany(targetEntity="App\Entity\Delegation", mappedBy="category", orphanRemoval=true)
+	 * @ORM\OneToMany(targetEntity="App\Entity\Delegation", mappedBy="theme", orphanRemoval=true)
 	 */
 	private $delegations;
 
@@ -139,7 +139,7 @@ class Category
 		if( ! $this->workshops->contains($workshop))
 		{
 			$this->workshops[] = $workshop;
-			$workshop->setCategory($this);
+			$workshop->setTheme($this);
 		}
 
 		return $this;
@@ -151,9 +151,9 @@ class Category
 		{
 			$this->workshops->removeElement($workshop);
 			// set the owning side to null (unless already changed)
-			if($workshop->getCategory() === $this)
+			if($workshop->getTheme() === $this)
 			{
-				$workshop->setCategory(null);
+				$workshop->setTheme(null);
 			}
 		}
 
@@ -173,7 +173,7 @@ class Category
 		if( ! $this->delegations->contains($delegation))
 		{
 			$this->delegations[] = $delegation;
-			$delegation->setCategory($this);
+			$delegation->setTheme($this);
 		}
 
 		return $this;
@@ -185,9 +185,9 @@ class Category
 		{
 			$this->delegations->removeElement($delegation);
 			// set the owning side to null (unless already changed)
-			if($delegation->getCategory() === $this)
+			if($delegation->getTheme() === $this)
 			{
-				$delegation->setCategory(null);
+				$delegation->setTheme(null);
 			}
 		}
 

@@ -3,7 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Proposal;
 use App\Entity\Workshop;
-use App\Entity\Category;
+use App\Entity\Theme;
 use App\Form\ProposalType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +35,7 @@ class ProposalController extends AbstractController
 		}
 
 		return $this->render('proposal/add.html.twig', [
-					'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),
+					'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 					'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
 					'workshop'	 => $workshop,
 					'form'		 => $form->createView(),
@@ -48,7 +48,7 @@ class ProposalController extends AbstractController
 	public function index(Request $request, string $slug, Workshop $workshop, Proposal $proposal = null): Response
 	{
 		return $this->render('proposal/index.html.twig', [
-					'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),
+					'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 					'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
 					'workshop'	 => $workshop,
 					'proposals'	 => $this->getDoctrine()->getRepository(Proposal::class)->findBy(['workshop' => $workshop]),
@@ -76,7 +76,7 @@ class ProposalController extends AbstractController
 		}
 
 		return $this->render('proposal/edit.html.twig', [
-					'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),
+					'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 					'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
 					'workshop'	 => $workshop,
 					'form'		 => $form->createView(),

@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Document;
 use App\Entity\Workshop;
-use App\Entity\Category;
+use App\Entity\Theme;
 use App\Form\DocumentType;
 use App\Form\WorkshopDocumentsType;
 use App\Form\WorkshopType;
@@ -97,18 +97,18 @@ class WorkshopController extends AbstractController
 	}
 
 	/**
-	 * @Route("/{slug}/{category}", name="workshop_index", methods={"GET"})
+	 * @Route("/{slug}/{theme}", name="workshop_index", methods={"GET"})
 	 */
-	public function index(Request $request, string $slug, Category $category): Response
+	public function index(Request $request, string $slug, Theme $theme): Response
 	{
 		if ($request->query->get('search') != "")
-			$workshops	 = $this->getDoctrine()->getRepository(Workshop::class)->searchBy(['category' => $category, 'name' => $request->query->get('search')]);
+			$workshops	 = $this->getDoctrine()->getRepository(Workshop::class)->searchBy(['theme' => $theme, 'name' => $request->query->get('search')]);
 		else
-			$workshops	 = $this->getDoctrine()->getRepository(Workshop::class)->findBy(['category' => $category]);
+			$workshops	 = $this->getDoctrine()->getRepository(Workshop::class)->findBy(['theme' => $theme]);
 
 		return $this->render('workshop/index.html.twig', [
-				'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),
-				'category'	 => $category,
+				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
+				'theme'	 => $theme,
 				'workshops'	 => $workshops,
 		]);
 	}
@@ -119,16 +119,16 @@ class WorkshopController extends AbstractController
 	public function show(Request $request, string $slug, Workshop $workshop): Response
 	{
 		return $this->render('workshop/show.html.twig', [
-				'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),
+				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 				'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
 				'workshop'	 => $this->getDoctrine()->getRepository(Workshop::class)->findOneById($workshop),
 		]);
 	}
 
 	/**
-	 * @Route("/{slug}/{category}/add", name="workshop_add_byuser", methods={"GET", "POST"})
+	 * @Route("/{slug}/{theme}/add", name="workshop_add_byuser", methods={"GET", "POST"})
 	 */
-	public function addByUser(Request $request, string $slug, Category $category)
+	public function addByUser(Request $request, string $slug, Theme $theme)
 	{
 
 		$workshop	 = new Workshop();
@@ -144,12 +144,12 @@ class WorkshopController extends AbstractController
 			$entityManager->flush();
 
 			$this->addFlash("success", "add.success");
-			return $this->redirectToRoute('workshop_index', ["category" => $category->getId(), "slug" => $slug]);
+			return $this->redirectToRoute('workshop_index', ["theme" => $theme->getId(), "slug" => $slug]);
 		}
 
 		return $this->render('workshop/add.byuser.html.twig', [
-				'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),
-				'category'	 => $category,
+				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
+				'theme'	 => $theme,
 				'form'		 => $form->createView(),
 				'workshop'	 => $workshop,
 		]);

@@ -36,7 +36,7 @@ Pour l'instant, toute personne inscrite dans l'interface a accès à tous les vo
 *  Aux Catégories (ou Thèmes)
 *  aux Workshops (ou Ateliers).
 
-Il faut donc créer un système de catégorie supplémentaire, assigné à la fois aux Categories, aux Workshops et au Users, de sorte que tel User auquel on assigue telle ou telle de ces catégories ne puisse voter qu'aux Categories ou Workshops correspondantes. Bien sur, on peut assigner à un User plusieurs de ces catégories. À son inscription, il doit pouvoir bénéficier d'une catégorie "par défaut". Bien sur, le système de délégations doit en tenir compte (quelqu'un ne peut pas déléguer quelqu'un d'autre qui ne participe pas au vote ; un délégué ne peut pas voter en sus pour une personne non inscrite).
+Il faut donc créer un système de catégorie supplémentaire, assigné à la fois aux Thèmes, aux Workshops et au Users, de sorte que tel User auquel on assigue telle ou telle de ces catégories ne puisse voter qu'aux Categories ou Workshops correspondantes. Bien sur, on peut assigner à un User plusieurs de ces catégories. À son inscription, il doit pouvoir bénéficier d'une catégorie "par défaut". Bien sur, le système de délégations doit en tenir compte (quelqu'un ne peut pas déléguer quelqu'un d'autre qui ne participe pas au vote ; un délégué ne peut pas voter en sus pour une personne non inscrite).
 Par contre, on ne peut associer à un **Thème** ou un **Atelier** qu'une seule catégorie.
 
 ### Autre typologie pour le système de catégories

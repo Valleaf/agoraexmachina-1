@@ -5,7 +5,7 @@
 
 	<div class="container-fluid">
 		<div class="row">
-			{% include 'category/menu.html.twig' %}
+			{% include 'theme/menu.html.twig' %}
 
 			<main class="col" id="content">
 				<div class="row mb-2" >
@@ -14,7 +14,7 @@
 						<nav aria-label="breadcrumb  text-secondary">
 							<ol class="breadcrumb text-small">
 								<li class="breadcrumb-item"><a href="{{ path('homepage') }}"><i class="fas fa-home"></i></a></li>
-								<li class="breadcrumb-item"><a href="{{path('workshop_index', {'slug' : workshop.category.name | slugify, 'category' : workshop.category.id })}}">{{ workshop.category.name }}</a></li>
+								<li class="breadcrumb-item"><a href="{{path('workshop_index', {'slug' : workshop.theme.name | slugify, 'theme' : workshop.theme.id })}}">{{ workshop.theme.name }}</a></li>
 								<li class="breadcrumb-item active" aria-current="page">{{ workshop.name }}</li>
 							</ol>
 						</nav>
@@ -76,7 +76,7 @@
 														<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 															<a href="{{path('vote_add', {'slug' : slug, 'proposal' : proposal.id, 'userVote' : 'votedFor', 'user' : app.user.id })}}" class="dropdown-item">{{ 'vote.me' | trans }}</a>
 															{% for delegation in app.user.delegationsTo %}
-																{% if (delegation.workshop and delegation.workshop.id == workshop.id) or (delegation.category and delegation.category.id == workshop.category.id) %}
+																{% if (delegation.workshop and delegation.workshop.id == workshop.id) or (delegation.theme and delegation.theme.id == workshop.theme.id) %}
 																	<a href="{{path('vote_add', {'slug' : slug, 'proposal' : proposal.id, 'userVote' : 'votedFor', 'user' : delegation.userFrom.id })}}" class="dropdown-item" >{{ 'vote.as' | trans }} {{ delegation.userFrom.username }}</a>
 																{% endif %}
 															{% endfor %}
@@ -89,7 +89,7 @@
 														<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 															<a href="{{path('vote_add', {'slug' : slug, 'proposal' : proposal.id, 'userVote' : 'votedAgainst', 'user' : app.user.id })}}" class="dropdown-item">{{ 'vote.me' | trans }}</a>
 															{% for delegation in app.user.delegationsTo %}
-																{% if (delegation.workshop and delegation.workshop.id == workshop.id) or (delegation.category and delegation.category.id == workshop.category.id) %}
+																{% if (delegation.workshop and delegation.workshop.id == workshop.id) or (delegation.theme and delegation.theme.id == workshop.theme.id) %}
 																	<a href="{{path('vote_add', {'slug' : slug, 'proposal' : proposal.id, 'userVote' : 'votedAgainst', 'user' : delegation.userFrom.id })}}" class="dropdown-item" >{{ 'vote.as' | trans }} {{ delegation.userFrom.username }}</a>
 																{% endif %}
 															{% endfor %}
@@ -102,7 +102,7 @@
 														<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 															<a href="{{path('vote_add', {'slug' : slug, 'proposal' : proposal.id, 'userVote' : 'votedBlank', 'user' : app.user.id })}}" class="dropdown-item">{{ 'vote.me' | trans }}</a>
 															{% for delegation in app.user.delegationsTo %}
-																{% if (delegation.workshop and delegation.workshop.id == workshop.id) or (delegation.category and delegation.category.id == workshop.category.id) %}
+																{% if (delegation.workshop and delegation.workshop.id == workshop.id) or (delegation.theme and delegation.theme.id == workshop.theme.id) %}
 																	<a href="{{path('vote_add', {'slug' : slug, 'proposal' : proposal.id, 'userVote' : 'votedBlank', 'user' : delegation.userFrom.id })}}" class="dropdown-item" >{{ 'vote.as' | trans }} {{ delegation.userFrom.username }}</a>
 																{% endif %}
 															{% endfor %}

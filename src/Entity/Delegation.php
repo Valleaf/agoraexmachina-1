@@ -34,9 +34,9 @@ class Delegation
     private $workshop;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="delegations")
+     * @ORM\ManyToOne(targetEntity="Theme", inversedBy="delegations")
      */
-    private $category;
+    private $theme;
 
     public function getId(): ?int
     {
@@ -79,14 +79,14 @@ class Delegation
         return $this;
     }
 
-    public function getCategory(): ?Category
+    public function getTheme(): ?Theme
     {
-        return $this->category;
+        return $this->theme;
     }
 
-    public function setCategory(?Category $category): self
+    public function setTheme(?Theme $theme): self
     {
-        $this->category = $category;
+        $this->theme = $theme;
 
         return $this;
     }

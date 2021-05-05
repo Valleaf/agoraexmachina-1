@@ -224,15 +224,15 @@
 			
 			
 			<!-- ******************************** -->
-			<!-- CATEGORY -->
+			<!-- THEME -->
 			<!-- ******************************** -->
-			<trans-unit id="categories">
-				<source>categories</source>
-				<target>Catégories</target>
+			<trans-unit id="themes">
+				<source>themes</source>
+				<target>Thèmes</target>
 			</trans-unit>
-			<trans-unit id="category">
-				<source>category</source>
-				<target>Catégorie</target>
+			<trans-unit id="theme">
+				<source>theme</source>
+				<target>Thème</target>
 			</trans-unit>
 			
 			

@@ -29,7 +29,7 @@
 										<thead class="thead-light">
 											<tr>
 												<th width="5%">&nbsp;</th>
-												<th width="20%">{{ 'category' | trans }}</th>	
+												<th width="20%">{{ 'theme' | trans }}</th>
 												<th width="65%">{{ 'name' | trans }}</th>
 												<th width="10%">{{ 'actions' | trans }}</th>
 											</tr>
@@ -44,7 +44,7 @@
 															<img src="{{ asset('img/logo_aem-sm.png')}}" />
 														{% endif %}
 													</td>
-													<td>{{ workshop.category.name}}</td>												
+													<td>{{ workshop.theme.name}}</td>												
 													<td>{{ workshop.name}}</td>												
 													<td>
 														<a href="{{ path('workshop_edit', {'workshop' : workshop.id}) }}" class="text-primary"><i class="fas fa-edit"></i></a> 
