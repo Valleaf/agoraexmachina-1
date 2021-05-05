@@ -160,6 +160,14 @@ class WorkshopController extends AbstractController
      */
 	public function addDocument(Request $request, Workshop $workshop): Response
     {
+        #Si il y a deja plus de 4 documents, on redirige l'utilisateur vers la page edit
+        $maxDocuments = 5;
+        if ($workshop->getDocuments()->count()>=$maxDocuments)
+        {
+            $this->addFlash('warning','Il y a deja le nombre maximum de documents');
+            return $this->redirectToRoute("workshop_edit", ["workshop" => $workshop->getId()]);
+        }
+
         $document = new Document();
         $form = $this->createForm(DocumentType::class, $document);
         $form->handleRequest($request);
@@ -177,6 +185,35 @@ class WorkshopController extends AbstractController
         return $this->render('workshop/add-document.html.twig', [
             'form'		 => $form->createView(),
             'workshop'	 => $workshop,
+        ]);
+    }
+
+    /**
+     * @Route("/admin/workshop/editDocument/{workshop}", name="workshop_edit_document")
+     */
+    public function editDocuments(Workshop $workshop): Response
+    {
+        return $this->render('workshop/edit-document.html.twig', [
+            'workshop'	 => $workshop,
+        ]);
+    }
+
+    /**
+     * @Route("/admin/workshop/deleteDocument/{workshop}/{document}", name="workshop_delete_document")
+     */
+    public function deleteDocuments(Workshop $workshop,Document $document): Response
+    {
+
+        //TODO: Rajouter un renvoi si les id n'existent pas
+        $workshop->removeDocument($document);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($workshop);
+        $entityManager->flush();
+
+        $this->addFlash("success", "delete.success");
+        //TODO: Erreur en redirigeant vers les documents, redirige vers la page admin donc, probleme de parametre
+        return $this->redirectToRoute('admin',[
         ]);
     }
 

@@ -28,7 +28,7 @@ a, button
 main 
 {
 	margin-top : 90px;
-    overflow: hidden;
+    /*overflow: hidden; TODO: Empeche l'affichage des elements, etait il la pour une raison?*/
     padding: 10px;
     min-height: 100vh;
 }

@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<div class="container-fluid">
+	<div class="container-fluid workshop_page">
 		<div class="row">
 			{% include 'category/menu.html.twig' %}
 
@@ -167,8 +167,14 @@
 					</div>
 
 					<div class="col-xl-4 col-md-12 mb-3">
+						<h4>Documents :</h4>
 						{% for doc in workshop.documents %}
-						{{ doc.path }}
+
+							<object type="application/pdf" width="100%" height="100%">
+								<param name="src" value="{{ asset("pdf/upload/workshops/") ~ doc.path  }}" />
+								<a href="{{ asset("pdf/upload/workshops/") ~ doc.path  }}">{{ doc.name }}</a>
+
+							</object>
 
 						{% endfor %}
 						{# <div class="card">

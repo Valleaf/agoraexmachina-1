@@ -106,7 +106,7 @@ class Workshop
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity=Document::class, mappedBy="workshop", orphanRemoval=true,cascade={"persist"})
+     * @ORM\OneToMany(targetEntity=Document::class, mappedBy="workshop", orphanRemoval=true,cascade={"persist","remove"})
      */
     private $documents;
 

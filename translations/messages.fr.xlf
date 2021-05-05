@@ -397,6 +397,10 @@
                 <source>add_document</source>
 				<target>Ajouter un document</target>
             </trans-unit>
+            <trans-unit id="edit_document">
+                <source>edit_document</source>
+                <target>Gérer les documents</target>
+            </trans-unit>
         </body>
 	</file>
 </xliff>

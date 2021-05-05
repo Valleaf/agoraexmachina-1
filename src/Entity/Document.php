@@ -23,6 +23,11 @@ class Document
     /**
      * @ORM\Column(type="string", length=255)
      */
+    private $name;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
     private $path;
 
     /**
@@ -32,7 +37,7 @@ class Document
     private $file;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Workshop::class, inversedBy="documents",cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity=Workshop::class, inversedBy="documents",cascade={"persist","remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $workshop;
@@ -64,13 +69,29 @@ class Document
         $this->updatedAt = $updatedAt;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+
 
     public function getPath(): ?string
     {
         return $this->path;
     }
 
-    public function setPath(string $path): self
+    public function setPath(string $path = null): self
     {
         $this->path = $path;
 
