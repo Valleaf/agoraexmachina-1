@@ -47,6 +47,10 @@ class WorkshopController extends AbstractController
 
 		if ($form->isSubmitted() && $form->isValid())
 		{
+		    $theme = $workshop->getTheme();
+		    if ($theme->getCategory() != null) {
+		        $workshop->setCategory($theme->getCategory());
+            }
 			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->persist($workshop);
 			$entityManager->flush();
@@ -71,6 +75,10 @@ class WorkshopController extends AbstractController
 
 		if ($form->isSubmitted() && $form->isValid())
 		{
+            $theme = $workshop->getTheme();
+            if ($theme->getCategory() != null) {
+                $workshop->setCategory($theme->getCategory());
+            }
 			$this->getDoctrine()->getManager()->flush();
 
 			$this->addFlash("success", "edit.success");

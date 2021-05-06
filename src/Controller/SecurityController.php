@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
+use App\Form\CategoryChoiceType;
+use App\Form\CategoryType;
 use App\Form\UserAddFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -84,26 +87,26 @@ class SecurityController extends AbstractController
         ]);
 
     }
-	
-	/**
-	 * @Route("/admin/user/delete/{id}", name="user_delete") 
+
+    /**
+	 * @Route("/admin/user/delete/{id}", name="user_delete")
 	 */
 	public function delete(int $id): RedirectResponse
     {
 		$user = $this->getDoctrine()
 				->getRepository(User::class)
 				->find($id);
-		
+
 		$entityManager = $this->getDoctrine()->getManager();
 		$entityManager->remove($user);
 		$entityManager->flush();
-		
+
 		$this->addFlash("success", "delete.success");
 		return $this->redirectToRoute('user_admin');
-		
+
 	}
-	
-	/**
+
+    /**
 	 * @Route("/admin/user/edit/{id}", name="user_admin_edit")
 	 */
 	public function edit(Request $request, int $id): Response
@@ -111,26 +114,26 @@ class SecurityController extends AbstractController
 		$user = $this->getDoctrine()
 				->getRepository(User::class)
 				->find($id);
-		
+
 		$form = $this->createForm(UserEditFormType::class, $user);
 		$form->handleRequest($request);
-		
-		if ($form->isSubmitted() && $form->isValid()) 
+
+		if ($form->isSubmitted() && $form->isValid())
 		{
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-			
+
 			$this->addFlash("success", "edit.success");
 		}
 
-		
+
         return $this->render('security/edit.html.twig', [
             'userForm' => $form->createView(),
         ]);
 	}
-	
-	/**
+
+    /**
 	 * @Route("/register", name="app_register")
 	 */
 	public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
@@ -166,4 +169,64 @@ class SecurityController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/admin/user/editCategory/{id}", name="user_edit_category")
+     */
+    public function userEditCategories(Request $request,int $id): Response
+    {
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($id);
+        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+
+        return $this->render('security/edit-category.html.twig', [
+            'categories' => $categories,
+            'user' => $user
+        ]);
+    }
+    /**
+     * @Route("/admin/user/addCategory/{id}/{categoryId}", name="user_add_category")
+     */
+    public function userAddCategory(int $id, int $categoryId)
+    {
+
+        $category = $this->getDoctrine()->getRepository(Category::class)->find($categoryId);
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($id);
+        $user->addCategory($category);
+        $this->getDoctrine()->getManager()->persist($user);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->render('security/edit-category.html.twig', [
+            'categories'=> $this->getDoctrine()->getRepository(Category::class)->findAll(),
+            'user' => $user
+        ]);
+
+    }
+
+    /**
+     * @Route("/admin/user/removeCategory/{id}/{categoryId}", name="user_remove_category")
+     */
+    public function userRemoveCategory(int $id, int $categoryId)
+    {
+        #TODO: Empecher l'acces a une page erreur en changeant l'URL ?
+        $category = $this->getDoctrine()->getRepository(Category::class)->find($categoryId);
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($id);
+
+        $user->removeCategory($category);
+        $this->getDoctrine()->getManager()->persist($user);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->render('security/edit-category.html.twig', [
+            'categories'=> $this->getDoctrine()->getRepository(Category::class)->findAll(),
+            'user' => $user
+        ]);
+
+    }
+    
+    
 }

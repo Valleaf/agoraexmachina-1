@@ -58,6 +58,15 @@ class ThemeController extends AbstractController
 
 		if($form->isSubmitted() && $form->isValid())
 		{
+		    $workshops = $theme->getWorkshops();
+		    if ($workshops != null)
+		    {
+		        foreach($workshops as $workshop)
+                {
+                    $workshop->setCategory($theme->getCategory());
+                }
+            }
+
 			$this->getDoctrine()->getManager()->flush();
 			
 			$this->addFlash("success", "edit.success");

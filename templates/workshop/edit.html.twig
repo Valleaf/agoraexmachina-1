@@ -29,7 +29,7 @@
 						<div class="card">
 							<div class="card-body ">
 								{% if workshop.image %}
-									<img src="{{ vich_uploader_asset(workshop, 'imageFile') | imagine_filter('categories_home')}}" class="img-fluid"/>
+									<img src="{{ vich_uploader_asset(workshop, 'imageFile') | imagine_filter('themes_home')}}" class="img-fluid"/>
 								{% else %}
 									<img src="{{asset('img/logo_aem-lg.png')}}" class="img-fluid"/>
 								{%	endif %}

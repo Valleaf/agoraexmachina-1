@@ -62,136 +62,153 @@ class Theme
 	 */
 	private $delegations;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="themes")
+     */
+    private $category;
+
 	public function __construct()
-	{
-		$this->workshops	 = new ArrayCollection();
-		$this->delegations	 = new ArrayCollection();
-	}
+         	{
+         		$this->workshops	 = new ArrayCollection();
+         		$this->delegations	 = new ArrayCollection();
+         	}
 
 	public function getId(): ?int
-	{
-		return $this->id;
-	}
+         	{
+         		return $this->id;
+         	}
 
 	public function getName(): ?string
-	{
-		return $this->name;
-	}
+         	{
+         		return $this->name;
+         	}
 
 	public function setName(string $name): self
-	{
-		$this->name = $name;
-
-		return $this;
-	}
+         	{
+         		$this->name = $name;
+         
+         		return $this;
+         	}
 
 	public function getDescription(): ?string
-	{
-		return $this->description;
-	}
+         	{
+         		return $this->description;
+         	}
 
 	public function setDescription(string $description): self
-	{
-		$this->description = $description;
-
-		return $this;
-	}
+         	{
+         		$this->description = $description;
+         
+         		return $this;
+         	}
 
 	public function setImageFile(File $image = null)
-	{
-		$this->imageFile = $image;
-
-		// VERY IMPORTANT:
-		// It is required that at least one field changes if you are using Doctrine,
-		// otherwise the event listeners won't be called and the file is lost
-		if($image)
-		{
-			// if 'updatedAt' is not defined in your entity, use another property
-			$this->updatedAt = new \DateTime('now');
-		}
-	}
+         	{
+         		$this->imageFile = $image;
+         
+         		// VERY IMPORTANT:
+         		// It is required that at least one field changes if you are using Doctrine,
+         		// otherwise the event listeners won't be called and the file is lost
+         		if($image)
+         		{
+         			// if 'updatedAt' is not defined in your entity, use another property
+         			$this->updatedAt = new \DateTime('now');
+         		}
+         	}
 
 	public function getImageFile()
-	{
-		return $this->imageFile;
-	}
+         	{
+         		return $this->imageFile;
+         	}
 
 	public function setImage($image)
-	{
-		$this->image = $image;
-	}
+         	{
+         		$this->image = $image;
+         	}
 
 	public function getImage()
-	{
-		return $this->image;
-	}
+         	{
+         		return $this->image;
+         	}
 
 	/**
 	 * @return Collection|Workshops[]
 	 */
 	public function getWorkshops(): Collection
-	{
-		return $this->workshops;
-	}
+         	{
+         		return $this->workshops;
+         	}
 
 	public function addWorkshop(Workshop $workshop): self
-	{
-		if( ! $this->workshops->contains($workshop))
-		{
-			$this->workshops[] = $workshop;
-			$workshop->setTheme($this);
-		}
-
-		return $this;
-	}
+         	{
+         		if( ! $this->workshops->contains($workshop))
+         		{
+         			$this->workshops[] = $workshop;
+         			$workshop->setTheme($this);
+         		}
+         
+         		return $this;
+         	}
 
 	public function removeWorkshop(Workshop $workshop): self
-	{
-		if($this->workshops->contains($workshop))
-		{
-			$this->workshops->removeElement($workshop);
-			// set the owning side to null (unless already changed)
-			if($workshop->getTheme() === $this)
-			{
-				$workshop->setTheme(null);
-			}
-		}
-
-		return $this;
-	}
+         	{
+         		if($this->workshops->contains($workshop))
+         		{
+         			$this->workshops->removeElement($workshop);
+         			// set the owning side to null (unless already changed)
+         			if($workshop->getTheme() === $this)
+         			{
+         				$workshop->setTheme(null);
+         			}
+         		}
+         
+         		return $this;
+         	}
 
 	/**
 	 * @return Collection|Delegation[]
 	 */
 	public function getDelegations(): Collection
-	{
-		return $this->delegations;
-	}
+         	{
+         		return $this->delegations;
+         	}
 
 	public function addDelegation(Delegation $delegation): self
-	{
-		if( ! $this->delegations->contains($delegation))
-		{
-			$this->delegations[] = $delegation;
-			$delegation->setTheme($this);
-		}
-
-		return $this;
-	}
+         	{
+         		if( ! $this->delegations->contains($delegation))
+         		{
+         			$this->delegations[] = $delegation;
+         			$delegation->setTheme($this);
+         		}
+         
+         		return $this;
+         	}
 
 	public function removeDelegation(Delegation $delegation): self
-	{
-		if($this->delegations->contains($delegation))
-		{
-			$this->delegations->removeElement($delegation);
-			// set the owning side to null (unless already changed)
-			if($delegation->getTheme() === $this)
-			{
-				$delegation->setTheme(null);
-			}
-		}
+         	{
+         		if($this->delegations->contains($delegation))
+         		{
+         			$this->delegations->removeElement($delegation);
+         			// set the owning side to null (unless already changed)
+         			if($delegation->getTheme() === $this)
+         			{
+         				$delegation->setTheme(null);
+         			}
+         		}
+         
+         		return $this;
+         	}
 
-		return $this;
-	}
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
+
+        return $this;
+    }
 
 }

@@ -153,7 +153,7 @@
 			</trans-unit>
 			<trans-unit id="jumbotron.5">
 				<source>jumbotron.5</source>
-				<target>n cas de problème, nous sommes sur https://github.com/CRLbazin/agoraexmachina.</target>
+				<target>En cas de problème, nous sommes sur https://github.com/CRLbazin/agoraexmachina.</target>
 			</trans-unit>
           
 		  
@@ -387,20 +387,61 @@
 			</trans-unit>
 
 			<!-- ******************************** -->
+			<!-- CATEGORIES -->
+			<!-- ******************************** -->
+
+
+			<trans-unit id="categories">
+				<source>categories</source>
+				<target>Catégories</target>
+			</trans-unit>
+			<trans-unit id="0">
+				<source>category</source>
+				<target>Catégorie</target>
+			</trans-unit>
+			<trans-unit id="add_category">
+				<source>add_category</source>
+				<target>Ajouter une catégorie</target>
+			</trans-unit>
+			<trans-unit id="edit_category">
+				<source>edit_category</source>
+				<target>Gérer les catégories</target>
+			</trans-unit>
+			<trans-unit id="add_user_to_category">
+				<source>add_user_to_category</source>
+				<target>Ajouter l'utilisateur à la catégorie</target>
+			</trans-unit>
+			<trans-unit id="remove_user_from_category">
+				<source>remove_user_from_category</source>
+				<target>Enlever l'utilisateur de la catégorie</target>
+			</trans-unit>
+
+
+		<!-- ******************************** -->
+			<!-- DOCUMENTS -->
+			<!-- ******************************** -->
+			<trans-unit id="add_document">
+				<source>add_document</source>
+				<target>Ajouter un document</target>
+			</trans-unit>
+			<trans-unit id="edit_document">
+				<source>edit_document</source>
+				<target>Gérer les documents</target>
+			</trans-unit>
+
+
+			<!-- ******************************** -->
 			<!-- DIVERS -->
 			<!-- ******************************** -->
 			<trans-unit id="siteproposepar">
 				<source>siteproposepar</source>
 				<target>Ce site vous est proposé par</target>
 			</trans-unit>
-            <trans-unit id="add_document">
-                <source>add_document</source>
-				<target>Ajouter un document</target>
-            </trans-unit>
-            <trans-unit id="edit_document">
-                <source>edit_document</source>
-                <target>Gérer les documents</target>
-            </trans-unit>
-        </body>
+
+
+
+
+
+		</body>
 	</file>
 </xliff>
