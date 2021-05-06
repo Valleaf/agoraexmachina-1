@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class DocumentType extends AbstractType
@@ -26,6 +27,16 @@ class DocumentType extends AbstractType
                 'download_uri' => '...',
                 'download_label' => '...',
                 'asset_helper' => true,
+                'constraints' =>[
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'application/pdf',
+                            'application/x-pdf',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid PDF document',
+                    ])
+                    ],
             ])
             ->add('name',TextType::class)
             ->add('Submit', SubmitType::class);

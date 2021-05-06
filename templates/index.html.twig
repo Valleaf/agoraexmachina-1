@@ -23,7 +23,7 @@
 												{{ theme.description | truncate(140, true)|raw}}
 												<span class="badge badge-secondary" data-toggle="tooltip" data-placement="top" title="{{theme.description}}">Suite</span>
 											{% else %}
-												{{ theme.description }}
+												{{ theme.description | raw }}
 											{% endif %}
 										</p>
 									</div>
