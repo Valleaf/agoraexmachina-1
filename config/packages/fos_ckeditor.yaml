@@ -25,7 +25,7 @@ fos_ck_editor:
       full.document: [ ]
       full.editing: [ ]
       full.forms: [ ]
-      full.insert: [ 'Image','HorizontalRule','Iframe','SpecialChar','savemarkdown' ]
+      full.insert: [ 'Image','HorizontalRule','SpecialChar','savemarkdown' ]
       full.links: [ 'Link','Unlink' ]
       full.paragraph: [ 'NumberedList','BulletedList','Indent','Outdent','Blockquote',
                         'JustifyLeft',

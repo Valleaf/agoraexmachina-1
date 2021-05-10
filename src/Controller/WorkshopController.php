@@ -76,12 +76,14 @@ class WorkshopController extends AbstractController
         #On verifie que l'admin restreint est enregistré a cette catégorie
         $admin = $this->getUser();
         $users = $workshop->getCategory()->getUsers();
-        if (!(
-            in_array('ROLE_ADMIN_RESTRICTED',$admin->getRoles())
+        if (
+        !(
+            in_array('ROLE_ADMIN_RESTRICTED', $admin->getRoles())
             &&
             $users->contains($admin)
-        ))
-        {
+            ||
+            in_array('ROLE_ADMIN', $admin->getRoles()))
+        ) {
             $this->addFlash("warning", "edit.authorization");
             return $this->redirectToRoute('workshop_admin');
         }
