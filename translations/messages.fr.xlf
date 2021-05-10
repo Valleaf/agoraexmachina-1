@@ -64,7 +64,15 @@
 			<trans-unit id="date_end">
 				<source>date_end</source>
 				<target>Date de fin</target>
-			</trans-unit> 
+			</trans-unit>
+			<trans-unit id="date_vote_end">
+				<source>date_vote_end</source>
+				<target>Date de début du vote</target>
+			</trans-unit>
+			<trans-unit id="date_vote_begin">
+				<source>date_vote_begin</source>
+				<target>Date de fin du vote</target>
+			</trans-unit>
 			<trans-unit id="year">
 				<source>year</source>
 				<target>Année</target>
@@ -442,6 +450,7 @@
 				<source>siteproposepar</source>
 				<target>Ce site vous est proposé par</target>
 			</trans-unit>
+
 
 
 

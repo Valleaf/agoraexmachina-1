@@ -35,6 +35,8 @@ class WorkshopType extends AbstractType
 				])
 				->add('dateBegin')
 				->add('dateEnd')
+                ->add('dateVoteBegin')
+                ->add('dateVoteEnd')
 				->add('rightsSeeWorkshop', ChoiceType::class, ['choices' => ['Everyone' => 'everyone']])
 				->add('rightsVoteProposals', ChoiceType::class, ['choices' => ['Everyone' => 'everyone']])
 				->add('rightsWriteProposals', ChoiceType::class, ['choices' => ['Everyone' => 'everyone']])

@@ -68,7 +68,7 @@
 													{% if vote.votedAgainst > 0 %} {% set va = va + 1 %} {% endif %}
 													{% if vote.votedBlank > 0 %} {% set vb = vb + 1 %} {% endif %}
 												{% endfor %}
-												{% if app.user and date(workshop.dateEnd) > date() %}
+												{% if app.user and date(workshop.dateVoteEnd) > date() %}
 													<div class="dropdown">
 														<button class="btn btn-success progress-bar-striped dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 															{{ vf }}

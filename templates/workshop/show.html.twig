@@ -52,6 +52,17 @@
 													{{ workshop.dateEnd |date("d/m/Y") }}
 												</div>
 												<div>
+													<b>{{ 'date_vote_begin' | trans }}</b>
+													<br />
+													{{ workshop.dateVoteBegin |date("d/m/Y") }}
+												</div>
+												<div>
+													<b>{{ 'date_vote_end' | trans }}</b>
+													<br />
+													{{ workshop.dateVoteEnd |date("d/m/Y") }}
+												</div>
+
+												<div>
 													<b>{{ 'proposals' | trans }}</b>
 													<br />
 													{{ workshop.proposals | length }}
