@@ -28,6 +28,12 @@ class User implements UserInterface
      */
     private $username;
 
+    public function __toString()
+    {
+        return $this->username;
+    }
+
+
     /**
      * @ORM\Column(type="json")
      */
@@ -78,7 +84,7 @@ class User implements UserInterface
     private $workshops;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="users")
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="users",cascade={"persist"})
      */
     private $categories;
 

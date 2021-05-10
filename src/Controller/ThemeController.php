@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Theme;
+use App\Entity\User;
 use App\Form\ThemeType;
 use App\Repository\ThemeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -53,6 +54,18 @@ class ThemeController extends AbstractController
 	 */
 	public function edit(Request $request, Theme $theme): Response
 	{
+	    #On verifie que l'admin restreint est enregistré a cette catégorie
+	    $admin = $this->getUser();
+	    $users = $theme->getCategory()->getUsers();
+	    if (!(
+	        in_array('ROLE_ADMIN_RESTRICTED',$admin->getRoles())
+            &&
+            $users->contains($admin)
+            ))
+        {
+            return $this->redirectToRoute('theme_admin');
+        }
+
 		$form = $this->createForm(ThemeType::class, $theme);
 		$form->handleRequest($request);
 
@@ -83,6 +96,17 @@ class ThemeController extends AbstractController
 	 */
 	public function delete(Request $request, Theme $theme): Response
 	{
+	    #On verifie que l'admin restreint est enregistré a cette catégorie
+        $admin = $this->getUser();
+        $users = $theme->getCategory()->getUsers();
+        if (!(
+            in_array('ROLE_ADMIN_RESTRICTED',$admin->getRoles())
+            &&
+            $users->contains($admin)
+        ))
+        {
+            return $this->redirectToRoute('theme_admin');
+        }
 		$entityManager = $this->getDoctrine()->getManager();
 		$entityManager->remove($theme);
 		$entityManager->flush();

@@ -22,7 +22,7 @@ class ForumController extends AbstractController
 	public function index(Request $request, string $slug, Workshop $workshop): Response
 	{
 		return $this->render('forum/index.html.twig', [
-				'theme' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
+				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 				'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
 				'workshop'	 => $workshop,
 				'forums'	 => $this->getDoctrine()->getRepository(Forum::class)->FindBy(['workshop' => $workshop]),
@@ -51,7 +51,7 @@ class ForumController extends AbstractController
 		}
 
 		return $this->render('forum/add.html.twig', [
-				'theme' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
+				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 				'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
 				'workshop'	 => $proposal->getWorkshop(),
 				'proposal'	 => $proposal,
@@ -76,7 +76,7 @@ class ForumController extends AbstractController
 		}
 
 		return $this->render('forum/edit.html.twig', [
-				'theme' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
+				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 				'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
 				'workshop'	 => $workshop,
 				'form'		 => $form->createView(),
@@ -119,7 +119,7 @@ class ForumController extends AbstractController
 		}
 
 		return $this->render('forum/answer.html.twig', [
-				'theme' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
+				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 				'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
 				'workshop'	 => $proposal->getWorkshop(),
 				'proposal'	 => $proposal,

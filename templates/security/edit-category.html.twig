@@ -5,25 +5,29 @@
         <div class="row">
             {% include 'admin.menu.html.twig' %}
             <main class="col-11 col-lg-10 ml-sm-auto">
-                <div class="row mb-2" >
+                <div class="row mb-2">
                     <div class="col-12">
-                        <h4>{{'user' | trans }} : {{ user.username }}</h4>
+                        <h4>{{ 'user' | trans }} : {{ user.username }}</h4>
                     </div>
                 </div>
-                <div class="row mb-2" >
+                <div class="row mb-2">
                     <div class="col-12">
-                        <a href="{{ path('user_admin') }}" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> {{ 'list_of' | trans }} {{ 'users' | trans | lower }}</a>
-                        <a href="{{ path('user_delete', {'id' : user.id}) }}" class="btn btn-danger btn-sm" data-toggle="deleteConfirmation"><i class="fas fa-trash-alt"></i> {{ 'delete' | trans }}</a>
-                        <a href="{{ path('user_edit_category', {'id' : user.id}) }}" class="btn btn-info btn-sm" ><i class="fas fa-edit"></i> {{ 'add_category' | trans }}</a>
+                        <a href="{{ path('user_admin') }}" class="btn btn-secondary btn-sm"><i
+                                    class="fas fa-arrow-left"></i> {{ 'list_of' | trans }} {{ 'users' | trans | lower }}
+                        </a>
+                        <a href="{{ path('user_delete', {'id' : user.id}) }}" class="btn btn-danger btn-sm"
+                           data-toggle="deleteConfirmation"><i class="fas fa-trash-alt"></i> {{ 'delete' | trans }}</a>
+                        <a href="{{ path('user_edit_category', {'id' : user.id}) }}" class="btn btn-info btn-sm"><i
+                                    class="fas fa-edit"></i> {{ 'add_category' | trans }}</a>
 
                     </div>
                 </div>
-                <div class="row mb-2" >
+                <div class="row mb-2">
                     <div class="col-12">
                         {% include 'flashbag.html.twig' %}
                     </div>
                 </div>
-                <div class="row" >
+                <div class="row">
                     <div class="col-2">
                         <div class="card">
                             <div class="card-body d-flex justify-content-center">
@@ -33,18 +37,25 @@
                     </div>
                     {% for category in categories %}
 
-                    <div class="col-2">
-                        <div class="card category-card">
-                               <h3> {{ category.name }}
-                                   {% if category not in user.categories %}
-                                <a href="{{ path('user_add_category',{'id' : user.id,'categoryId' : category.id}) }}"><i class="fas fa-plus-circle"></i></a></h3>
-                            <span>{{ 'add_user_to_category' | trans }}</span>
-                            {%  else %}
-                                <a href="{{ path('user_remove_category',{'id' : user.id,'categoryId' : category.id}) }}"><i class="fas fa-minus-circle"></i></a></h3>
-                                <span>{{ 'remove_user_from_category' | trans }}</span>
+                        <div class="col-2">
+                            {% if category not in user.categories %}
+                                <div class="card category-card user_not_subscribed">
+                                    <h3> {{ category.name }}
+                                        <a href="{{ path('user_add_category',{'id' : user.id,'categoryId' : category.id}) }}"><i
+                                                    class="fas fa-plus-circle"></i></a></h3>
+                                    <span>{{ 'add_user_to_category' | trans }}</span>
+                                </div>
+                            {% else %}
+                                <div class="card category-card user_subscribed">
+                                    <h3> {{ category.name }}
+
+                                        <a href="{{ path('user_remove_category',{'id' : user.id,'categoryId' : category.id}) }}"><i
+                                                    class="fas fa-minus-circle"></i></a></h3>
+                                    <span>{{ 'remove_user_from_category' | trans }}</span>
+                                </div>
                             {% endif %}
+
                         </div>
-                    </div>
                     {% endfor %}
 
                 </div>

@@ -292,3 +292,10 @@ label
 .category-card{
     text-align: center;
 }
+
+.user_not_subscribed{
+    background-color: #ce1f6a;
+}
+.user_subscribed{
+    background-color: #81b214;
+}

@@ -7,6 +7,7 @@ use App\Entity\Theme;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use \Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use \Symfony\Component\Form\FormBuilderInterface;
 use \Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -25,10 +26,25 @@ class ThemeType extends AbstractType
                 'choice_label' => 'name'
             ])
             ->add('name')
-            ->add('description', CKEditorType::class)
+            ->add('description', CKEditorType::class,[
+                'config'=>[
+                    'toolbar'=>'full',
+       #           'extraPlugins' => 'markdown'
+                ],
+       #       'plugins'=>[
+       #           'markdown'=>[
+       #               'path'=>'/bundles/fosckeditor/plugins/CKEditor-Markdown/markdown/',
+       #               'filename'=>'plugin.js'
+       #           ]
+       #        ]
+            ])
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => true,
+            ])
+            ->add('isPublic',CheckboxType::class,[
+                'label'=>'Public?',
+                'required'=>false
             ])
             ->add('Submit', SubmitType::class);
     }

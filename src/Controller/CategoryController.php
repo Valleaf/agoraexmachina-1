@@ -35,6 +35,12 @@ class CategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($category);
+            if ($category->getUsers() != null) {
+                $users = $category->getUsers();
+                foreach ($users as $user) {
+                    $user->addCategory($category);
+                }
+            }
             $entityManager->flush();
 
             $this->addFlash("success", "add.success");
@@ -51,11 +57,26 @@ class CategoryController extends AbstractController
      */
     public function edit(Request $request, Category $category): Response
     {
+     #  if ($category->getUsers() != null) {
+     #      $usersInit = $category->getUsers();
+     #  }
+
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
+        #   foreach ($usersInit as $user) {
+        #       $category->removeUser($user);
+        #   }
+        #TODO: Permettre d'enlever des utilisateurs des categories
+            if ($category->getUsers() != null) {
+                $users = $category->getUsers();
+                foreach ($users as $user) {
+                    $user->addCategory($category);
+                }
+            }
+
+            $this->getDoctrine()->getManager()->persist($category);
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash("success", "edit.success");
@@ -63,8 +84,8 @@ class CategoryController extends AbstractController
         }
 
         return $this->render('category/edit.html.twig', [
-            'form'		 => $form->createView(),
-            'category'	 => $category,
+            'form' => $form->createView(),
+            'category' => $category,
         ]);
     }
 
@@ -80,9 +101,6 @@ class CategoryController extends AbstractController
         $this->addFlash("success", "delete.success");
         return $this->redirectToRoute('category_admin');
     }
-
-
-
 
 
 }

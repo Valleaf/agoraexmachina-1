@@ -37,7 +37,7 @@ class DelegationController extends AbstractController
 	/**
 	 * @Route("/delegation/theme/{theme}/add", name="delegation_add_theme", methods={"GET", "POST"})
 	 */
-	public function addtheme(Request $request, Theme $theme): Response
+	public function addTheme(Request $request, Theme $theme): Response
 	{
 		$entityManager = $this->getDoctrine()->getManager();
 
@@ -68,7 +68,7 @@ class DelegationController extends AbstractController
 			return $this->redirectToRoute('delegation_index');
 		}
 
-		return $this->render('add.theme.html.twig', [
+		return $this->render('delegation/add.theme.html.twig', [
 				'form' => $form->createView()
 		]);
 	}
