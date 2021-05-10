@@ -63,6 +63,7 @@ class ThemeController extends AbstractController
             $users->contains($admin)
             ))
         {
+            $this->addFlash("warning", "edit.authorization");
             return $this->redirectToRoute('theme_admin');
         }
 

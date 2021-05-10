@@ -1,0 +1,14 @@
+<tr>
+    <td>
+        {% if workshop.image %}
+            <img src="{{ vich_uploader_asset(workshop, 'imageFile') | imagine_filter('workshops_list')}}" />
+        {% else %}
+            <img src="{{ asset('img/logo_aem-sm.png')}}" />
+        {% endif %}
+    </td>
+    <td>{{ workshop.theme.name}}</td>
+    <td>{{ workshop.name}}</td>
+    <td>
+        <a href="{{ path('workshop_edit', {'workshop' : workshop.id}) }}" class="text-primary"><i class="fas fa-edit"></i></a>
+        <a href="{{ path('workshop_delete', {'workshop' : workshop.id}) }}" class="text-primary"  data-toggle="deleteConfirmation"><i class="fas fa-trash-alt"></i></a>
+</tr>

@@ -42,6 +42,7 @@ security:
         - { path: '^/admin/user*', roles: ROLE_ADMIN }
         - { path: '^/admin/category*', roles: ROLE_ADMIN }
         - { path: '^/admin/theme/add*', roles: ROLE_ADMIN }
+        - { path: '^/admin/workshop/add*', roles: ROLE_ADMIN }
         - { path: '^/admin', roles: [ROLE_ADMIN,ROLE_ADMIN_RESTRICTED] }
         - { path: '/add', roles: ROLE_USER }
         - { path: '/vote/', roles: ROLE_USER }

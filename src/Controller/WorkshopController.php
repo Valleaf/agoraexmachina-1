@@ -39,6 +39,8 @@ class WorkshopController extends AbstractController
 	 */
 	public function add(Request $request): Response
 	{
+
+
 		$workshop	 = new Workshop();
 		$workshop->setUser($this->security->getUser());
 		
@@ -70,6 +72,20 @@ class WorkshopController extends AbstractController
 	 */
 	public function edit(Request $request, Workshop $workshop): Response
 	{
+
+        #On verifie que l'admin restreint est enregistré a cette catégorie
+        $admin = $this->getUser();
+        $users = $workshop->getCategory()->getUsers();
+        if (!(
+            in_array('ROLE_ADMIN_RESTRICTED',$admin->getRoles())
+            &&
+            $users->contains($admin)
+        ))
+        {
+            $this->addFlash("warning", "edit.authorization");
+            return $this->redirectToRoute('workshop_admin');
+        }
+
 		$form = $this->createForm(WorkshopType::class, $workshop);
 		$form->handleRequest($request);
 

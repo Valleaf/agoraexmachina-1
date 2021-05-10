@@ -135,6 +135,10 @@
 				<source>edit.success</source>
 				<target>Modification enregistrée</target>
 			</trans-unit>
+			<trans-unit id="edit.authorization">
+				<source>edit.authorization</source>
+				<target>Vous n'avez pas accès</target>
+			</trans-unit>
 			<trans-unit id="jumbotron.1">
 				<source>jumbotron.1</source>
 				<target>GORA Ex Machina facilite la prise de décisions via la "démocratie liquide".</target>
@@ -276,6 +280,7 @@
 				<source>results</source>
 				<target>Résultats</target>
 			</trans-unit>
+
 			
 			
 			<!-- ******************************** -->
