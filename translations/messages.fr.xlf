@@ -89,6 +89,10 @@
 				<source>delete.success</source>
 				<target>Suppression effectuée</target>
 			</trans-unit>
+			<trans-unit id="report.success">
+				<source>report.success</source>
+				<target>Signalement effectué</target>
+			</trans-unit>
 			<trans-unit id="add.success">
 				<source>add.success</source>
 				<target>Création enregistrée</target>

@@ -8,9 +8,13 @@ use App\Entity\Proposal;
 use App\Entity\Theme;
 use App\Form\ForumType;
 use App\Form\ForumAnswerType;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ForumController extends AbstractController
@@ -126,5 +130,34 @@ class ForumController extends AbstractController
 				'form'		 => $form->createView(),
 		]);
 	}
+    /**
+     * @Route("/{slug}/workshop/{workshop}/forum/report/{forum}", name="forum_report", methods={"GET"})
+     */
+	public function report(MailerInterface $mailer, Request $request, string $slug, Proposal $proposal, Workshop $workshop,
+                           Forum
+$forum):
+Response
+    {
+
+
+        $users = $workshop->getCategory()->getUsers();
+        foreach ($users as $user)
+        {
+            if (in_array('ROLE_ADMIN',$user->getRoles()) ||  in_array('ROLE_ADMIN_RESTRICTED',$user->getRoles()))
+            {
+                $email = (new Email())
+                    ->from($this->getUser()->getEmail())
+                    ->to($user->getEmail())
+                    ->subject('Message signalé'.$forum->getName())
+                   #->htmlTemplate('email/report.html.twig')
+                    ->text($forum->getDescription());
+                $mailer->send($email);
+            }
+        }
+
+        $this->addFlash("success", "report.success");
+        return $this->redirectToRoute('proposal_index', ['slug' => $slug, 'workshop' => $proposal->getWorkshop()->getId(), 'proposal' => $proposal->getId()]);
+
+    }
 
 }
