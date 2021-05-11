@@ -1,20 +1,24 @@
 # Cahier des charges fonctionnel partiel
 > 03 05 2021
-**Remarque** : à cette étape, l’aspect visuel et l’ergonomie du site ne sont pas traités.## Catégories / Besoins fonctionnels
+**Remarque** : à cette étape, l’aspect visuel et l’ergonomie du site ne sont pas traités.
+## Catégories / Besoins fonctionnels
 ### Catégories des Thèmes et ateliers
 #### Thèmes
-1. Permet de faciliter l’attribution des droits à un ADMIN_RESTREINT ou un MODERATEUR pour des catégories de **Thèmes**
-2. Permet de faciliter l’inscription de cohortes d’utilisateurs à des catégories de **Thèmes**
-3. Permet de grouper **Thèmes** et utilisateurs sur des sujets précis : Par exemple, trois associations peuvent pratiquer leurs activités démocratiques indépendamment les uns des autres, sans que les uns voient ce qui se passe chez les autres. À noter, un utilisateur peut avoir accès à plusieurs catégories lui permettant d’avoir accès à plusieurs **Thèmes** (!important). Sauvegarde dans la base de données probablement en `ARRAY`.
+~~1. Permet de faciliter l’attribution des droits à un ADMIN_RESTREINT ou un MODERATEUR pour des catégories de **Thèmes**~~
+
+~~2. Permet de faciliter l’inscription de cohortes d’utilisateurs à des catégories de **Thèmes**~~ (Desinscirption en groupe a faire)
+
+~~3. Permet de grouper **Thèmes** et utilisateurs sur des sujets précis : Par exemple, trois associations peuvent pratiquer leurs activités démocratiques indépendamment les uns des autres, sans que les uns voient ce qui se passe chez les autres. À noter, un utilisateur peut avoir accès à plusieurs catégories lui permettant d’avoir accès à plusieurs **Thèmes** (!important). Sauvegarde dans la base de données probablement en `ARRAY`.~~
 
 #### Ateliers
-Ils reçoivent en héritage la catégorie à laquelle leur Thème est associé. 
+~~Ils reçoivent en héritage la catégorie à laquelle leur Thème est associé.~~
+
 À cela s’ajoute peut-être une autre forme de catégorisation par **Mots-clefs** permettant pour un utilisateur de passer d’un atelier à l’autre par mot-clefs plutôt que par navigation « verticale ». 
 #### Conclusion
-1. Un **Thème** peut être associé à une **Catégorie**
+~~1. Un **Thème** peut être associé à une **Catégorie**~~
 2. Un **Atelier** ou un **Thème** peuvent être associé à un ou plusieurs **Mots-clefs** (#)
 #### Public / privé
-1. Ajouter à la base de données pour les **Themes** un champ *Public* (O/N) qui permet de savoir si l’atelier ou le thème va être visible dans l’espace public sans login. Par contre, il faut permettre que même dans la partie publique, en étant logué, on n’ait accès qu’à ce qui nous intéresse, d’où l’intérêt des **Catégories**. 
+~~1. Ajouter à la base de données pour les **Themes** un champ *Public* (O/N) qui permet de savoir si l’atelier ou le thème va être visible dans l’espace public sans login. Par contre, il faut permettre que même dans la partie publique, en étant logué, on n’ait accès qu’à ce qui nous intéresse, d’où l’intérêt des **Catégories**.~~
 2. Ajouter deux champs aux**Thèmes** et **Ateliers** : permettre ou non la **Délégation** et établir la profondeur de la délégation « en cascade »: 
     * 0 pour pas de limitation, 
     * 1 pour « une personne peut recevoir une délégation »
@@ -34,7 +38,7 @@ L’administrateur du site et les administrateurs restreints doivent avoir accè
 **Remarque** : pour l’instant, c’est géré dans la doctrine.yaml. On peut ajouter des variables supplémentaires utilisables. En soi, c’est plutôt un travail pour le webmestre, donc ce n’est pas *prioritaire*.
 2. Gérer l’aspect de la page d’accueil : logo général du site, Titre général, image d’arrière-plan (voir par exemple dans l’aspect le site de [démocratie participative de Villeurbanne](https://participez.villeurbanne.fr/?locale=fr), et Descriptif / Présentation du site. Ne pas limiter le nombre de caractères et proposer une interface WYSIWYG pour le descriptif, mais donner la possibilité de limiter le nombre de caractères dans le twig. 
 Les champs titre et descriptif ne sont pas forcément les mêmes que les meta title, description ou les balises OpenGraph ou Twitter.
-3. Gérer les **Thèmes** visibles sur la page d’accueil. Un **Thème** n’apparaitra pas s’il est défini en tant que « privé ».
+   ~~3. Gérer les **Thèmes** visibles sur la page d’accueil. Un **Thème** n’apparaitra pas s’il est défini en tant que « privé ».~~
 4. Gestion du pied de page.
 ### Gestion des Thèmes
 #### L’administrateur peut :

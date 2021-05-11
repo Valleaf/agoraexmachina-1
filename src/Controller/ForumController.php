@@ -143,7 +143,7 @@ Response
         $users = $workshop->getCategory()->getUsers();
         foreach ($users as $user)
         {
-            if (in_array('ROLE_ADMIN',$user->getRoles()) ||  in_array('ROLE_ADMIN_RESTRICTED',$user->getRoles()))
+            if (in_array('ROLE_MODERATOR',$user->getRoles()) ||  in_array('ROLE_ADMIN_RESTRICTED',$user->getRoles()))
             {
                 $email = (new Email())
                     ->from($this->getUser()->getEmail())
