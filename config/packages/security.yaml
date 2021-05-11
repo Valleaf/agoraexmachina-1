@@ -47,3 +47,4 @@ security:
         - { path: '^/admin', roles: [ROLE_ADMIN,ROLE_ADMIN_RESTRICTED] }
         - { path: '/add', roles: ROLE_USER }
         - { path: '/vote/', roles: ROLE_USER }
+        - { path: '/notification', roles: ROLE_USER }
