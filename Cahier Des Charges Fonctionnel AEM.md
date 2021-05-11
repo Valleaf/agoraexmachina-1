@@ -121,3 +121,6 @@ Bug : une fois qu’on a voté, c’est la première proposition qui apparaît. 
 ## Installation
 ### Première installation
 ### Mise à jour d’une installation existante
+
+## FAIRE UN SYSTEME DE NOTIFICATIONS
+MODIFIER README

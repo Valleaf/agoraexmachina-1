@@ -446,6 +446,14 @@
 				<target>Gérer les documents</target>
 			</trans-unit>
 
+			<!-- ******************************** -->
+			<!-- NOTIFICATIONS -->
+			<!-- ******************************** -->
+			<trans-unit id="notifications">
+				<source>notifications</source>
+				<target>Notifications</target>
+			</trans-unit>
+
 
 			<!-- ******************************** -->
 			<!-- DIVERS -->
@@ -460,6 +468,7 @@
 
 
 
-		</body>
+
+        </body>
 	</file>
 </xliff>

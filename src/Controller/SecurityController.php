@@ -8,6 +8,8 @@ use App\Form\CategoryType;
 use App\Form\UserAddFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Entity\User;
@@ -136,7 +138,8 @@ class SecurityController extends AbstractController
     /**
 	 * @Route("/register", name="app_register")
 	 */
-	public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
+	public function register(MailerInterface $mailer,Request $request, UserPasswordEncoderInterface $passwordEncoder,
+                              GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -151,10 +154,19 @@ class SecurityController extends AbstractController
                 )
             );
 
+            $strings = ['d','2','$','@','D',0,3,8,6,1,2,'!'];
+            $random = rand(8000).$strings[rand(10)].rand(500).$strings[rand(10)].rand(9531);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-
+            $email = (new Email())
+                ->from('accounts@agora.com')
+                ->to($user->getEmail())
+                ->subject("Confirmation de l'inscription")
+                #->htmlTemplate('email/report.html.twig')
+                #give a link with a random password. Link will be something like public/setPw/userid
+                ->text("Bonjour ".$user->getUsername());
+            $mailer->send($email);
             // do anything else you need here, like send an email
 
             return $guardHandler->authenticateUserAndHandleSuccess(
