@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Forum;
+use App\Entity\Notification;
 use App\Entity\Workshop;
 use App\Entity\Proposal;
 use App\Entity\Theme;
@@ -16,6 +17,7 @@ use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Date;
 
 class ForumController extends AbstractController
 {
@@ -118,6 +120,11 @@ class ForumController extends AbstractController
 			$entityManager->persist($answer);
 			$entityManager->flush();
 
+            $notification = $forum->getUser()->prepareNotification('Réponse : '.$answer->getName());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($notification);
+            $entityManager->flush();
+
 			$this->addFlash("success", "add.success");
 			return $this->redirectToRoute('proposal_index', ['slug' => $slug, 'workshop' => $proposal->getWorkshop()->getId(), 'proposal' => $proposal->getId()]);
 		}
@@ -148,10 +155,16 @@ Response
                 $email = (new Email())
                     ->from($this->getUser()->getEmail())
                     ->to($user->getEmail())
-                    ->subject('Message signalé'.$forum->getName())
+                    ->subject('Message signalé '.$forum->getName())
                    #->htmlTemplate('email/report.html.twig')
                     ->text($forum->getDescription());
                 $mailer->send($email);
+                $notification = $user->prepareNotification('Message signalé '.$forum->getName()." : "
+                    .$forum->getDescription());
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($notification);
+                $entityManager->flush();
+
             }
         }
 

@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -92,6 +93,11 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="user")
      */
     private $notifications;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isAllowedEmails;
 
     public function __construct()
     {
@@ -431,4 +437,42 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getIsAllowedEmails(): ?bool
+    {
+        return $this->isAllowedEmails;
+    }
+
+    public function setIsAllowedEmails(bool $isAllowedEmails): self
+    {
+        $this->isAllowedEmails = $isAllowedEmails;
+
+        return $this;
+    }
+
+    public function prepareNotification($subject): Notification
+    {
+        $notification = new Notification();
+        $notification
+            ->setDate(new \DateTime('now'))
+            ->setIsRead(false)
+            ->setSubject($subject)
+            ->setUser($this);
+        return $notification;
+    }
+
+    public function numberUnreadNotifications(): int
+    {
+        $count = 0;
+        $notifications = $this->getNotifications();
+        foreach ($notifications as $notification)
+        {
+            if(!$notification->getIsRead())
+            {
+                $count++;
+            }
+        }
+        return $count;
+    }
+
 }

@@ -9,7 +9,7 @@
                     {% for n in notifications %}
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
-                                <h5 class="card-title">{{ n.date | date }}</h5>
+                                <h5 class="card-title">{{ n.date | date ("m/d/Y") }}</h5>
                                 <p class="card-text">{{ n.subject }}</p>
                             </div>
                         </div>

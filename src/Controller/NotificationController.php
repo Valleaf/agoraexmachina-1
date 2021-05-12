@@ -14,10 +14,21 @@ class NotificationController extends AbstractController
      */
     public function index(): Response
     {
+        $notifications = $this->getDoctrine()->getRepository(Notification::class)->findByUserId($this->getUser()
+            ->getId());
+        $entityManager = $this->getDoctrine()->getManager();
+        foreach ($notifications as $notification)
+        {
+            if (!$notification->getIsRead())
+            {
+                $notification->setIsRead(true);
+                $entityManager->persist($notification);
+            }
+        }
+        $entityManager->flush();
 
         return $this->render('notification/index.html.twig', [
-            'notifications'=>$this->getDoctrine()->getRepository(Notification::class)->findByUserId($this->getUser()
-                ->getId())
+            'notifications'=>$notifications,
         ]);
     }
 }

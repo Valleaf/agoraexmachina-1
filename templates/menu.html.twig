@@ -10,6 +10,10 @@
 	{% if app.user %}	
 		<div class="btn-group ml-auto mt-0 flex-row text-nowrap">
 			<button type="button" class="btn btn-link text-decoration-none no-shadow" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
+				{% if app.user.numberUnreadNotifications != 0 %}
+				<i class="fas fa-exclamation-circle"></i>{{ app.user.numberUnreadNotifications }}
+				{% endif %}
+
 				<div class="btn btn-light btn-outline-secondary rounded-circle avatar avatar-sm text-secondary">
 					{{ app.user.username | first | capitalize }}
 				</div>

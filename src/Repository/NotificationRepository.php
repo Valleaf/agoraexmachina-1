@@ -31,6 +31,7 @@ class NotificationRepository extends ServiceEntityRepository
             ->from('App:Notification','n')
             ->innerJoin('n.user','user')
             ->andWhere('user.id = '.$id)
+            ->orderBy('n.date')
         ;
         return $query->getQuery()->getResult();
     }
