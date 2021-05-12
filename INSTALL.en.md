@@ -61,7 +61,7 @@
 The liquid democracy solution is under development, and some installation bugs remain. Don't despair during installation. These few tips will surely help you: 
 
 * Perform a local mode installation first. Once this operation is successful, you will have access to all the Symfony packages in the vendor directory. 
-* If you try to install AEM using the commands `composer install --nodev --optimize --autoloader` and `sudo composer require symfony/dotenv:^4.4` and you receive error messages, you can copy the `vendor` directory to the root of your remote directory. Then by repeating the same command lines, your installation will run smoothly.
+* If you try to install AEM using the commands `composer install --nodev --optimize --autoloader` and you receive error messages, you can copy the `vendor` directory to the root of your remote directory. Then by repeating the same command lines, your installation will run smoothly.
 * When installing the database, if you get error messages about an invalid `utf8mb4_unicode_ci`, you will have to do this installation manually by exporting the code of the database tables (from `user`) and to install the tables directly, for example from your phpMyAdmin interface, correcting the string *utf8mb4_unicode_ci* for the `user` table with *utf8_unicode_ci*. This procedure can be applied to all `user' tables, and following ones.
 
 For any bug related to the installation, please contact the author.**
