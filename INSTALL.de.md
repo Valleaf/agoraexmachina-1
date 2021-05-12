@@ -16,14 +16,14 @@
 
 ### Präambel
 
-**AgoraExMachina** wird mit dem Symfony Framework entwickelt. Es ist notwendig :
+**AgoraExMachina** wird mit dem Symfony Framework entwickelt. Es ist notwendig:
 
 * entweder den Paketmanager `Composer` auf Ihrem php/MySQL-Server zu installieren
 * oder benutzen Sie `composer.phar`, um die Paketakquisition zu ermöglichen.
 
-### Mit Wählscheibe
+### Mit composer
 
-`kompilieren Sie install --nodev --optimieren Sie --autoloader`
+`composer install --no-dev --optimize-autoloader`
 
 `php bin/console doctrine:database:create`
 
@@ -31,11 +31,11 @@
 
 `php bin/console doctrine:fixtures:load`
 
-### Mit dial.phar
+### Mit composer.phar
 
 `php composer.phar install` im agoraexmachina-Verzeichnis
 
-`php composer.phar install --nodev --optimize --autoloader`
+`php composer.phar install --no-dev --optimize-autoloader`
 
 `php bin/console doctrine:database:create`
 

@@ -23,7 +23,7 @@
 
 ### Avec composer
 
-`composer install --nodev --optimize --autoloader`
+`composer install --no-dev --optimize-autoloader`
 
 `php bin/console doctrine:database:create`
 
@@ -35,7 +35,7 @@
 
 `php composer.phar install` dans le répertoire agoraexmachina
 
-`php composer.phar install --nodev --optimize --autoloader`
+`php composer.phar install --no-dev --optimize-autoloader`
 
 `php bin/console doctrine:database:create`
 

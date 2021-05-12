@@ -21,9 +21,9 @@
 * either to install the package manager `Composer` to your php/MySQL server
 * or use `composer.phar` to allow packet acquisition.
 
-### With dial
+### With composer
 
-`compile install --nodev --optimize --autoloader`.
+`composer install --no-dev --optimize-autoloader`.
 
 `php bin/console doctrine:database:create`
 
@@ -35,7 +35,7 @@
 
 `php composer.phar install` in the agoraexmachina directory
 
-`php composer.phar install --nodev --optimize --autoloader`
+`php composer.phar install --no-dev --optimize-autoloader`
 
 `php bin/console doctrine:database:create`
 
