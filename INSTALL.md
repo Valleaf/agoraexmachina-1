@@ -23,23 +23,32 @@
 
 ### Avec composer
 
-`composer install --no-dev --optimize-autoloader`
+`composer install`
 
 `php bin/console doctrine:database:create`
 
-`php bin/console doctrine:schema:update —force`
+`php bin/console doctrine:schema:update --force`
 
 `php bin/console doctrine:fixtures:load`
+
+*Dans le fichier .env, changer la ligne APP_ENV=dev en APP_ENV=prod*
+
+`composer install --no-dev --optimize-autoloader`
+
 
 ### Avec composer.phar
 
 `php composer.phar install` dans le répertoire agoraexmachina
 
-`php composer.phar install --no-dev --optimize-autoloader`
+`php bin/console doctrine:database:create`
 
-`php bin/console doctrine:schema:update —force`
+`php bin/console doctrine:schema:update --force`
 
 `php bin/console doctrine:fixtures:load`
+
+*Dans le fichier .env, changer la ligne APP_ENV=dev en APP_ENV=prod*
+
+`php composer.phar install --no-dev --optimize-autoloader`
 
 ### Procédure post-installation
 

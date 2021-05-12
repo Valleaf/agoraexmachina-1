@@ -24,6 +24,8 @@ class AppFixtures extends Fixture
         $admin->setEmail('admin@agora.com');
         $admin->setPassword($this->passwordEncoder->encodePassword($admin,'agora'));
         $admin->setRoles(['ROLE_ADMIN']);
+        $admin->setIsAllowedEmails(true);
+
 
         $manager->persist($admin);
         $manager->flush();
