@@ -356,6 +356,10 @@
 				<source>Delegations received</source>
 				<target>Délégations recues</target>
 			</trans-unit>
+			<trans-unit id="delegation.deleted">
+				<source>delegation.deleted</source>
+				<target>Délégation supprimée</target>
+			</trans-unit>
 			<trans-unit id="userFrom">
 				<source>userFrom</source>
 				<target>De l'utilisateur</target>
@@ -469,6 +473,7 @@
 
 
 
-        </body>
+
+		</body>
 	</file>
 </xliff>

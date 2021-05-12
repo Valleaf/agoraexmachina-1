@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DelegationController extends AbstractController
 {
@@ -37,7 +38,7 @@ class DelegationController extends AbstractController
 	/**
 	 * @Route("/delegation/theme/{theme}/add", name="delegation_add_theme", methods={"GET", "POST"})
 	 */
-	public function addTheme(Request $request, Theme $theme): Response
+	public function addTheme(Request $request, Theme $theme, TranslatorInterface $translator): Response
 	{
 		$entityManager = $this->getDoctrine()->getManager();
 
@@ -63,6 +64,13 @@ class DelegationController extends AbstractController
 			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->persist($delegation);
 			$entityManager->flush();
+
+            $notification = $delegation->getUserTo()->prepareNotification($translator->trans('delegation').' : '
+                .$delegation->getTheme().' '.$translator->trans('from').' '
+                .$this->getUser()->getUsername());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($notification);
+            $entityManager->flush();
 
 			$this->addFlash("success", "add.success");
 			return $this->redirectToRoute('delegation_index');
@@ -116,11 +124,18 @@ class DelegationController extends AbstractController
 	/**
 	 * @Route("/user/delegation/delete/{delegation}", name="delegation_delete", methods={"GET"})
 	 */
-	public function delete(Request $request, Delegation $delegation): Response
+	public function delete(Request $request, Delegation $delegation, TranslatorInterface $translator): Response
 	{
 		$entityManager = $this->getDoctrine()->getManager();
 		$entityManager->remove($delegation);
 		$entityManager->flush();
+
+        $notification = $delegation->getUserTo()->prepareNotification($translator->trans('delegation.deleted')
+            .' '.$delegation->getTheme().' '.$translator->trans('from')
+            .' '.$this->getUser()->getUsername());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($notification);
+        $entityManager->flush();
 
 		$this->addFlash("success", "delete.success");
 		return $this->redirectToRoute('delegation_index');

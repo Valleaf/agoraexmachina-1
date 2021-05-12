@@ -78,7 +78,13 @@ class Theme
                   		$this->delegations	 = new ArrayCollection();
                   	}
 
-	public function getId(): ?int
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+
+    public function getId(): ?int
                   	{
                   		return $this->id;
                   	}
