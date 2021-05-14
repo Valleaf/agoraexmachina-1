@@ -64,7 +64,15 @@
 			<trans-unit id="date_end">
 				<source>date_end</source>
 				<target>Date de fin</target>
-			</trans-unit> 
+			</trans-unit>
+			<trans-unit id="date_vote_end">
+				<source>date_vote_end</source>
+				<target>Date de début du vote</target>
+			</trans-unit>
+			<trans-unit id="date_vote_begin">
+				<source>date_vote_begin</source>
+				<target>Date de fin du vote</target>
+			</trans-unit>
 			<trans-unit id="year">
 				<source>year</source>
 				<target>Année</target>
@@ -80,6 +88,10 @@
 			<trans-unit id="delete.success">
 				<source>delete.success</source>
 				<target>Suppression effectuée</target>
+			</trans-unit>
+			<trans-unit id="report.success">
+				<source>report.success</source>
+				<target>Signalement effectué</target>
 			</trans-unit>
 			<trans-unit id="add.success">
 				<source>add.success</source>
@@ -135,6 +147,10 @@
 				<source>edit.success</source>
 				<target>Modification enregistrée</target>
 			</trans-unit>
+			<trans-unit id="edit.authorization">
+				<source>edit.authorization</source>
+				<target>Vous n'avez pas accès</target>
+			</trans-unit>
 			<trans-unit id="jumbotron.1">
 				<source>jumbotron.1</source>
 				<target>GORA Ex Machina facilite la prise de décisions via la "démocratie liquide".</target>
@@ -153,7 +169,7 @@
 			</trans-unit>
 			<trans-unit id="jumbotron.5">
 				<source>jumbotron.5</source>
-				<target>n cas de problème, nous sommes sur https://github.com/CRLbazin/agoraexmachina.</target>
+				<target>En cas de problème, nous sommes sur https://github.com/CRLbazin/agoraexmachina.</target>
 			</trans-unit>
           
 		  
@@ -224,15 +240,15 @@
 			
 			
 			<!-- ******************************** -->
-			<!-- CATEGORY -->
+			<!-- THEME -->
 			<!-- ******************************** -->
-			<trans-unit id="categories">
-				<source>categories</source>
-				<target>Catégories</target>
+			<trans-unit id="themes">
+				<source>themes</source>
+				<target>Thèmes</target>
 			</trans-unit>
-			<trans-unit id="category">
-				<source>category</source>
-				<target>Catégorie</target>
+			<trans-unit id="theme">
+				<source>theme</source>
+				<target>Thème</target>
 			</trans-unit>
 			
 			
@@ -276,6 +292,7 @@
 				<source>results</source>
 				<target>Résultats</target>
 			</trans-unit>
+
 			
 			
 			<!-- ******************************** -->
@@ -339,6 +356,10 @@
 				<source>Delegations received</source>
 				<target>Délégations recues</target>
 			</trans-unit>
+			<trans-unit id="delegation.deleted">
+				<source>delegation.deleted</source>
+				<target>Délégation supprimée</target>
+			</trans-unit>
 			<trans-unit id="userFrom">
 				<source>userFrom</source>
 				<target>De l'utilisateur</target>
@@ -387,12 +408,72 @@
 			</trans-unit>
 
 			<!-- ******************************** -->
+			<!-- CATEGORIES -->
+			<!-- ******************************** -->
+
+
+			<trans-unit id="categories">
+				<source>categories</source>
+				<target>Catégories</target>
+			</trans-unit>
+			<trans-unit id="0">
+				<source>category</source>
+				<target>Catégorie</target>
+			</trans-unit>
+			<trans-unit id="add_category">
+				<source>add_category</source>
+				<target>Ajouter une catégorie</target>
+			</trans-unit>
+			<trans-unit id="edit_category">
+				<source>edit_category</source>
+				<target>Gérer les catégories</target>
+			</trans-unit>
+			<trans-unit id="add_user_to_category">
+				<source>add_user_to_category</source>
+				<target>Ajouter l'utilisateur à la catégorie</target>
+			</trans-unit>
+			<trans-unit id="remove_user_from_category">
+				<source>remove_user_from_category</source>
+				<target>Enlever l'utilisateur de la catégorie</target>
+			</trans-unit>
+
+
+		<!-- ******************************** -->
+			<!-- DOCUMENTS -->
+			<!-- ******************************** -->
+			<trans-unit id="add_document">
+				<source>add_document</source>
+				<target>Ajouter un document</target>
+			</trans-unit>
+			<trans-unit id="edit_document">
+				<source>edit_document</source>
+				<target>Gérer les documents</target>
+			</trans-unit>
+
+			<!-- ******************************** -->
+			<!-- NOTIFICATIONS -->
+			<!-- ******************************** -->
+			<trans-unit id="notifications">
+				<source>notifications</source>
+				<target>Notifications</target>
+			</trans-unit>
+
+
+			<!-- ******************************** -->
 			<!-- DIVERS -->
 			<!-- ******************************** -->
 			<trans-unit id="siteproposepar">
 				<source>siteproposepar</source>
 				<target>Ce site vous est proposé par</target>
 			</trans-unit>
+
+
+
+
+
+
+
+
 		</body>
 	</file>
 </xliff>

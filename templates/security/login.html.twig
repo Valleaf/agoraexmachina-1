@@ -28,6 +28,9 @@
 					<button class="btn btn-lg btn-primary btn-block" type="submit">{{ 'signin' | trans }}</button>
 					<br />
 					<a href="{{path('app_register')}}">{{ 'or_create_account' | trans  }}</a>
+					<br />
+					{# Ajouter le forgot password dans la traduction #}
+					<a href="{{path('app_forgot_password_request')}}">{{ 'Forgot your password ?' }}</a>
 				{% endif %}
 			</form>
 		</div>

@@ -21,32 +21,40 @@
 * either to install the package manager `Composer` to your php/MySQL server
 * or use `composer.phar` to allow packet acquisition.
 
-### With dial
+### With composer
 
-`compile install --nodev --optimize --autoloader`.
+`composer install`
 
-`sudo composer require symfony/dotenv:^4.4`
+`php bin/console doctrine:database:create`
 
-`php bin/console doctrine:schema:update -force`
+`php bin/console doctrine:schema:update --force`
+
+`php bin/console doctrine:fixtures:load`
+
+*In .env file, change APP_ENV=dev to APP_ENV=prod*
+
+`composer install --no-dev --optimize-autoloader`
 
 ### With composer.phar
 
 `php composer.phar install` in the agoraexmachina directory
 
-`php composer.phar install --nodev --optimize --autoloader`
+`php bin/console doctrine:database:create`
 
-`php composer.phar require symfony/dotenv:^4.4`
+`php bin/console doctrine:schema:update --force`
 
-`php bin/console doctrine:schema:update -force`
+`php bin/console doctrine:fixtures:load`
+
+*In .env file, change APP_ENV=dev to APP_ENV=prod*
+
+`php composer.phar install --no-dev --optimize-autoloader`
 
 ### Post-installation procedure
 
 * In a browser, go to the AEM administration interface (http://mondomaine.com/agoraexmachina)
-* Add an account (top right, **Signin**)
-* Click on **or create an account**.
-* Create your account 
-* In the phpMyadmin interface (or command line), add `["ROLE_ADMIN"]` in the `user` table, column `roles`. This action allows you to become administrator. 
-* You may have to log in again with your new status.
+* Sign in (top right, **Signin**)
+* Login : **admin@agora.com**
+* Password: **agora**
 
 ### And then
 
@@ -59,7 +67,7 @@
 The liquid democracy solution is under development, and some installation bugs remain. Don't despair during installation. These few tips will surely help you: 
 
 * Perform a local mode installation first. Once this operation is successful, you will have access to all the Symfony packages in the vendor directory. 
-* If you try to install AEM using the commands `composer install --nodev --optimize --autoloader` and `sudo composer require symfony/dotenv:^4.4` and you receive error messages, you can copy the `vendor` directory to the root of your remote directory. Then by repeating the same command lines, your installation will run smoothly.
+* If you try to install AEM using the commands `composer install --nodev --optimize --autoloader` and you receive error messages, you can copy the `vendor` directory to the root of your remote directory. Then by repeating the same command lines, your installation will run smoothly.
 * When installing the database, if you get error messages about an invalid `utf8mb4_unicode_ci`, you will have to do this installation manually by exporting the code of the database tables (from `user`) and to install the tables directly, for example from your phpMyAdmin interface, correcting the string *utf8mb4_unicode_ci* for the `user` table with *utf8_unicode_ci*. This procedure can be applied to all `user' tables, and following ones.
 
 For any bug related to the installation, please contact the author.**

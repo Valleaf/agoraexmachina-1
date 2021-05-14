@@ -1,0 +1,13 @@
+<tr>
+    <td>
+        {% if theme.image %}
+            <img src="{{ vich_uploader_asset(theme, 'imageFile') | imagine_filter('themes_list')}}" />
+        {% else %}
+            <img src="{{ asset('img/logo_aem-sm.png')}}" />
+        {% endif %}
+    </td>
+    <td>{{ theme.name}}</td>
+    <td>
+        <a href="{{ path('theme_edit', {'theme' : theme.id}) }}" class="text-primary"><i class="fas fa-edit"></i></a>
+        <a href="{{ path('theme_delete', {'theme' : theme.id}) }}" class="text-primary"  data-toggle="deleteConfirmation"><i class="fas fa-trash-alt"></i></a>
+</tr>

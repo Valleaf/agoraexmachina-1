@@ -22,7 +22,8 @@ Verwendete Sprachen
 *********************
 * HTML5
 * CSS 3
-* PHP 5
+* PHP 7
+* MySql 5
 * Javascript
 
 

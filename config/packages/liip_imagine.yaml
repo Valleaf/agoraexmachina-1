@@ -13,11 +13,11 @@ liip_imagine:
         
     filter_sets :
         cache : ~
-        categories_home :
+        themes_home :
             quality : 100
             filters :
                 thumbnail  : { size : [260, 225], mode : outbound }
-        categories_list:
+        themes_list:
             quality : 100
             filters :
                 thumbnail  : { size : [25, 25], mode : outbound }

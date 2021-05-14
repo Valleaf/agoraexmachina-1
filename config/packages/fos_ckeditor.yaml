@@ -1,0 +1,37 @@
+# Read the documentation: https://symfony.com/doc/current/bundles/FOSCKEditorBundle/index.html
+
+twig:
+  form_themes:
+    - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
+fos_ck_editor:
+  configs:
+    my_config:
+      toolbar: "full"
+      extraPlugins: "markdown,savemarkdown"
+  plugins:
+    markdown:
+      path: "bundles/fosckeditor/plugins/CKEditor-Markdown/markdown/"
+      filename: "plugin.js"
+    savemarkdown:
+      path: "bundles/fosckeditor/plugins/savemarkdown/"
+      filename: "plugin.js"
+  toolbars:
+    items:
+      full.about: [ ]
+      full.basic_styles: [ 'Bold',
+                           'Italic', ]
+      full.clipboard: [ ]
+      full.colors: [ ]
+      full.document: [ ]
+      full.editing: [ ]
+      full.forms: [ ]
+      full.insert: [ 'Image','HorizontalRule','SpecialChar','savemarkdown' ]
+      full.links: [ 'Link','Unlink' ]
+      full.paragraph: [ 'NumberedList','BulletedList','Indent','Outdent','Blockquote',
+                        'JustifyLeft',
+                        'JustifyCenter',
+                        'JustifyRight',
+                        'JustifyBlock', ]
+      full.styles: ['Styles','Format','Font','FontSize']
+      full.tools: ["Maximize","markdown"]
+#TODO: Fix markdown plugins, not showing

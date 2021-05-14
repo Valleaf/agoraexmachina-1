@@ -10,6 +10,10 @@
 	{% if app.user %}	
 		<div class="btn-group ml-auto mt-0 flex-row text-nowrap">
 			<button type="button" class="btn btn-link text-decoration-none no-shadow" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
+				{% if app.user.numberUnreadNotifications != 0 %}
+				<i class="fas fa-exclamation-circle"></i>{{ app.user.numberUnreadNotifications }}
+				{% endif %}
+
 				<div class="btn btn-light btn-outline-secondary rounded-circle avatar avatar-sm text-secondary">
 					{{ app.user.username | first | capitalize }}
 				</div>
@@ -19,9 +23,10 @@
 				<h4 class="p-2">{{ app.user.username }}</h4>
 				<div class="dropdown-divider"></div>
 				<a class="dropdown-item" href="{{ path('delegation_index') }}"><i class="fas fa-people-arrows"></i> {{ 'delegations' | trans }}</a>
-				{% if is_granted('ROLE_ADMIN') %}
+				{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ADMIN_RESTRICTED') %}
 					<a class="dropdown-item" href="{{path('admin')}}"><i class="fas fa-user-cog"></i> {{ 'admin' | trans}}</a>
 				{%endif%}
+				<a class="dropdown-item" href="{{ path('notification') }}"><i class="fas fa-dot-circle"></i> {{ 'notifications' | trans }}</a>
 				<a class="dropdown-item" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt"></i> {{ 'logout' | trans }}</a>
 			</div>
 		</div>

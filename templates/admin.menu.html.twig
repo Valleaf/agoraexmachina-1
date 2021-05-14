@@ -5,19 +5,32 @@
 				<div><i class="fas fa-tachometer-alt"></i>&nbsp;</div>
 				<div class="d-none d-lg-block">{{ 'dashboard' | trans }}</div>
 			</a>
-		</li> 
-		<li class="nav-item">
+		</li>
+		{% if 'ROLE_ADMIN_RESTRICTED' not in app.user.roles  %}
+
+			<li class="nav-item">
 			<a class="nav-link d-flex flex-row  {{ 'user_' in app.request.attributes.get('_route') ? 'active' }}" href="{{path('user_admin')}}">
 				<div><i class="fas fa-user"></i>&nbsp;</div>
 				<div class="d-none d-lg-block">{{'users' | trans }}</div>
 			</a>
-		</li> 
+		</li>
+
 		<li class="nav-item">
 			<a class="nav-link d-flex flex-row  {{ 'category_' in app.request.attributes.get('_route') ? 'active' }}" href="{{path('category_admin')}}">
 				<div><i class="fas fa-folder"></i>&nbsp;</div>
 				<div class="d-none d-lg-block">{{'categories' | trans }} </div>
 			</a>
-		</li>  
+		</li>
+		{% endif %}
+
+
+		<li class="nav-item">
+			<a class="nav-link d-flex flex-row  {{ 'theme_' in app.request.attributes.get('_route') ? 'active' }}" href="{{path('theme_admin')}}">
+				<div><i class="fas fa-folder"></i>&nbsp;</div>
+				<div class="d-none d-lg-block">{{'themes' | trans }} </div>
+			</a>
+		</li>
+
 		<li class="nav-item">
 			<a class="nav-link d-flex flex-row  {{ 'workshop_' in app.request.attributes.get('_route') ? 'active' }}" href="{{path('workshop_admin')}}">
 				<div><i class="fas fa-poll"></i>&nbsp;</div>

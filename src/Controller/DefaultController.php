@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
-use App\Entity\Category;
+use App\Entity\Theme;
 use App\Entity\User;
 use App\Entity\Workshop;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-class DefaultController extends Controller
+class DefaultController extends AbstractController
 {
 
 	/**
@@ -17,19 +17,20 @@ class DefaultController extends Controller
 	public function index()
 	{
 		return $this->render('index.html.twig', [
-				'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),
+				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 		]);
 	}
+
+
 
 	/**
 	 * @Route("/admin", name="admin", methods={"GET"});
 	 */
 	public function admin()
 	{
-
 		return $this->render('admin.html.twig', [
 				'users'		 => $this->getDoctrine()->getRepository(User::class)->findAll(),
-				'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),
+				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 				'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
 		]);
 	}

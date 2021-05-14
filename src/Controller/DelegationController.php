@@ -4,13 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Delegation;
 use App\Entity\User;
-use App\Entity\Category;
+use App\Entity\Theme;
 use App\Entity\Workshop;
-use App\Form\DelegationCategoryType;
+use App\Form\DelegationThemeType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DelegationController extends AbstractController
 {
@@ -35,16 +36,16 @@ class DelegationController extends AbstractController
 	}
 
 	/**
-	 * @Route("/delegation/category/{category}/add", name="delegation_add_category", methods={"GET", "POST"})
+	 * @Route("/delegation/theme/{theme}/add", name="delegation_add_theme", methods={"GET", "POST"})
 	 */
-	public function addCategory(Request $request, Category $category): Response
+	public function addTheme(Request $request, Theme $theme, TranslatorInterface $translator): Response
 	{
 		$entityManager = $this->getDoctrine()->getManager();
 
 		$delegation = $entityManager->getRepository(Delegation::Class)->findOneBy(
 			[
 				'userFrom'	 => $this->getUser(),
-				'category'	 => $category
+				'theme'	 => $theme
 		]);
 
 		//case insert
@@ -53,9 +54,9 @@ class DelegationController extends AbstractController
 
 
 		$delegation->setUserFrom($this->getUser());
-		$delegation->setCategory($category);
+		$delegation->settheme($theme);
 
-		$form = $this->createForm(DelegationCategoryType::class, $delegation);
+		$form = $this->createForm(DelegationThemeType::class, $delegation);
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid())
@@ -64,11 +65,18 @@ class DelegationController extends AbstractController
 			$entityManager->persist($delegation);
 			$entityManager->flush();
 
+            $notification = $delegation->getUserTo()->prepareNotification($translator->trans('delegation').' : '
+                .$delegation->getTheme().' '.$translator->trans('from').' '
+                .$this->getUser()->getUsername());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($notification);
+            $entityManager->flush();
+
 			$this->addFlash("success", "add.success");
 			return $this->redirectToRoute('delegation_index');
 		}
 
-		return $this->render('delegation/add.category.html.twig', [
+		return $this->render('delegation/add.theme.html.twig', [
 				'form' => $form->createView()
 		]);
 	}
@@ -116,11 +124,18 @@ class DelegationController extends AbstractController
 	/**
 	 * @Route("/user/delegation/delete/{delegation}", name="delegation_delete", methods={"GET"})
 	 */
-	public function delete(Request $request, Delegation $delegation): Response
+	public function delete(Request $request, Delegation $delegation, TranslatorInterface $translator): Response
 	{
 		$entityManager = $this->getDoctrine()->getManager();
 		$entityManager->remove($delegation);
 		$entityManager->flush();
+
+        $notification = $delegation->getUserTo()->prepareNotification($translator->trans('delegation.deleted')
+            .' '.$delegation->getTheme().' '.$translator->trans('from')
+            .' '.$this->getUser()->getUsername());
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($notification);
+        $entityManager->flush();
 
 		$this->addFlash("success", "delete.success");
 		return $this->redirectToRoute('delegation_index');

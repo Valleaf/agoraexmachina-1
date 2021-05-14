@@ -16,37 +16,48 @@
 
 ### Präambel
 
-**AgoraExMachina** wird mit dem Symfony Framework entwickelt. Es ist notwendig :
+**AgoraExMachina** wird mit dem Symfony Framework entwickelt. Es ist notwendig:
 
 * entweder den Paketmanager `Composer` auf Ihrem php/MySQL-Server zu installieren
 * oder benutzen Sie `composer.phar`, um die Paketakquisition zu ermöglichen.
 
-### Mit Wählscheibe
+### Mit composer
 
-`kompilieren Sie install --nodev --optimieren Sie --autoloader`
+`composer install`
 
-`sudo composer require symfony/dotenv:^4.4`
+`php bin/console doctrine:database:create`
 
-`php bin/console doctrine:schema:update -force`
+`php bin/console doctrine:schema:update --force`
 
-### Mit dial.phar
+`php bin/console doctrine:fixtures:load`
+
+*(.env)
+APP_ENV=dev =>  APP_ENV=prod*
+
+`composer install --no-dev --optimize-autoloader`
+
+### Mit composer.phar
 
 `php composer.phar install` im agoraexmachina-Verzeichnis
 
-`php composer.phar install --nodev --optimize --autoloader`
+php bin/console doctrine:database:create`
 
-`php composer.phar erfordern symfony/dotenv:^4.4`
+`php bin/console doctrine:schema:update --force`
 
-`php bin/console doctrine:schema:update -force`
+`php bin/console doctrine:fixtures:load`
+
+*(.env)
+APP_ENV=dev =>  APP_ENV=prod*
+
+`php composer.phar install --no-dev --optimize-autoloader`
+
 
 ### Verfahren nach der Installation
 
 * Gehen Sie in einem Browser auf die AEM-Verwaltungsoberfläche (http://mondomaine.com/agoraexmachina)
 * Ein Konto hinzufügen (oben rechts, **Signin**)
-* Klicken Sie auf **or create an account**
-* Erstellen Sie Ihr Konto 
-* Fügen Sie in der phpMyadmin-Schnittstelle (oder Befehlszeile) `["ROLE_ADMIN"]` zur Tabelle `user`, Spalte `roles` hinzu. Mit dieser Aktion können Sie Administrator werden.
-* Möglicherweise müssen Sie sich mit Ihrem neuen Status erneut anmelden.
+* Login : **admin@agora.com**
+* Password: **agora**
 
 ### Und dann
 

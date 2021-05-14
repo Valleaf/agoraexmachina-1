@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} {{ 'notifications' | trans }}{% endblock %}
+
+{% block body %}
+    <main main="role">
+        <div class="container">
+                <div class="row row-cols-1 d-flex justify-content-around ">
+                    {% for n in notifications %}
+                        <div class="card" style="width: 18rem;">
+                            <div class="card-body">
+                                <h5 class="card-title">{{ n.date | date ("m/d/Y") }}</h5>
+                                <p class="card-text">{{ n.subject }}</p>
+                            </div>
+                        </div>
+
+
+
+                    {% endfor %}
+                </div>
+        </div>
+    </main>
+
+{% endblock %}

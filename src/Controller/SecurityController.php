@@ -2,8 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
+use App\Form\CategoryChoiceType;
+use App\Form\CategoryType;
+use App\Form\UserAddFormType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use App\Entity\User;
@@ -39,8 +45,8 @@ class SecurityController extends AbstractController
 	/**
 	 * @Route("/admin/user", name="user_admin")
 	 */
-	public function admin()
-	{
+	public function admin(): Response
+    {
 		$users = $this->getDoctrine()
 				->getRepository(User::class)
 				->findAll();
@@ -51,56 +57,90 @@ class SecurityController extends AbstractController
 				]
 				);		
 	}
-	
-	/**
-	 * @Route("/admin/user/delete/{id}", name="user_delete") 
+
+    /**
+     * @Route("/admin/user/add", name="user_add")
+     */
+	public function addUser(UserPasswordEncoderInterface $passwordEncoder,Request $request)
+    {
+        $user = new User();
+        $form = $this->createForm(UserAddFormType::class,$user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+            $user->setIsAllowedEmails(true);
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            //TODO:: Utiliser messages
+            $this->addFlash("success", "Création effectuée avec succès");
+        }
+        //TODO: regrouper les formulaires et les twig edit et add
+        return $this->render('security/add.html.twig', [
+            'userForm' => $form->createView(),
+        ]);
+
+    }
+
+    /**
+	 * @Route("/admin/user/delete/{id}", name="user_delete")
 	 */
-	public function delete(int $id)
-	{
+	public function delete(int $id): RedirectResponse
+    {
 		$user = $this->getDoctrine()
 				->getRepository(User::class)
 				->find($id);
-		
+
 		$entityManager = $this->getDoctrine()->getManager();
 		$entityManager->remove($user);
 		$entityManager->flush();
-		
+
 		$this->addFlash("success", "delete.success");
 		return $this->redirectToRoute('user_admin');
-		
+
 	}
-	
-	/**
+
+    /**
 	 * @Route("/admin/user/edit/{id}", name="user_admin_edit")
 	 */
-	public function edit(Request $request, int $id)
-	{
+	public function edit(Request $request, int $id): Response
+    {
 		$user = $this->getDoctrine()
 				->getRepository(User::class)
 				->find($id);
-		
+
 		$form = $this->createForm(UserEditFormType::class, $user);
 		$form->handleRequest($request);
-		
-		if ($form->isSubmitted() && $form->isValid()) 
+
+		if ($form->isSubmitted() && $form->isValid())
 		{
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-			
+
 			$this->addFlash("success", "edit.success");
 		}
 
-		
+
         return $this->render('security/edit.html.twig', [
             'userForm' => $form->createView(),
         ]);
 	}
-	
-	/**
+
+    /**
 	 * @Route("/register", name="app_register")
 	 */
-	public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
+	public function register(MailerInterface $mailer,Request $request, UserPasswordEncoderInterface $passwordEncoder,
+                              GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -114,11 +154,20 @@ class SecurityController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-
+            $user->setIsAllowedEmails(true);
+            $strings = ['d','2','$','@','D',0,3,8,6,1,2,'!'];
+            $random = rand(8000,15000).$strings[rand(0,10)].rand(100,500).$strings[rand(0,10)].rand(51,9531);
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
-
+            $email = (new Email())
+                ->from('accounts@agora.com')
+                ->to($user->getEmail())
+                ->subject("Confirmation de l'inscription")
+                #->htmlTemplate('email/report.html.twig')
+                #give a link with a random password. Link will be something like public/setPw/userid
+                ->text("Bonjour ".$user->getUsername());
+            $mailer->send($email);
             // do anything else you need here, like send an email
 
             return $guardHandler->authenticateUserAndHandleSuccess(
@@ -133,4 +182,64 @@ class SecurityController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/admin/user/editCategory/{id}", name="user_edit_category")
+     */
+    public function userEditCategories(Request $request,int $id): Response
+    {
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($id);
+        $categories = $this->getDoctrine()->getRepository(Category::class)->findAll();
+
+        return $this->render('security/edit-category.html.twig', [
+            'categories' => $categories,
+            'user' => $user
+        ]);
+    }
+    /**
+     * @Route("/admin/user/addCategory/{id}/{categoryId}", name="user_add_category")
+     */
+    public function userAddCategory(int $id, int $categoryId)
+    {
+
+        $category = $this->getDoctrine()->getRepository(Category::class)->find($categoryId);
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($id);
+        $user->addCategory($category);
+        $this->getDoctrine()->getManager()->persist($user);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->render('security/edit-category.html.twig', [
+            'categories'=> $this->getDoctrine()->getRepository(Category::class)->findAll(),
+            'user' => $user
+        ]);
+
+    }
+
+    /**
+     * @Route("/admin/user/removeCategory/{id}/{categoryId}", name="user_remove_category")
+     */
+    public function userRemoveCategory(int $id, int $categoryId)
+    {
+        #TODO: Empecher l'acces a une page erreur en changeant l'URL ?
+        $category = $this->getDoctrine()->getRepository(Category::class)->find($categoryId);
+        $user = $this->getDoctrine()
+            ->getRepository(User::class)
+            ->find($id);
+
+        $user->removeCategory($category);
+        $this->getDoctrine()->getManager()->persist($user);
+        $this->getDoctrine()->getManager()->flush();
+
+        return $this->render('security/edit-category.html.twig', [
+            'categories'=> $this->getDoctrine()->getRepository(Category::class)->findAll(),
+            'user' => $user
+        ]);
+
+    }
+    
+    
 }

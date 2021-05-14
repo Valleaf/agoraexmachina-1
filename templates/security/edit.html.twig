@@ -14,6 +14,8 @@
 					<div class="col-12">
 						<a href="{{ path('user_admin') }}" class="btn btn-secondary btn-sm"><i class="fas fa-arrow-left"></i> {{ 'list_of' | trans }} {{ 'users' | trans | lower }}</a>
 						<a href="{{ path('user_delete', {'id' : userForm.vars.value.id}) }}" class="btn btn-danger btn-sm" data-toggle="deleteConfirmation"><i class="fas fa-trash-alt"></i> {{ 'delete' | trans }}</a>
+						<a href="{{ path('user_edit_category', {'id' : userForm.vars.value.id}) }}" class="btn btn-info btn-sm" ><i class="fas fa-edit"></i> {{ 'edit_category' | trans }}</a>
+
 					</div>
 				</div>
 				<div class="row mb-2" >

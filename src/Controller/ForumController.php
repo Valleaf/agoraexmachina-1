@@ -3,15 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\Forum;
+use App\Entity\Notification;
 use App\Entity\Workshop;
 use App\Entity\Proposal;
-use App\Entity\Category;
+use App\Entity\Theme;
 use App\Form\ForumType;
 use App\Form\ForumAnswerType;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\Date;
 
 class ForumController extends AbstractController
 {
@@ -22,7 +28,7 @@ class ForumController extends AbstractController
 	public function index(Request $request, string $slug, Workshop $workshop): Response
 	{
 		return $this->render('forum/index.html.twig', [
-				'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),
+				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 				'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
 				'workshop'	 => $workshop,
 				'forums'	 => $this->getDoctrine()->getRepository(Forum::class)->FindBy(['workshop' => $workshop]),
@@ -51,7 +57,7 @@ class ForumController extends AbstractController
 		}
 
 		return $this->render('forum/add.html.twig', [
-				'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),
+				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 				'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
 				'workshop'	 => $proposal->getWorkshop(),
 				'proposal'	 => $proposal,
@@ -76,7 +82,7 @@ class ForumController extends AbstractController
 		}
 
 		return $this->render('forum/edit.html.twig', [
-				'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),
+				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 				'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
 				'workshop'	 => $workshop,
 				'form'		 => $form->createView(),
@@ -114,17 +120,57 @@ class ForumController extends AbstractController
 			$entityManager->persist($answer);
 			$entityManager->flush();
 
+            $notification = $forum->getUser()->prepareNotification('Réponse : '.$answer->getName());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($notification);
+            $entityManager->flush();
+
 			$this->addFlash("success", "add.success");
 			return $this->redirectToRoute('proposal_index', ['slug' => $slug, 'workshop' => $proposal->getWorkshop()->getId(), 'proposal' => $proposal->getId()]);
 		}
 
 		return $this->render('forum/answer.html.twig', [
-				'categories' => $this->getDoctrine()->getRepository(Category::class)->findAll(),
+				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 				'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
 				'workshop'	 => $proposal->getWorkshop(),
 				'proposal'	 => $proposal,
 				'form'		 => $form->createView(),
 		]);
 	}
+    /**
+     * @Route("/{slug}/workshop/{workshop}/forum/report/{forum}", name="forum_report", methods={"GET"})
+     */
+	public function report(MailerInterface $mailer, Request $request, string $slug, Proposal $proposal, Workshop $workshop,
+                           Forum
+$forum):
+Response
+    {
+
+
+        $users = $workshop->getCategory()->getUsers();
+        foreach ($users as $user)
+        {
+            if (in_array('ROLE_MODERATOR',$user->getRoles()) ||  in_array('ROLE_ADMIN_RESTRICTED',$user->getRoles()))
+            {
+                $email = (new Email())
+                    ->from($this->getUser()->getEmail())
+                    ->to($user->getEmail())
+                    ->subject('Message signalé '.$forum->getName())
+                   #->htmlTemplate('email/report.html.twig')
+                    ->text($forum->getDescription());
+                $mailer->send($email);
+                $notification = $user->prepareNotification('Message signalé '.$forum->getName()." : "
+                    .$forum->getDescription());
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($notification);
+                $entityManager->flush();
+
+            }
+        }
+
+        $this->addFlash("success", "report.success");
+        return $this->redirectToRoute('proposal_index', ['slug' => $slug, 'workshop' => $proposal->getWorkshop()->getId(), 'proposal' => $proposal->getId()]);
+
+    }
 
 }

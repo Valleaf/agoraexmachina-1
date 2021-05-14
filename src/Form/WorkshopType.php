@@ -2,7 +2,7 @@
 namespace App\Form;
 
 use App\Entity\Workshop;
-use App\Entity\Category;
+use App\Entity\Theme;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,8 +23,8 @@ class WorkshopType extends AbstractType
 	{
 
 		$builder
-				->add('category', EntityType::class, [
-					'class' => Category::class,
+				->add('theme', EntityType::class, [
+					'class' => Theme::class,
 					'choice_label'	=> 'name'
 				])
 				->add('name')
@@ -35,6 +35,8 @@ class WorkshopType extends AbstractType
 				])
 				->add('dateBegin')
 				->add('dateEnd')
+                ->add('dateVoteBegin')
+                ->add('dateVoteEnd')
 				->add('rightsSeeWorkshop', ChoiceType::class, ['choices' => ['Everyone' => 'everyone']])
 				->add('rightsVoteProposals', ChoiceType::class, ['choices' => ['Everyone' => 'everyone']])
 				->add('rightsWriteProposals', ChoiceType::class, ['choices' => ['Everyone' => 'everyone']])

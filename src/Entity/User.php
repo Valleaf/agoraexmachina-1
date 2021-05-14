@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
@@ -27,6 +28,12 @@ class User implements UserInterface
      * @ORM\Column(type="string", length=40, unique=true)
      */
     private $username;
+
+    public function __toString()
+    {
+        return $this->username;
+    }
+
 
     /**
      * @ORM\Column(type="json")
@@ -77,6 +84,21 @@ class User implements UserInterface
      */
     private $workshops;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="users",cascade={"persist"})
+     */
+    private $categories;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="user")
+     */
+    private $notifications;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isAllowedEmails;
+
     public function __construct()
     {
         $this->proposals = new ArrayCollection();
@@ -85,6 +107,8 @@ class User implements UserInterface
         $this->delegationsFrom = new ArrayCollection();
 		$this->delegationsTo = new ArrayCollection();
   $this->workshops = new ArrayCollection();
+  $this->categories = new ArrayCollection();
+  $this->notifications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -359,4 +383,96 @@ class User implements UserInterface
 
         return $this;
     }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notification[]
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getUser() === $this) {
+                $notification->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getIsAllowedEmails(): ?bool
+    {
+        return $this->isAllowedEmails;
+    }
+
+    public function setIsAllowedEmails(bool $isAllowedEmails): self
+    {
+        $this->isAllowedEmails = $isAllowedEmails;
+
+        return $this;
+    }
+
+    public function prepareNotification($subject): Notification
+    {
+        $notification = new Notification();
+        $notification
+            ->setDate(new \DateTime('now'))
+            ->setIsRead(false)
+            ->setSubject($subject)
+            ->setUser($this);
+        return $notification;
+    }
+
+    public function numberUnreadNotifications(): int
+    {
+        $count = 0;
+        $notifications = $this->getNotifications();
+        foreach ($notifications as $notification)
+        {
+            if(!$notification->getIsRead())
+            {
+                $count++;
+            }
+        }
+        return $count;
+    }
+
 }
