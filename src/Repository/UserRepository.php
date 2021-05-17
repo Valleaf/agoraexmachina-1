@@ -22,6 +22,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         parent::__construct($registry, User::class);
     }
 
+    public function findAdmins()
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQueryBuilder();
+        $query
+            ->select('u')
+            ->from('App:User','u')
+            ->where('u.roles LIKE :roles')
+            ->setParameter('roles','%"ROLE_ADMIN"%');
+        return $query->getQuery()->getResult();
+    }
+
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */
