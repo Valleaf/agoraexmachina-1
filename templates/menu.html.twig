@@ -1,11 +1,11 @@
 <nav class="navbar fixed-top d-flex flex-row flex-nowrap px-md-4 bg-white border-bottom shadow-md ">
     <h1 class="my-0 ">
 		<a href="{{path('homepage')}}" class="navbar-brand text-secondary">
-			<h2>{{params.website.title}}</h2>
+			<h2>{{website.title}}</h2>
 		</a>
 
     </h1>
-	<div class="d-none d-sm-block"><span class="badge badge-primary">{{ params.website.version}} - #{{ params.website.name }}</span></div>
+	<div class="d-none d-sm-block"><span class="badge badge-primary">{{ website.version}} - #{{ website.name }}</span></div>
 
 	{% if app.user %}	
 		<div class="btn-group ml-auto mt-0 flex-row text-nowrap">

@@ -3,11 +3,11 @@
     <head>
         <meta charset="UTF-8">
 		<meta name="robots" content="noindex, nofollow">
-        <title>{% block title %}{{params.website.title}}{% endblock %}</title>
+        <title>{% block title %}{{website.title}}{% endblock %}</title>
         <link rel="canonical" href="http://mobile-adenum.fr/demo-bischheim/public">
-        <meta property="og:site_name" content="{{params.website.title}}" />
+        <meta property="og:site_name" content="{{website.title}}" />
         <meta property="og:locale" content="{% block lang %}{{params.website.lang}}{% endblock %}" />
-		<meta property="og:title" content="{{params.website.title}}" />
+		<meta property="og:title" content="{{website.title}}" />
 		<meta property="og:type" content="website" />
 		<meta property="og:url" content="http://mobile-adenum.fr/demo-bischheim/public" />
 		<meta property="og:image" content="{{ absolute_url(asset('img/logo_aem-lg.png')) }}" />

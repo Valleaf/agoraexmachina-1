@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            {% include 'admin.menu.html.twig' %}
+            <main class="col-11 col-lg-10 ml-sm-auto">
+                <div class="row mb-2" >
+                    <div class="col-12">
+                        {% include 'flashbag.html.twig' %}
+                    </div>
+                </div>
+                <div class="row" >
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                 {% form_theme form 'bootstrap_4_layout.html.twig' %}
+                                {{ form(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+{% endblock %}

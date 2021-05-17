@@ -466,6 +466,10 @@
 				<source>siteproposepar</source>
 				<target>Ce site vous est proposé par</target>
 			</trans-unit>
+            <trans-unit id="configuration">
+                <source>configuration</source>
+                <target>Configuration</target>
+            </trans-unit>
 
 
 
@@ -474,6 +478,6 @@
 
 
 
-		</body>
+        </body>
 	</file>
 </xliff>

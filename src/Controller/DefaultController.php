@@ -4,10 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Theme;
 use App\Entity\User;
+use App\Entity\Website;
 use App\Entity\Workshop;
 use App\Form\RegistrationFormType;
+use App\Form\WebsiteType;
 use App\Security\LoginFormAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
@@ -66,6 +69,10 @@ class DefaultController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+            $website = new Website();
+            $entityManager->persist($website);
+            $entityManager->flush();
+            $this->get('twig')->addGlobal('website',$website);
             $email = (new Email())
                 ->from('accounts@agora.com')
                 ->to($user->getEmail())
@@ -90,6 +97,27 @@ class DefaultController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/admin/configuration", name="admin_configuration");
+     */
+    public function configuration(Request $request)
+    {
+
+        $website = $this->getDoctrine()->getRepository(Website::class)->find(1);
+        $form = $this->createForm(WebsiteType::class,$website);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash("success", "edit.success");
+        }
+
+        return $this->render('admin.config.html.twig',[
+        'form' => $form->createView(),
+        ]);
+    }
 
 
 	/**

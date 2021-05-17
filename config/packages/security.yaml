@@ -39,6 +39,7 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # require ROLE_ADMIN for /admin*
+        - { path: '^/admin/configuration', roles: ROLE_ADMIN }
         - { path: '^/admin/user*', roles: ROLE_ADMIN }
         - { path: '^/admin/category*', roles: ROLE_ADMIN }
         - { path: '^/admin/theme/add*', roles: ROLE_ADMIN }

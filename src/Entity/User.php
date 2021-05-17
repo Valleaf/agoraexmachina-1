@@ -80,7 +80,7 @@ class User implements UserInterface
     private $delegationsTo;
 
     /**
-     * @ORM\OneToMany(targetEntity=Workshop::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Workshop::class, mappedBy="user",orphanRemoval=true)
      */
     private $workshops;
 
@@ -90,7 +90,7 @@ class User implements UserInterface
     private $categories;
 
     /**
-     * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="user", orphanRemoval=true)
      */
     private $notifications;
 
