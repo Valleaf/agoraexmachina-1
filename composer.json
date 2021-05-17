@@ -6,6 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "doctrine/doctrine-fixtures-bundle": "^3.4",
+        "erusev/parsedown": "^1.7",
         "friendsofsymfony/ckeditor-bundle": "^2.3",
         "liip/imagine-bundle": "^2.2",
         "sensio/framework-extra-bundle": "^5.1",
@@ -32,6 +33,7 @@
         "symfony/yaml": "5.2.*",
         "symfonycasts/reset-password-bundle": "^1.7",
         "twig/extensions": "^1.5",
+        "twig/markdown-extra": "^3.3",
         "vich/uploader-bundle": "^1.8"
     },
     "require-dev": {

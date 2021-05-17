@@ -3,7 +3,7 @@
 {% block body %}
     <main main="role">
         <div class="container">
-            {% if themes is empty %}
+             {% if themes is empty %}
                 {% include 'default/jumbotron.html.twig' %}
             {% else %}
                 <div class="row row-cols-1 d-flex justify-content-around ">
@@ -21,7 +21,7 @@
 
                     {% endfor %}
                 </div>
-            {% endif %}
+             {% endif %}
         </div>
     </main>
 {% endblock %}
