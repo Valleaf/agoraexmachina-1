@@ -23,20 +23,22 @@ class TwigGlobalSubscriber implements EventSubscriberInterface
      */
     private $manager;
 
-    public function __construct( Environment $twig, EntityManagerInterface $manager ) {
-        $this->twig    = $twig;
+    public function __construct(Environment $twig, EntityManagerInterface $manager)
+    {
+        $this->twig = $twig;
         $this->manager = $manager;
     }
 
-    public function injectGlobalVariables( RequestEvent $event ) {
-        $website = $this->manager->getRepository( Website::class )->find(1);
-        $this->twig->addGlobal( 'website', $website );
+    public function injectGlobalVariables(RequestEvent $event)
+    {
+        $website = $this->manager->getRepository(Website::class)->find(1);
+        $this->twig->addGlobal('website', $website);
 
     }
 
     public static function getSubscribedEvents(): array
     {
-        return [ RequestEvent::class =>  'injectGlobalVariables' ];
+        return [RequestEvent::class => 'injectGlobalVariables'];
     }
 
 }
