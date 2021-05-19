@@ -119,8 +119,19 @@ class CategoryController extends AbstractController
      */
     public function sendRequestForCategory(MailerInterface $mailer,CategoryRepository $categoryRepository, int $id)
     {
+
         $category = $categoryRepository->find($id);
-        $users = $category->getUsers();
+
+        if($this->getUser()->getCategories()->contains($category))
+        {
+            $this->addFlash("warning", "already.part-of-category");
+
+            return $this->render('category/request.html.twig', [
+                'categories' => $categoryRepository->findAll(),
+            ]);
+        }
+
+            $users = $category->getUsers();
         foreach ($users as $user) {
             if (in_array('ROLE_MODERATOR', $user->getRoles()) || in_array('ROLE_ADMIN_RESTRICTED', $user->getRoles())) {
                 $email = (new Email())
@@ -147,6 +158,22 @@ class CategoryController extends AbstractController
         return $this->render('category/request.html.twig', [
             'categories' => $categoryRepository->findAll(),
         ]);
+    }
+
+    /**
+     * @Route("/category/request/{id}/accept",name="category_accept_request")
+     */
+    public function acceptRequest()
+    {
+
+    }
+
+    /**
+     * @Route("/category/request/{id}/deny",name="category_deny_request")
+     */
+    public function denyRequest()
+    {
+
     }
 
 

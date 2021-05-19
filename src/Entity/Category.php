@@ -43,11 +43,17 @@ class Category
      */
     private $users;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Request::class, mappedBy="category", orphanRemoval=true)
+     */
+    private $requests;
+
     public function __construct()
     {
         $this->themes = new ArrayCollection();
         $this->workshops = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->requests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -149,6 +155,36 @@ class Category
     {
         if ($this->users->removeElement($user)) {
             $user->removeCategory($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Request[]
+     */
+    public function getRequests(): Collection
+    {
+        return $this->requests;
+    }
+
+    public function addRequest(Request $request): self
+    {
+        if (!$this->requests->contains($request)) {
+            $this->requests[] = $request;
+            $request->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRequest(Request $request): self
+    {
+        if ($this->requests->removeElement($request)) {
+            // set the owning side to null (unless already changed)
+            if ($request->getCategory() === $this) {
+                $request->setCategory(null);
+            }
         }
 
         return $this;

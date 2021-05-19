@@ -38,6 +38,11 @@ class Notification
      */
     private $isRead;
 
+    /**
+     * @ORM\OneToOne(targetEntity=Request::class, inversedBy="notification", cascade={"persist", "remove"})
+     */
+    private $request;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +92,18 @@ class Notification
     public function setIsRead(bool $isRead): self
     {
         $this->isRead = $isRead;
+
+        return $this;
+    }
+
+    public function getRequest(): ?Request
+    {
+        return $this->request;
+    }
+
+    public function setRequest(?Request $request): self
+    {
+        $this->request = $request;
 
         return $this;
     }

@@ -101,6 +101,10 @@
                 <source>request.success</source>
                 <target>Demande envoyée</target>
             </trans-unit>
+            <trans-unit id="already.part-of-category">
+                <source>already.part-of-category</source>
+                <target>Vous faites déjà partie de cette catégorie</target>
+            </trans-unit>
             <trans-unit id="actions">
                 <source>actions</source>
                 <target>Actions</target>

@@ -163,6 +163,11 @@ class User implements UserInterface
     private $lastName;
 
     /**
+     * @ORM\OneToMany(targetEntity=Request::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $requests;
+
+    /**
      * @return string
      */
     public function getImage()
@@ -204,6 +209,7 @@ class User implements UserInterface
         $this->workshops = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->notifications = new ArrayCollection();
+        $this->requests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -644,6 +650,36 @@ class User implements UserInterface
     public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Request[]
+     */
+    public function getRequests(): Collection
+    {
+        return $this->requests;
+    }
+
+    public function addRequest(Request $request): self
+    {
+        if (!$this->requests->contains($request)) {
+            $this->requests[] = $request;
+            $request->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRequest(Request $request): self
+    {
+        if ($this->requests->removeElement($request)) {
+            // set the owning side to null (unless already changed)
+            if ($request->getUser() === $this) {
+                $request->setUser(null);
+            }
+        }
 
         return $this;
     }
