@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main main="role">
+
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-12">
+                    {% include 'flashbag.html.twig' %}
+                </div>
+            </div>
+            <div class="row row-cols-1 d-flex justify-content-around ">
+
+                <div class="card" style="width: 18rem;">
+                    <ul class="list-group list-group-flush">
+
+                        {% for category in categories | sort %}
+                            {% if app.user not in category.users %}
+                            <li class="list-group-item"> <h3>  {{ category.name }} </h3>
+                           <a href="{{ path('category_send_request',{'id':category.id}) }}"> {{ 'send-request' | trans }} </a></li>
+                            {% endif %}
+                        {% endfor %}
+
+                    </ul>
+                </div>
+            </div>
+    </main>
+{% endblock %}
+

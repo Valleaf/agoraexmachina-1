@@ -6,14 +6,16 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\Validator\Constraints\Date;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"username"}, message="username.alreadyexists")
  * @UniqueEntity(fields={"email"}, message="email.alreadyexists")
+ * @Vich\Uploadable
  */
 class User implements UserInterface
 {
@@ -22,7 +24,7 @@ class User implements UserInterface
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\Column(type="string", length=40, unique=true)
@@ -46,6 +48,41 @@ class User implements UserInterface
      */
     private $password;
 
+    private $plainPassword;
+
+    /**
+     * @return mixed
+     */
+    public function getPlainPassword()
+    {
+        return $this->plainPassword;
+    }
+
+    /**
+     * @param mixed $plainPassword
+     */
+    public function setPlainPassword($plainPassword): void
+    {
+        $this->plainPassword = $plainPassword;
+    }
+
+    /**
+     * @return \DateTime
+     */
+    public function getUpdatedAt(): \DateTime
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * @param \DateTime $updatedAt
+     */
+    public function setUpdatedAt(\DateTime $updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
+    }
+
+
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Proposal", mappedBy="user")
      */
@@ -58,9 +95,9 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
-	 * @Assert\Email(
-	 *	message = "email.notvalid"
-	 * )
+     * @Assert\Email(
+     *    message = "email.notvalid"
+     * )
      */
     private $email;
 
@@ -99,16 +136,74 @@ class User implements UserInterface
      */
     private $isAllowedEmails;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string
+     */
+    private $image;
+    /**
+     * @Vich\UploadableField(mapping="users_images", fileNameProperty="image")
+     * @var File
+     */
+    private $imageFile;
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime
+     */
+    private $updatedAt;
+
+    /**
+     * @ORM\Column(type="string", length=40)
+     */
+    private $firstName;
+
+    /**
+     * @ORM\Column(type="string", length=40)
+     */
+    private $lastName;
+
+    /**
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($image) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+
     public function __construct()
     {
         $this->proposals = new ArrayCollection();
         $this->votes = new ArrayCollection();
         $this->forums = new ArrayCollection();
         $this->delegationsFrom = new ArrayCollection();
-		$this->delegationsTo = new ArrayCollection();
-  $this->workshops = new ArrayCollection();
-  $this->categories = new ArrayCollection();
-  $this->notifications = new ArrayCollection();
+        $this->delegationsTo = new ArrayCollection();
+        $this->workshops = new ArrayCollection();
+        $this->categories = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -123,7 +218,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return (string)$this->username;
     }
 
     public function setUsername(string $username): self
@@ -157,7 +252,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
@@ -214,7 +309,7 @@ class User implements UserInterface
 
         return $this;
     }
-	
+
     /**
      * @return Collection|Votes[]
      */
@@ -244,7 +339,7 @@ class User implements UserInterface
         }
 
         return $this;
-	}
+    }
 
     public function getEmail(): ?string
     {
@@ -336,9 +431,8 @@ class User implements UserInterface
         }
 
         return $this;
-	}
+    }
 
-        
 
     public function removeDelegationTo(Delegation $delegationTo): self
     {
@@ -465,14 +559,94 @@ class User implements UserInterface
     {
         $count = 0;
         $notifications = $this->getNotifications();
-        foreach ($notifications as $notification)
-        {
-            if(!$notification->getIsRead())
-            {
+        foreach ($notifications as $notification) {
+            if (!$notification->getIsRead()) {
                 $count++;
             }
         }
         return $count;
     }
+    /*
+        public function __serialize(): array
+        {
+            return [
+                'id' => $this->id,
+                'username' => $this->username,
+                'roles' => $this->roles,
+                'password' => $this->password,
+                'proposals' => $this->proposals,
+                'votes' => $this->votes,
+                'email' => $this->email,
+                'forums' => $this->forums,
+                'delegationsFrom' => $this->delegationsFrom,
+                'delegationsTo' => $this->delegationsTo,
+                'workshops' => $this->workshops,
+                'categories' => $this->categories,
+                'notifications' => $this->notifications,
+                'isAllowedEmails' => $this->isAllowedEmails,
+                'image' => $this->image,
+                'imageFile' => $this->imageFile,
+                'updatedAt' => $this->updatedAt,
+            ];
+        }
+
+        public function __unserialize(array $data): User
+        {
+            $this->id = $data['id'];
+            $this->username = $data['username'];
+            $this->roles = $data['roles'];
+            $this->password = $data['password'];
+            $this->proposals = $data['proposals'];
+            $this->votes = $data['votes'];
+            $this->email = $data['email'];
+            $this->forums = $data['forums'];
+            $this->delegationsFrom= $data['delegationsFrom'];
+            $this->delegationsTo = $data['delegationsTo'];
+            $this->workshops = $data['workshops'];
+            $this->categories = $data['categories'];
+            $this->notifications = $data['notifications'];
+            $this->isAllowedEmails = $data['isAllowedEmails'];
+            $this->image = $data['image'];
+            $this->imageFile = $data['imageFile'];
+            $this->updatedAt = $data['updatedAt'];
+
+            return $this;
+        }*/
+
+    public function serialize()
+    {
+        return serialize($this->id);
+    }
+
+    public function unserialize($serialized)
+    {
+        $this->id = unserialize($serialized);
+
+    }
+
+    public function getFirstName(): ?string
+    {
+        return $this->firstName;
+    }
+
+    public function setFirstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function getLastName(): ?string
+    {
+        return $this->lastName;
+    }
+
+    public function setLastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
 
 }

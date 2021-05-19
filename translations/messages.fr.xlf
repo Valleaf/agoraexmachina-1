@@ -97,6 +97,10 @@
                 <source>add.success</source>
                 <target>Création enregistrée</target>
             </trans-unit>
+            <trans-unit id="request.success">
+                <source>request.success</source>
+                <target>Demande envoyée</target>
+            </trans-unit>
             <trans-unit id="actions">
                 <source>actions</source>
                 <target>Actions</target>
@@ -170,6 +174,11 @@
             <trans-unit id="jumbotron.5">
                 <source>jumbotron.5</source>
                 <target>##En cas de problème, nous sommes sur **https://github.com/CRLbazin/agoraexmachina.**</target>
+            </trans-unit>
+
+            <trans-unit id="no-categories">
+                <source>no-categories</source>
+                <target>%link_start%Vous n'avez aucune categorie ! Vous pouvez demander a rejoindre des categories  ici%link_end%</target>
             </trans-unit>
 
 
@@ -469,6 +478,10 @@
             <trans-unit id="configuration">
                 <source>configuration</source>
                 <target>Configuration</target>
+            </trans-unit>
+            <trans-unit id="send-request">
+                <source>send-request</source>
+                <target>Envoyer une demande</target>
             </trans-unit>
 
         </body>

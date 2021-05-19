@@ -6,7 +6,7 @@
     <main main="role">
         <div class="container">
                 <div class="row row-cols-1 d-flex justify-content-around ">
-                    {% for n in notifications %}
+                    {% for n in notifications | sort | reverse %}
                         <div class="card" style="width: 18rem;">
                             <div class="card-body">
                                 <h5 class="card-title">{{ n.date | date ("m/d/Y") }}</h5>

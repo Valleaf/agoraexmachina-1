@@ -110,6 +110,7 @@ class DefaultController extends AbstractController
         $form = $this->createForm(WebsiteType::class, $website);
         $form->handleRequest($request);
 
+
         if ($form->isSubmitted() && $form->isValid()) {
 
             $this->getDoctrine()->getManager()->flush();

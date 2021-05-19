@@ -6,6 +6,7 @@ use App\Entity\Category;
 use App\Form\CategoryChoiceType;
 use App\Form\CategoryType;
 use App\Form\UserAddFormType;
+use App\Form\UserEditByUserType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -137,6 +138,39 @@ class SecurityController extends AbstractController
 	}
 
     /**
+     * @Route ("/user", name="user_edit_by_user")
+     */
+	public function editByuser(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $user = $this->getUser();
+
+        $form = $this->createForm(UserEditByUserType::class,$user);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            if ($user->getPlainPassword() !== null) {
+                $user->setPassword(
+                    $passwordEncoder->encodePassword(
+                        $user,
+                        $form->get('plainPassword')->getData()
+                    )
+                );
+            }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            $this->addFlash("success", "edit.success");
+        }
+        return $this->render('security/edit-by-user.html.twig', [
+            'userForm' => $form->createView(),
+        ]);
+
+    }
+
+    /**
 	 * @Route("/register", name="app_register")
 	 */
 	public function register(MailerInterface $mailer,Request $request, UserPasswordEncoderInterface $passwordEncoder,
@@ -167,8 +201,10 @@ class SecurityController extends AbstractController
                 #->htmlTemplate('email/report.html.twig')
                 #give a link with a random password. Link will be something like public/setPw/userid
                 ->text("Bonjour ".$user->getUsername());
-            $mailer->send($email);
-            // do anything else you need here, like send an email
+            if ($user->getIsAllowedEmails())
+            {
+                $mailer->send($email);
+            }            // do anything else you need here, like send an email
 
             return $guardHandler->authenticateUserAndHandleSuccess(
                 $user,

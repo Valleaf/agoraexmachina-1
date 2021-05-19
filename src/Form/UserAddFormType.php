@@ -28,6 +28,8 @@ class UserAddFormType extends AbstractType
 
         $builder
             ->add('username')
+            ->add('firstName')
+            ->add('lastName')
             ->add('email', EmailType::class)
             ->add('plainPassword', PasswordType::class, [
                 'mapped' => false,

@@ -14,6 +14,10 @@ vich_uploader:
             uri_prefix: '%workshops_documents_directory%'
             upload_destination: '%kernel.project_dir%/public/pdf/upload/workshops'
             namer: vich_uploader.namer_uniqid
+        users_images:
+            uri_prefix: '%users_images_directory%'
+            upload_destination: '%kernel.project_dir%/public/img/upload/users'
+            namer: vich_uploader.namer_uniqid
 
             inject_on_load: false
             delete_on_update: true

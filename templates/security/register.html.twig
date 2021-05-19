@@ -18,6 +18,8 @@
 				{% form_theme registrationForm 'bootstrap_4_layout.html.twig' %}
 				{{ form_start(registrationForm, {'attr' : { 'class' : 'form-signin'}}) }}
 				<h3 class="mb-3">{{'register' | trans }}</h3>
+				{{ form_row(registrationForm.firstName) }}
+				{{ form_row(registrationForm.lastName) }}
 				{{ form_row(registrationForm.username) }}
 				{{ form_row(registrationForm.email) }}
 				{{ form_row(registrationForm.plainPassword) }}

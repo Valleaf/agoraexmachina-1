@@ -8,6 +8,8 @@ use App\Repository\CategoryRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CategoryController extends AbstractController
@@ -100,6 +102,51 @@ class CategoryController extends AbstractController
 
         $this->addFlash("success", "delete.success");
         return $this->redirectToRoute('category_admin');
+    }
+
+    /**
+     * @Route("/category/request",name="category_request")
+     */
+    public function requestCategory(CategoryRepository $categoryRepository): Response
+    {
+        return $this->render('category/request.html.twig', [
+            'categories' => $categoryRepository->findAll(),
+        ]);
+    }
+
+    /**
+     * @Route("/category/request/{id}",name="category_send_request")
+     */
+    public function sendRequestForCategory(MailerInterface $mailer,CategoryRepository $categoryRepository, int $id)
+    {
+        $category = $categoryRepository->find($id);
+        $users = $category->getUsers();
+        foreach ($users as $user) {
+            if (in_array('ROLE_MODERATOR', $user->getRoles()) || in_array('ROLE_ADMIN_RESTRICTED', $user->getRoles())) {
+                $email = (new Email())
+                    ->from($this->getUser()->getEmail())
+                    ->to($user->getEmail())
+                    ->subject('Requête pour rejoindre la catégorie ' . $category->getName())
+                    #->htmlTemplate('email/report.html.twig')
+                    ->text("L'utilisateur ".$this->getUser()->getUsername()." a demandé a rejoindre la catégorie "
+                        .$category->getName());
+                if ($user->getIsAllowedEmails())
+                {
+                    $mailer->send($email);
+                }
+                $notification = $user->prepareNotification('Requête pour rejoindre la catégorie ' . $category->getName() . " : "
+                    . "L'utilisateur ".$this->getUser()->getUsername()." a demandé a rejoindre la catégorie \n Accepter ?  - Refuser ?");
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($notification);
+                $entityManager->flush();
+
+            }
+        }
+        $this->addFlash("success", "request.success");
+
+        return $this->render('category/request.html.twig', [
+            'categories' => $categoryRepository->findAll(),
+        ]);
     }
 
 
