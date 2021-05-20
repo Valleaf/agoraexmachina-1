@@ -23,38 +23,24 @@
 
 ### With composer
 
-`composer install`
+`composer install --no-dev --optimize-autoloader`
 
 `php bin/console doctrine:database:create`
 
 `php bin/console doctrine:schema:update --force`
-
-`php bin/console doctrine:fixtures:load`
-
-*In .env file, change APP_ENV=dev to APP_ENV=prod*
-
-`composer install --no-dev --optimize-autoloader`
 
 ### With composer.phar
 
-`php composer.phar install` in the agoraexmachina directory
+`php composer.phar install --no-dev --optimize-autoloader` in the agoraexmachina directory
 
 `php bin/console doctrine:database:create`
 
 `php bin/console doctrine:schema:update --force`
 
-`php bin/console doctrine:fixtures:load`
-
-*In .env file, change APP_ENV=dev to APP_ENV=prod*
-
-`php composer.phar install --no-dev --optimize-autoloader`
-
 ### Post-installation procedure
 
-* In a browser, go to the AEM administration interface (http://mondomaine.com/agoraexmachina)
-* Sign in (top right, **Signin**)
-* Login : **admin@agora.com**
-* Password: **agora**
+* In a browser, go to the AEM administration interface (http://mondomaine.com/agoraexmachina/public)
+* Register
 
 ### And then
 
