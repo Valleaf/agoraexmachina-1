@@ -57,7 +57,7 @@ class ThemeController extends AbstractController
         #On verifie que l'admin restreint est enregistré a cette catégorie ou que c'est un admin
         $admin = $this->getUser();
         $users = $theme->getCategory()->getUsers();
-
+#TODO: HAVE A DEFAULT CATEGORY
         if (
             !(
                 in_array('ROLE_ADMIN_RESTRICTED', $admin->getRoles())

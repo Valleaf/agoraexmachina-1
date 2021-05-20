@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Theme;
 use App\Entity\User;
 use App\Entity\Website;
@@ -32,9 +33,17 @@ class DefaultController extends AbstractController
         $numberOfAdmins = count($numberOfAdmins);
         if ($numberOfAdmins == 0) {
             $entityManager = $this->getDoctrine()->getManager();
-            if (count($this->getDoctrine()->getRepository(Website::class)->findAll()) == 0) {
+            if (count($this->getDoctrine()->getRepository(Website::class)->findAll()) == 0)
+            {
                 $website = new Website();
                 $entityManager->persist($website);
+                $entityManager->flush();
+            }
+            if(count($this->getDoctrine()->getRepository(Category::class)->findAll() == 0))
+            {
+                $category = new Category();
+                $category->setName('Default');
+                $entityManager->persist($category);
                 $entityManager->flush();
             }
             return $this->redirectToRoute('setup');
