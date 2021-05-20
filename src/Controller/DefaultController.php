@@ -4,38 +4,23 @@ namespace App\Controller;
 
 use App\Entity\Theme;
 use App\Entity\User;
+use App\Entity\Website;
 use App\Entity\Workshop;
+use App\Form\RegistrationFormType;
+use App\Form\WebsiteType;
+use App\Security\LoginFormAuthenticator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 class DefaultController extends AbstractController
 {
 
-<<<<<<< Updated upstream
-	/**
-	 * @Route("/", name="homepage", methods={"GET"});
-	 */
-	public function index()
-	{
-		return $this->render('index.html.twig', [
-				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
-		]);
-	}
-
-
-
-	/**
-	 * @Route("/admin", name="admin", methods={"GET"});
-	 */
-	public function admin()
-	{
-		return $this->render('admin.html.twig', [
-				'users'		 => $this->getDoctrine()->getRepository(User::class)->findAll(),
-				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
-				'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
-		]);
-	}
-=======
     /**
      * @Route("/", name="homepage", methods={"GET"});
      */
@@ -151,6 +136,5 @@ class DefaultController extends AbstractController
             'workshops' => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
         ]);
     }
->>>>>>> Stashed changes
 
 }
