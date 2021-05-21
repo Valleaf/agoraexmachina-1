@@ -3,14 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Notification;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
+use App\Repository\RequestRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CategoryController extends AbstractController
 {
@@ -130,7 +133,7 @@ class CategoryController extends AbstractController
                 'categories' => $categoryRepository->findAll(),
             ]);
         }
-
+        #TODO: then check if request already exists et qu'elle ne soit pas done
             $users = $category->getUsers();
         foreach ($users as $user) {
             if (in_array('ROLE_MODERATOR', $user->getRoles()) || in_array('ROLE_ADMIN_RESTRICTED', $user->getRoles())) {
@@ -145,8 +148,13 @@ class CategoryController extends AbstractController
                 {
                     $mailer->send($email);
                 }
-                $notification = $user->prepareNotification('Requête pour rejoindre la catégorie ' . $category->getName() . " : "
-                    . "L'utilisateur ".$this->getUser()->getUsername()." a demandé a rejoindre la catégorie \n Accepter ?  - Refuser ?");
+                $notification = $user->prepareNotification("L'utilisateur " .$this->getUser()->getUsername(). "a 
+                demandé a rejoindre la catégorie " . $category->getName());
+                $request = new \App\Entity\Request();
+                $request->setUser($this->getUser());
+                $request->setCategory($category);
+                $request->setNotification($notification);
+                $request->setIsDone(false);
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($notification);
                 $entityManager->flush();
@@ -161,19 +169,73 @@ class CategoryController extends AbstractController
     }
 
     /**
-     * @Route("/category/request/{id}/accept",name="category_accept_request")
+     * @Route("/category/request/accept/{id}",name="category_accept_request")
      */
-    public function acceptRequest()
+    public function acceptRequest(int $id, RequestRepository $requestRepository,TranslatorInterface $translator)
     {
 
+        #TODO: Si la requete n'existe pas
+        #TODO: Changer la notification, actuellement elle devient la meme des deux cotes
+        ##verification isdone et que le moderateur/admin correspond a la categorie
+        $request = $requestRepository->find($id);
+        $category = $request->getCategory();
+        $user = $this->getUser();
+        $userRequesting = $request->getUser();
+        if (
+            (in_array('ROLE_MODERATOR', $user->getRoles()) || in_array('ROLE_ADMIN_RESTRICTED', $user->getRoles()))
+        &&
+        $user->getCategories()->contains($category)
+        &&
+        !$request->getIsDone())
+        {
+            $request->setIsDone(true);
+            $category->addUser($userRequesting);
+            $this->addFlash("success", "request.accept");
+            $notification = $userRequesting->prepareNotification($translator->trans('request.accepted').
+            $category->getName());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($notification);
+            $entityManager->flush();
+            $this->addFlash("success", "request.accepted");
+
+        }
+
+        return $this->forward('App\Controller\NotificationController::index', [
+        ]);
     }
 
     /**
-     * @Route("/category/request/{id}/deny",name="category_deny_request")
+     * @Route("/category/request/deny/{id}",name="category_deny_request")
      */
-    public function denyRequest()
+    public function denyRequest(int $id, RequestRepository $requestRepository,TranslatorInterface $translator)
     {
+#TODO: Si la requete n'existe pas
+        ##verification isdone et que le moderateur/admin correspond a la categorie
+        $request = $requestRepository->find($id);
+        $category = $request->getCategory();
+        $user = $this->getUser();
+        $userRequesting = $request->getUser();
+        if (
+            (in_array('ROLE_MODERATOR', $user->getRoles()) || in_array('ROLE_ADMIN_RESTRICTED', $user->getRoles()))
+            &&
+            $user->getCategories()->contains($category)
+            &&
+            !$request->getIsDone())
+        {
+            $request->setIsDone(true);
+            $this->addFlash("success", "request.denied");
+            ##TODO: Notification refus
+            $notification = $userRequesting->prepareNotification($translator->trans('request.denied').
+            $category->getName());
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($notification);
+            $entityManager->flush();
+            $this->addFlash("success", "request.denied");
+        }
 
+        return $this->render('notification/index.html.twig', [
+            'notifications'=>$this->getDoctrine()->getRepository(Notification::class)->findAll(),
+        ]);
     }
 
 

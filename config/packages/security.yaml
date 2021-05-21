@@ -50,4 +50,6 @@ security:
         - { path: '/vote/', roles: ROLE_USER }
         - { path: '/notification', roles: ROLE_USER }
         - { path: '/user', roles: ROLE_USER }
+        - { path: '/category/request/accept*', roles: ROLE_MODERATOR }
+        - { path: '/category/request/deny*', roles: ROLE_MODERATOR }
         - { path: '/category/request*', roles: ROLE_USER }

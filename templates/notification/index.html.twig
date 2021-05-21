@@ -11,6 +11,10 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ n.date | date ("m/d/Y") }}</h5>
                                 <p class="card-text">{{ n.subject | raw }}</p>
+                                {% if n.request and not n.request.isDone %}
+                                    <a href="{{ path('category_accept_request',{'id' : n.request.id}) }}">Accepter</a>
+                                    <a href="{{ path('category_deny_request',{'id' : n.request.id}) }}">Refuser</a>
+                                {% endif %}
                             </div>
                         </div>
 

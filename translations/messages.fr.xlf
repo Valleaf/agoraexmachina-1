@@ -93,6 +93,14 @@
                 <source>report.success</source>
                 <target>Signalement effectué</target>
             </trans-unit>
+            <trans-unit id="request.accept">
+                <source>request.accept</source>
+                <target>Requête acceptée</target>
+            </trans-unit>
+            <trans-unit id="request.deny">
+                <source>request.deny</source>
+                <target>Requête refusée</target>
+            </trans-unit>
             <trans-unit id="add.success">
                 <source>add.success</source>
                 <target>Création enregistrée</target>
@@ -471,6 +479,17 @@
                 <target>Notifications</target>
             </trans-unit>
 
+        <!-- ******************************** -->
+        <!-- REQUESTS -->
+        <!-- ******************************** -->
+            <trans-unit id="request.accepted">
+                <source>request.accepted</source>
+                <target>Votre requête a été acceptée, elle concerne la catégorie </target>
+            </trans-unit>
+            <trans-unit id="request.denied">
+                <source>request.denied</source>
+                <target>Votre requête a été refusée, elle concerne la catégorie </target>
+            </trans-unit>
 
         <!-- ******************************** -->
         <!-- DIVERS -->
@@ -487,6 +506,7 @@
                 <source>send-request</source>
                 <target>Envoyer une demande</target>
             </trans-unit>
+
 
         </body>
     </file>
