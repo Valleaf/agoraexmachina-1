@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\RequestRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -30,14 +32,19 @@ class Request
     private $category;
 
     /**
-     * @ORM\OneToOne(targetEntity=Notification::class, mappedBy="request", cascade={"persist", "remove"})
-     */
-    private $notification;
-
-    /**
      * @ORM\Column(type="boolean")
      */
     private $isDone;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="request",cascade={"persist", "remove"})
+     */
+    private $notifications;
+
+    public function __construct()
+    {
+        $this->notifications = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -68,27 +75,7 @@ class Request
         return $this;
     }
 
-    public function getNotification(): ?Notification
-    {
-        return $this->notification;
-    }
 
-    public function setNotification(?Notification $notification): self
-    {
-        // unset the owning side of the relation if necessary
-        if ($notification === null && $this->notification !== null) {
-            $this->notification->setRequest(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($notification !== null && $notification->getRequest() !== $this) {
-            $notification->setRequest($this);
-        }
-
-        $this->notification = $notification;
-
-        return $this;
-    }
 
     public function getIsDone(): ?bool
     {
@@ -98,6 +85,36 @@ class Request
     public function setIsDone(bool $isDone): self
     {
         $this->isDone = $isDone;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Notification[]
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->setRequest($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getRequest() === $this) {
+                $notification->setRequest(null);
+            }
+        }
 
         return $this;
     }

@@ -5,6 +5,11 @@
 {% block body %}
     <main main="role">
         <div class="container">
+            <div class="row mb-2" >
+                <div class="col-12">
+                    {% include 'flashbag.html.twig' %}
+                </div>
+            </div>
                 <div class="row row-cols-1 d-flex justify-content-around ">
                     {% for n in notifications | sort | reverse %}
                         <div class="card" style="width: 18rem;">

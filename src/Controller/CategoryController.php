@@ -153,7 +153,7 @@ class CategoryController extends AbstractController
                 $request = new \App\Entity\Request();
                 $request->setUser($this->getUser());
                 $request->setCategory($category);
-                $request->setNotification($notification);
+                $request->addNotification($notification);
                 $request->setIsDone(false);
                 $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($notification);
@@ -197,7 +197,7 @@ class CategoryController extends AbstractController
             $entityManager->persist($notification);
             $entityManager->flush();
             $this->addFlash("success", "request.accepted");
-
+            ##TODO: changer les autres requetes en isdone
         }
 
         return $this->forward('App\Controller\NotificationController::index', [
@@ -237,6 +237,8 @@ class CategoryController extends AbstractController
             'notifications'=>$this->getDoctrine()->getRepository(Notification::class)->findAll(),
         ]);
     }
+
+
 
 
 }

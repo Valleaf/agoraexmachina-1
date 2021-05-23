@@ -39,9 +39,10 @@ class Notification
     private $isRead;
 
     /**
-     * @ORM\OneToOne(targetEntity=Request::class, inversedBy="notification", cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Request::class, inversedBy="notifications",cascade={"persist", "remove"})
      */
     private $request;
+
 
     public function getId(): ?int
     {
@@ -95,6 +96,7 @@ class Notification
 
         return $this;
     }
+
 
     public function getRequest(): ?Request
     {
