@@ -99,8 +99,9 @@ Faire la même chose qu’un ADMIN, mais uniquement pour les **Thèmes** dont il
     * Il reçoit un email de confirmation
     * Le lien l’amène à une page dans laquelle il définit un mot de passe.
     * Il est alors logué.
-2. Peut demander à s’inscrire à un **Thème** (validée par un Administrateur ou un administrateur restreint si le **Thème** correspond à un de ceux dont il a la charge)
-3. A accès à une page lui permettant de définir son avatar : Nom, Prénom (visible depuis l’espace public), bio, changement d’e-mail pas possible, changement de mot de passe possible, choix d’un avatar (photo ou avatar choisi dans une liste).
+2.~~Peut demander à s’inscrire à un **Thème** (validée par un Administrateur ou un administrateur restreint si le **Thème** correspond à un de ceux dont il a la charge)~~ **Actuellement moderateurs et admin restreints**
+~~3. A accès à une page lui permettant de définir son avatar : Nom, Prénom (visible depuis l’espace public), bio, changement d’e-mail pas possible, changement de mot de passe possible, choix d’un avatar (photo ou avatar choisi dans une liste).~~
+      **Gestion d'avatar a voir , bug**
 La même page (navigation par onglet ajax ?) le renseigne sur :
     * Les threads de forums les plus récents qu’il a écrit avec une réponse apportée à son thread, ou d’autres réactions dans le même forum.
     * Les nouvelles propositions faites dans les **Ateliers** auxquels il participe
