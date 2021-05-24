@@ -506,6 +506,14 @@
                 <source>send-request</source>
                 <target>Envoyer une demande</target>
             </trans-unit>
+            <trans-unit id="keyword.help">
+                <source>keyword.help</source>
+                <target>Séparation par virgule</target>
+            </trans-unit>
+            <trans-unit id="keyword">
+                <source>keyword</source>
+                <target>Mot-clefs</target>
+            </trans-unit>
 
 
         </body>

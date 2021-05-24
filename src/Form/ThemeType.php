@@ -26,18 +26,13 @@ class ThemeType extends AbstractType
                 'choice_label' => 'name'
             ])
             ->add('name')
-            ->add('description', CKEditorType::class,[
-                'config'=>[
-                    'toolbar'=>'full',
-       #           'extraPlugins' => 'markdown'
-                ],
-       #       'plugins'=>[
-       #           'markdown'=>[
-       #               'path'=>'/bundles/fosckeditor/plugins/CKEditor-Markdown/markdown/',
-       #               'filename'=>'plugin.js'
-       #           ]
-       #        ]
-            ])
+            ->add('description', TextareaType::class, array('attr' => array('class' => 'ckeditor')))
+            #TODO: fix ckeditor
+            #->add('description', CKEditorType::class,[
+            #    'config'=>[
+            #        'toolbar'=>'full',
+            #  ],
+            #])
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => true,

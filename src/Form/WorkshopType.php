@@ -1,9 +1,12 @@
 <?php
 namespace App\Form;
 
+use App\Entity\Keyword;
 use App\Entity\Workshop;
 use App\Entity\Theme;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -42,6 +45,10 @@ class WorkshopType extends AbstractType
 				->add('rightsWriteProposals', ChoiceType::class, ['choices' => ['Everyone' => 'everyone']])
 				->add('quorumRequired', PercentType::class)
 				->add('rightsDelegation')
+                ->add('keytext',TextType::class,[
+                    'help' => 'keyword.help',
+                    'label' => 'keyword'
+                ])
 				->add('Submit', SubmitType::class)
 		;
 	}

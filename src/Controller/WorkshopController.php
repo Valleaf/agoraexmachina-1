@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Document;
+use App\Entity\Keyword;
 use App\Entity\Workshop;
 use App\Entity\Theme;
 use App\Form\DocumentType;
@@ -53,6 +54,16 @@ class WorkshopController extends AbstractController
 		    if ($theme->getCategory() != null) {
 		        $workshop->setCategory($theme->getCategory());
             }
+
+		    $keywords = $workshop->getKeytext();
+		    $arr = explode(',',$keywords);
+		    foreach ($arr as $key)
+            {
+                $keyword = new Keyword();
+                $keyword->setName($key);
+                $workshop->addKeyword($keyword);
+            }
+
 
 			$entityManager = $this->getDoctrine()->getManager();
 			$entityManager->persist($workshop);
