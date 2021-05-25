@@ -46,4 +46,17 @@ class WorkshopRepository extends ServiceEntityRepository
 	
 		return $query->getQuery()->getResult();
 	}
+
+	public function searchByKeyword(int $id)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQueryBuilder();
+        $query
+            ->select('w')
+            ->from('App\Entity\Workshop', 'w')
+            ->innerJoin('w.keywords','k')
+            ->where('k.id = '.$id);
+        dump($query);
+        return $query->getQuery()->getResult();
+    }
 }

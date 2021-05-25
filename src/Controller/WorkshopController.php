@@ -42,23 +42,22 @@ class WorkshopController extends AbstractController
      * @param string $key
      * @return Keyword
      */
-    public function findKeyWord($repo,string $key)
+    public function findKeyWord($repo,string $key): Keyword
     {
 
         $keyword = new Keyword();
-        $keyword->setName($key);
+        $keyword->setName(trim($key));
         if($repo == null){
-            return $keyword;
+            return ($keyword);
         }
         foreach ($repo as $word )
         {
-            if ($word->getName() == $key)
+            if ($word->getName() == trim($key))
             {
-                $keyword = $word;
+                $keyword=$word;
                 break;
             }
         }
-
         return $keyword;
     }
 
@@ -315,9 +314,17 @@ class WorkshopController extends AbstractController
         ]);
     }
 
-    public function workshopsKeyword(Keyword $keyword, WorkshopRepository $repository): Response
+    /**
+     * @Route("/workshop/keyword/{id}", name="workshop_tags")
+     */
+    public function workshopsKeyword(int $id, WorkshopRepository $repository): Response
     {
-        
+
+        $workshops = $repository->searchByKeyword($id);
+
+        return  $this->render('workshop/index-by-keyword.html.twig',[
+            'workshops'=>$workshops
+        ]);
     }
 
 

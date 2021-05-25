@@ -1,81 +1,91 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<div class="container-fluid workshop_page">
-		<div class="row">
-			{% include 'theme/menu.html.twig' %}
+    <div class="container-fluid workshop_page">
+        <div class="row">
+            {% include 'theme/menu.html.twig' %}
 
-			<main class="col" id="content">
-				<div class="row mb-2" >
-					<div class="col-12 d-flex">
-						<h4 class="mr-auto"><i class="fas fa-chevron-left"></i> {{ 'workshop' | trans }} {{ workshop.name }}</h4>
-						<nav aria-label="breadcrumb  text-secondary">
-							<ol class="breadcrumb text-small">
-								<li class="breadcrumb-item"><a href="{{ path('homepage') }}"><i class="fas fa-home"></i></a></li>
-								<li class="breadcrumb-item"><a href="{{path('workshop_index', {'slug' : workshop.theme.name | slugify, 'theme' : workshop.theme.id })}}">{{ workshop.theme.name }}</a></li>
-								<li class="breadcrumb-item active" aria-current="page">{{ workshop.name }}</li>
-							</ol>
-						</nav>
-					</div>
-				</div>
-				<div class="row mb-3 d-flex justify-content-center" >
-					<div class="col-10">
-						{% include 'workshop/menu.sub.html.twig' %}
-					</div>
-				</div>
-				<div class="row mb-2" >
-					<div class="col-12">
-						{% include 'flashbag.html.twig' %}
-					</div>
-				</div>					
-				<div class="row" >
-					<div class="col-xl-8 col-md-12 mb-3">
-						<div class="row">
-							<div class="col-12">
-								<div class="card">
-									<div class="card-body">
-										<div class="card-title">
-											<h5>{{ 'details' | trans}} {{ 'workshop' | trans | lower }}</h5>
+            <main class="col" id="content">
+                <div class="row mb-2">
+                    <div class="col-12 d-flex">
+                        <h4 class="mr-auto"><i
+                                    class="fas fa-chevron-left"></i> {{ 'workshop' | trans }} {{ workshop.name }}</h4>
+                        <nav aria-label="breadcrumb  text-secondary">
+                            <ol class="breadcrumb text-small">
+                                <li class="breadcrumb-item"><a href="{{ path('homepage') }}"><i class="fas fa-home"></i></a>
+                                </li>
+                                <li class="breadcrumb-item"><a
+                                            href="{{ path('workshop_index', {'slug' : workshop.theme.name | slugify, 'theme' : workshop.theme.id }) }}">{{ workshop.theme.name }}</a>
+                                </li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ workshop.name }}</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+                <div class="row mb-3 d-flex justify-content-center">
+                    <div class="col-10">
+                        {% include 'workshop/menu.sub.html.twig' %}
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-12">
+                        {% include 'flashbag.html.twig' %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-8 col-md-12 mb-3">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="card-title">
+                                            <h5>{{ 'details' | trans }} {{ 'workshop' | trans | lower }}</h5>
+                                        </div>
+                                        <div class="card-text mb-3">{{ status(workshop.dateEnd) }}</div>
+                                        <div class="card-text mb-3">{{ workshop.description | raw }}</div>
 
-										</div>
-										<div class="card-text mb-3">{{ status(workshop.dateEnd) }}</div>
-										<div class="card-text mb-3">{{ workshop.description | raw }}</div>
-										<div class="card-text mb-3">
-											<div class="d-flex justify-content-between">
-												<div>
-													<b>{{ 'date_begin' | trans }}</b>
-													<br />
-													{{ workshop.dateBegin |date("d/m/Y") }}
-												</div>
-												<div>
-													<b>{{ 'date_end' | trans }}</b>
-													<br />
-													{{ workshop.dateEnd |date("d/m/Y") }}
-												</div>
-												<div>
-													<b>{{ 'date_vote_begin' | trans }}</b>
-													<br />
-													{{ workshop.dateVoteBegin |date("d/m/Y") }}
-												</div>
-												<div>
-													<b>{{ 'date_vote_end' | trans }}</b>
-													<br />
-													{{ workshop.dateVoteEnd |date("d/m/Y") }}
-												</div>
+                                        <div class="card-text mb-3">
+                                            <div class="d-flex justify-content-between">
+                                                <div>
+                                                    <b>{{ 'date_begin' | trans }}</b>
+                                                    <br/>
+                                                    {{ workshop.dateBegin |date("d/m/Y") }}
+                                                </div>
+                                                <div>
+                                                    <b>{{ 'date_end' | trans }}</b>
+                                                    <br/>
+                                                    {{ workshop.dateEnd |date("d/m/Y") }}
+                                                </div>
+                                                <div>
+                                                    <b>{{ 'date_vote_begin' | trans }}</b>
+                                                    <br/>
+                                                    {{ workshop.dateVoteBegin |date("d/m/Y") }}
+                                                </div>
+                                                <div>
+                                                    <b>{{ 'date_vote_end' | trans }}</b>
+                                                    <br/>
+                                                    {{ workshop.dateVoteEnd |date("d/m/Y") }}
+                                                </div>
 
-												<div>
-													<b>{{ 'proposals' | trans }}</b>
-													<br />
-													{{ workshop.proposals | length }}
-												</div>
-												<div>
-													<b>{{ 'forums' | trans }}</b>
-													<br />
-													{{ workshop.proposals | length }}
-												</div>
-											</div>
-										</div>
-										<!-- @Todo
+                                                <div>
+                                                    <b>{{ 'proposals' | trans }}</b>
+                                                    <br/>
+                                                    {{ workshop.proposals | length }}
+                                                </div>
+                                                <div>
+                                                    <b>{{ 'forums' | trans }}</b>
+                                                    <br/>
+                                                    {{ workshop.proposals | length }}
+                                                </div>
+                                            </div>
+                                            <div class="card-text mb-3">
+                                               <h4> {{ 'keyword' | trans }} :</h4>
+                                                {% for keyword in workshop.keywords %}
+                                                    <a href="{{ path('workshop_tags',{'id':keyword.id}) }}">#{{keyword}}</a>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+                                        <!-- @Todo
 								<div class="card-text mb3">
 									<b>{{ 'members' | trans }}</b>
 									<br />
@@ -87,113 +97,117 @@
 									</div>
 								</div>
 										-->
-									</div>
-								</div>
-							</div>
-						</div>
-						{% if date(workshop.dateEnd) < date() %}
-						<hr class="mt-4 mb-4" />
-						<div class="row">
-							<div class="col-12">
-								<div class="card">
-									<div class="card-body">
-										<div class="card-title">
-											<h5>{{ 'results' | trans}} {{ 'workshop' | trans | lower }}</h5>
-										</div>										
-										<div class="card-text mb-3">
-											<div class="row">
-												<div class="col-4">
-													<b>{{ 'statusQuo' | trans }}</b>
-													{% for proposal in workshop.proposals %}
-														{% set vf = 0 %}
-														{% set va = 0 %}
-														{% set vb = 0 %}
-														{% for vote in proposal.votes %}
-															{% if vote.votedFor > 0 %} {% set vf = vf + 1 %} {% endif %}
-															{% if vote.votedAgainst > 0 %} {% set va = va + 1 %} {% endif %}
-															{% if vote.votedBlank > 0 %} {% set vb = vb + 1 %} {% endif %}
-														{% endfor %}
-														{% if vb > vf and vb > va %}
-															<div class="card  bg-light mb-3" style="max-width: 18rem;">
-																<div class="card-header">{{  proposal.user.username }}</div>
-																<div class="card-body">
-																	<h5 class="card-title">{{ proposal.name | raw }}</h5>
-																	<p class="card-text">{{ proposal.description | raw }}</p>
-																</div>
-															</div>
-														{% endif %}
-													{% endfor %}
-												</div>
-												<div class="col-4">
-													<b>{{ 'accepted' | trans }}</b>
-													{% for proposal in workshop.proposals %}
-														{% set vf = 0 %}
-														{% set va = 0 %}
-														{% set vb = 0 %}
-														{% for vote in proposal.votes %}
-															{% if vote.votedFor > 0 %} {% set vf = vf + 1 %} {% endif %}
-															{% if vote.votedAgainst > 0 %} {% set va = va + 1 %} {% endif %}
-															{% if vote.votedBlank > 0 %} {% set vb = vb + 1 %} {% endif %}
-														{% endfor %}
-														{% if vf > va and vf > vb %}
-															<div class="card text-white bg-success mb-3" style="max-width: 18rem;">
-																<div class="card-header">{{  proposal.user.username }}</div>
-																<div class="card-body">
-																	<h5 class="card-title">{{ proposal.name | raw }}</h5>
-																	<p class="card-text">{{ proposal.description | raw }}</p>
-																</div>
-															</div>
-														{% endif %}
-													{% endfor %}
-												</div>
-												<div class="col-4">
-													<b>{{ 'refused' | trans }}</b>
-													{% for proposal in workshop.proposals %}
-														{% set vf = 0 %}
-														{% set va = 0 %}
-														{% set vb = 0 %}
-														{% for vote in proposal.votes %}
-															{% if vote.votedFor > 0 %} {% set vf = vf + 1 %} {% endif %}
-															{% if vote.votedAgainst > 0 %} {% set va = va + 1 %} {% endif %}
-															{% if vote.votedBlank > 0 %} {% set vb = vb + 1 %} {% endif %}
-														{% endfor %}
-														{% if va > vf and va > vb %}
-															<div class="card text-white bg-danger mb-3" style="max-width: 18rem;">
-																<div class="card-header">{{  proposal.user.username }}</div>
-																<div class="card-body">
-																	<h5 class="card-title">{{ proposal.name | raw }}</h5>
-																	<p class="card-text">{{ proposal.description | raw }}</p>
-																</div>
-															</div>
-														{% endif %}
-													{% endfor %}
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>
-						</div>												
-						<hr class="mt-4 mb-4" />
-						{% endif%}
-					</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% if date(workshop.dateEnd) < date() %}
+                            <hr class="mt-4 mb-4"/>
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="card-title">
+                                                <h5>{{ 'results' | trans }} {{ 'workshop' | trans | lower }}</h5>
+                                            </div>
+                                            <div class="card-text mb-3">
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <b>{{ 'statusQuo' | trans }}</b>
+                                                        {% for proposal in workshop.proposals %}
+                                                            {% set vf = 0 %}
+                                                            {% set va = 0 %}
+                                                            {% set vb = 0 %}
+                                                            {% for vote in proposal.votes %}
+                                                                {% if vote.votedFor > 0 %} {% set vf = vf + 1 %} {% endif %}
+                                                                {% if vote.votedAgainst > 0 %} {% set va = va + 1 %} {% endif %}
+                                                                {% if vote.votedBlank > 0 %} {% set vb = vb + 1 %} {% endif %}
+                                                            {% endfor %}
+                                                            {% if vb > vf and vb > va %}
+                                                                <div class="card  bg-light mb-3"
+                                                                     style="max-width: 18rem;">
+                                                                    <div class="card-header">{{ proposal.user.username }}</div>
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title">{{ proposal.name | raw }}</h5>
+                                                                        <p class="card-text">{{ proposal.description | raw }}</p>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <b>{{ 'accepted' | trans }}</b>
+                                                        {% for proposal in workshop.proposals %}
+                                                            {% set vf = 0 %}
+                                                            {% set va = 0 %}
+                                                            {% set vb = 0 %}
+                                                            {% for vote in proposal.votes %}
+                                                                {% if vote.votedFor > 0 %} {% set vf = vf + 1 %} {% endif %}
+                                                                {% if vote.votedAgainst > 0 %} {% set va = va + 1 %} {% endif %}
+                                                                {% if vote.votedBlank > 0 %} {% set vb = vb + 1 %} {% endif %}
+                                                            {% endfor %}
+                                                            {% if vf > va and vf > vb %}
+                                                                <div class="card text-white bg-success mb-3"
+                                                                     style="max-width: 18rem;">
+                                                                    <div class="card-header">{{ proposal.user.username }}</div>
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title">{{ proposal.name | raw }}</h5>
+                                                                        <p class="card-text">{{ proposal.description | raw }}</p>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                    <div class="col-4">
+                                                        <b>{{ 'refused' | trans }}</b>
+                                                        {% for proposal in workshop.proposals %}
+                                                            {% set vf = 0 %}
+                                                            {% set va = 0 %}
+                                                            {% set vb = 0 %}
+                                                            {% for vote in proposal.votes %}
+                                                                {% if vote.votedFor > 0 %} {% set vf = vf + 1 %} {% endif %}
+                                                                {% if vote.votedAgainst > 0 %} {% set va = va + 1 %} {% endif %}
+                                                                {% if vote.votedBlank > 0 %} {% set vb = vb + 1 %} {% endif %}
+                                                            {% endfor %}
+                                                            {% if va > vf and va > vb %}
+                                                                <div class="card text-white bg-danger mb-3"
+                                                                     style="max-width: 18rem;">
+                                                                    <div class="card-header">{{ proposal.user.username }}</div>
+                                                                    <div class="card-body">
+                                                                        <h5 class="card-title">{{ proposal.name | raw }}</h5>
+                                                                        <p class="card-text">{{ proposal.description | raw }}</p>
+                                                                    </div>
+                                                                </div>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="mt-4 mb-4"/>
+                        {% endif %}
+                    </div>
 
-					<div class="col-xl-4 col-md-12 mb-3">
-						{% if is_granted('ROLE_MODERATOR') %}
-						<a href="{{ path('workshop_add_document', {'workshop' : workshop.id}) }}"><h4>Documents :</h4> </a>
-						{% else %}
-						<h4>Documents :</h4>
-						{% endif %}
-						{% for doc in workshop.documents %}
+                    <div class="col-xl-4 col-md-12 mb-3">
+                        {% if is_granted('ROLE_MODERATOR') %}
+                            <a href="{{ path('workshop_add_document', {'workshop' : workshop.id}) }}"><h4>Documents
+                                    :</h4></a>
+                        {% else %}
+                            <h4>Documents :</h4>
+                        {% endif %}
+                        {% for doc in workshop.documents %}
 
-							<object type="application/pdf" width="100%" height="100%">
-								<param name="src" value="{{ asset("pdf/upload/workshops/") ~ doc.path  }}" />
-								<a href="{{ asset("pdf/upload/workshops/") ~ doc.path  }}">{{ doc.name }}</a>
+                            <object type="application/pdf" width="100%" height="100%">
+                                <param name="src" value="{{ asset("pdf/upload/workshops/") ~ doc.path }}"/>
+                                <a href="{{ asset("pdf/upload/workshops/") ~ doc.path }}">{{ doc.name }}</a>
 
-							</object>
+                            </object>
 
-						{% endfor %}
-						{# <div class="card">
+                        {% endfor %}
+                        {# <div class="card">
 							<div class="card-body">
 								<div class="card-title">
 									<h5>{{ 'timeline' | trans }}</h5>
@@ -234,9 +248,9 @@
 								</div>
 							</div>
 						</div> #}
-					</div>
-				</div>
-			</main>
-		</div>
-	</div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
 {% endblock %}
