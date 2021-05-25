@@ -18,72 +18,72 @@ use Symfony\Component\Security\Core\Security;
 
 class WorkshopController extends AbstractController
 {
-	private $security;
+    private $security;
 
-	public function __construct(Security $security)
-	{
-		$this->security = $security;
-	}
+    public function __construct(Security $security)
+    {
+        $this->security = $security;
+    }
 
-	/**
-	 * @Route("/admin/workshop", name="workshop_admin", methods={"GET"})
-	 */
-	public function admin(WorkshopRepository $workshopRepository): Response
-	{
-		return $this->render('workshop/admin.html.twig', [
-				'workshops' => $workshopRepository->findAll(),
-		]);
-	}
+    /**
+     * @Route("/admin/workshop", name="workshop_admin", methods={"GET"})
+     */
+    public function admin(WorkshopRepository $workshopRepository): Response
+    {
+        return $this->render('workshop/admin.html.twig', [
+            'workshops' => $workshopRepository->findAll(),
+        ]);
+    }
 
-	/**
-	 * @Route("/admin/workshop/add", name="workshop_add")
-	 */
-	public function add(Request $request): Response
-	{
+    /**
+     * @Route("/admin/workshop/add", name="workshop_add")
+     */
+    public function add(Request $request): Response
+    {
 
 
-		$workshop	 = new Workshop();
-		$workshop->setUser($this->security->getUser());
-		
-		$form		 = $this->createForm(WorkshopType::class, $workshop);
-		$form->handleRequest($request);
+        $workshop = new Workshop();
+        $workshop->setUser($this->security->getUser());
 
-		if ($form->isSubmitted() && $form->isValid())
-		{
-		    $theme = $workshop->getTheme();
-		    if ($theme->getCategory() != null) {
-		        $workshop->setCategory($theme->getCategory());
+        $form = $this->createForm(WorkshopType::class, $workshop);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $theme = $workshop->getTheme();
+            if ($theme->getCategory() != null) {
+                $workshop->setCategory($theme->getCategory());
             }
 
-		    $keywords = $workshop->getKeytext();
-		    $arr = explode(',',$keywords);
-		    foreach ($arr as $key)
-            {
-                $keyword = new Keyword();
-                $keyword->setName($key);
-                $workshop->addKeyword($keyword);
+            $keywords = $workshop->getKeytext();
+            if ($keywords != null) {
+                $arr = explode(',', $keywords);
+                foreach ($arr as $key) {
+                    $keyword = new Keyword();
+                    $keyword->setName($key);
+                    $workshop->addKeyword($keyword);
+                }
             }
 
 
-			$entityManager = $this->getDoctrine()->getManager();
-			$entityManager->persist($workshop);
-			$entityManager->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($workshop);
+            $entityManager->flush();
 
-			$this->addFlash("success", "add.success");
-			return $this->redirectToRoute('workshop_edit', ["workshop" => $workshop->getId()]);
-		}
+            $this->addFlash("success", "add.success");
+            return $this->redirectToRoute('workshop_edit', ["workshop" => $workshop->getId()]);
+        }
 
-		return $this->render('workshop/add.html.twig', [
-				'form'		 => $form->createView(),
-				'workshop'	 => $workshop,
-		]);
-	}
+        return $this->render('workshop/add.html.twig', [
+            'form' => $form->createView(),
+            'workshop' => $workshop,
+        ]);
+    }
 
-	/**
-	 * @Route("/admin/workshop/edit/{workshop}", name="workshop_edit", methods={"GET", "POST"})
-	 */
-	public function edit(Request $request, Workshop $workshop): Response
-	{
+    /**
+     * @Route("/admin/workshop/edit/{workshop}", name="workshop_edit", methods={"GET", "POST"})
+     */
+    public function edit(Request $request, Workshop $workshop): Response
+    {
 
         #On verifie que l'admin restreint est enregistré a cette catégorie
         $admin = $this->getUser();
@@ -100,113 +100,143 @@ class WorkshopController extends AbstractController
             return $this->redirectToRoute('workshop_admin');
         }
 
-		$form = $this->createForm(WorkshopType::class, $workshop);
-		$form->handleRequest($request);
+        $form = $this->createForm(WorkshopType::class, $workshop);
+        $form->handleRequest($request);
 
-		if ($form->isSubmitted() && $form->isValid())
-		{
+        if ($form->isSubmitted() && $form->isValid()) {
             $theme = $workshop->getTheme();
             if ($theme->getCategory() != null) {
                 $workshop->setCategory($theme->getCategory());
             }
-			$this->getDoctrine()->getManager()->flush();
+            $keysInDb = $this->getDoctrine()->getRepository(Keyword::class)->findByWorkshopId($workshop->getId());
+            if($keysInDb != null)
+            {
+                foreach ($keysInDb as $key)
+                {
+                    $workshop->removeKeyword($key);
+                }
+            }
 
-			$this->addFlash("success", "edit.success");
-			return $this->redirectToRoute("workshop_edit", ["workshop" => $workshop->getId()]);
-		}
+            $keywords = $workshop->getKeytext();
+            if ($keywords != null) {
+                $arr = explode(',', $keywords);
+                foreach ($arr as $key) {
+                    $keyword = new Keyword();
+                    $keyword->setName($key);
+                    $workshop->addKeyword($keyword);
+                }
+            }
 
-		return $this->render('workshop/edit.html.twig', [
-				'form'		 => $form->createView(),
-				'workshop'	 => $workshop,
-		]);
-	}
+            $this->getDoctrine()->getManager()->flush();
 
-	/**
-	 * @Route("/admin/workshop/delete/{workshop}", name="workshop_delete")
-	 */
-	public function delete(Request $request, Workshop $workshop): Response
-	{
-		$entityManager = $this->getDoctrine()->getManager();
-		$entityManager->remove($workshop);
-		$entityManager->flush();
+            $this->addFlash("success", "edit.success");
+            return $this->redirectToRoute("workshop_edit", ["workshop" => $workshop->getId()]);
+        }
 
-		$this->addFlash("success", "delete.success");
-		return $this->redirectToRoute('workshop_admin');
-	}
+        return $this->render('workshop/edit.html.twig', [
+            'form' => $form->createView(),
+            'workshop' => $workshop,
+        ]);
+    }
 
-	/**
-	 * @Route("/{slug}/{theme}", name="workshop_index", methods={"GET"})
-	 */
-	public function index(Request $request, string $slug, Theme $theme): Response
-	{
-		if ($request->query->get('search') != "")
-			$workshops	 = $this->getDoctrine()->getRepository(Workshop::class)->searchBy(['theme' => $theme, 'name' => $request->query->get('search')]);
-		else
-			$workshops	 = $this->getDoctrine()->getRepository(Workshop::class)->findBy(['theme' => $theme]);
+    /**
+     * @Route("/admin/workshop/delete/{workshop}", name="workshop_delete")
+     */
+    public function delete(Request $request, Workshop $workshop): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($workshop);
+        $entityManager->flush();
 
-		return $this->render('workshop/index.html.twig', [
-				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
-				'theme'	 => $theme,
-				'workshops'	 => $workshops,
-		]);
-	}
+        $this->addFlash("success", "delete.success");
+        return $this->redirectToRoute('workshop_admin');
+    }
 
-	/**
-	 * @Route("/{slug}/workshop/{workshop}", name="workshop_show", methods={"GET"})
-	 */
-	public function show(Request $request, string $slug, Workshop $workshop): Response
-	{
-		return $this->render('workshop/show.html.twig', [
-				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
-				'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
-				'workshop'	 => $this->getDoctrine()->getRepository(Workshop::class)->findOneById($workshop),
-		]);
-	}
+    /**
+     * @Route("/{slug}/{theme}", name="workshop_index", methods={"GET"})
+     */
+    public function index(Request $request, string $slug, Theme $theme): Response
+    {
+        if ($request->query->get('search') != "")
+            $workshops = $this->getDoctrine()->getRepository(Workshop::class)->searchBy(['theme' => $theme, 'name' => $request->query->get('search')]);
+        else
+            $workshops = $this->getDoctrine()->getRepository(Workshop::class)->findBy(['theme' => $theme]);
 
-	/**
-	 * @Route("/{slug}/{theme}/add", name="workshop_add_byuser", methods={"GET", "POST"})
-	 */
-	public function addByUser(Request $request, string $slug, Theme $theme)
-	{
+        return $this->render('workshop/index.html.twig', [
+            'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
+            'theme' => $theme,
+            'workshops' => $workshops,
+        ]);
+    }
 
-		$workshop	 = new Workshop();
-		$workshop->setUser($this->security->getUser());
-		
-		$form		 = $this->createForm(WorkshopType::class, $workshop);
-		$form->handleRequest($request);
+    /**
+     * @Route("/{slug}/workshop/{workshop}", name="workshop_show", methods={"GET"})
+     */
+    public function show(Request $request, string $slug, Workshop $workshop): Response
+    {
+        return $this->render('workshop/show.html.twig', [
+            'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
+            'workshops' => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
+            'workshop' => $this->getDoctrine()->getRepository(Workshop::class)->findOneById($workshop),
+        ]);
+    }
 
-		if ($form->isSubmitted() && $form->isValid())
-		{
+    /**
+     * @Route("/{slug}/{theme}/add", name="workshop_add_byuser", methods={"GET", "POST"})
+     */
+    public function addByUser(Request $request, string $slug, Theme $theme)
+    {
+
+        $workshop = new Workshop();
+        $workshop->setUser($this->security->getUser());
+
+        $form = $this->createForm(WorkshopType::class, $workshop);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
             $theme = $workshop->getTheme();
             if ($theme->getCategory() != null) {
                 $workshop->setCategory($theme->getCategory());
             }
-			$entityManager = $this->getDoctrine()->getManager();
-			$entityManager->persist($workshop);
-			$entityManager->flush();
 
-			$this->addFlash("success", "add.success");
-			return $this->redirectToRoute('workshop_index', ["theme" => $theme->getId(), "slug" => $slug]);
-		}
 
-		return $this->render('workshop/add.byuser.html.twig', [
-				'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
-				'theme'	 => $theme,
-				'form'		 => $form->createView(),
-				'workshop'	 => $workshop,
-		]);
-	}
+            $keywords = $workshop->getKeytext();
+            if ($keywords != null) {
+                $arr = explode(',', $keywords);
+                foreach ($arr as $key) {
+                    #find each keyword  or delete all keywords for this id
+
+                    $keyword = new Keyword();
+                    $keyword->setName($key);
+                    $workshop->addKeyword($keyword);
+                }
+            }
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($workshop);
+            $entityManager->flush();
+
+            $this->addFlash("success", "add.success");
+            return $this->redirectToRoute('workshop_index', ["theme" => $theme->getId(), "slug" => $slug]);
+        }
+
+        return $this->render('workshop/add.byuser.html.twig', [
+            'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
+            'theme' => $theme,
+            'form' => $form->createView(),
+            'workshop' => $workshop,
+        ]);
+    }
 
     /**
      * @Route("/admin/workshop/addDocument/{workshop}", name="workshop_add_document")
      */
-	public function addDocument(Request $request, Workshop $workshop): Response
+    public function addDocument(Request $request, Workshop $workshop): Response
     {
         #Si il y a deja plus de 4 documents, on redirige l'utilisateur vers la page edit
         $maxDocuments = 5;
-        if ($workshop->getDocuments()->count()>=$maxDocuments)
-        {
-            $this->addFlash('warning','Il y a deja le nombre maximum de documents');
+        if ($workshop->getDocuments()->count() >= $maxDocuments) {
+            $this->addFlash('warning', 'Il y a deja le nombre maximum de documents');
             return $this->redirectToRoute("workshop_edit", ["workshop" => $workshop->getId()]);
         }
 
@@ -214,8 +244,7 @@ class WorkshopController extends AbstractController
         $form = $this->createForm(DocumentType::class, $document);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
 
             $workshop->addDocument($document);
             $this->getDoctrine()->getManager()->flush();
@@ -225,8 +254,8 @@ class WorkshopController extends AbstractController
         }
 
         return $this->render('workshop/add-document.html.twig', [
-            'form'		 => $form->createView(),
-            'workshop'	 => $workshop,
+            'form' => $form->createView(),
+            'workshop' => $workshop,
         ]);
     }
 
@@ -236,14 +265,14 @@ class WorkshopController extends AbstractController
     public function editDocuments(Workshop $workshop): Response
     {
         return $this->render('workshop/edit-document.html.twig', [
-            'workshop'	 => $workshop,
+            'workshop' => $workshop,
         ]);
     }
 
     /**
      * @Route("/admin/workshop/deleteDocument/{workshop}/{document}", name="workshop_delete_document")
      */
-    public function deleteDocuments(Workshop $workshop,Document $document): Response
+    public function deleteDocuments(Workshop $workshop, Document $document): Response
     {
 
         //TODO: Rajouter un renvoi si les id n'existent pas
@@ -255,7 +284,7 @@ class WorkshopController extends AbstractController
 
         $this->addFlash("success", "delete.success");
         //TODO: Erreur en redirigeant vers les documents, redirige vers la page admin donc, probleme de parametre
-        return $this->redirectToRoute('admin',[
+        return $this->redirectToRoute('admin', [
         ]);
     }
 

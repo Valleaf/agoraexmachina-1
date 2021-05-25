@@ -25,7 +25,7 @@ class Keyword
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Workshop::class, mappedBy="keywords",cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity=Workshop::class, mappedBy="keywords",cascade={"persist","remove"})
      */
     private $workshops;
 

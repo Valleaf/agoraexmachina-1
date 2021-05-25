@@ -47,7 +47,8 @@ class WorkshopType extends AbstractType
 				->add('rightsDelegation')
                 ->add('keytext',TextType::class,[
                     'help' => 'keyword.help',
-                    'label' => 'keyword'
+                    'label' => 'keyword',
+                    'required'=>false
                 ])
 				->add('Submit', SubmitType::class)
 		;

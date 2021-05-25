@@ -19,6 +19,18 @@ class KeywordRepository extends ServiceEntityRepository
         parent::__construct($registry, Keyword::class);
     }
 
+    public function findByWorkshopId(int $id)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQueryBuilder();
+        $query
+            ->select('k')
+            ->from('App:Keyword','k')
+            ->innerJoin('k.workshops','w')
+            ->andWhere('w.id ='.$id);
+        return $query->getQuery()->getResult();
+    }
+
     // /**
     //  * @return Keyword[] Returns an array of Keyword objects
     //  */
