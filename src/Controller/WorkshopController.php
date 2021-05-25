@@ -36,6 +36,33 @@ class WorkshopController extends AbstractController
     }
 
     /**
+     * On cherche si le mot cle existe deja pour l'ajouter a l'atelier si oui, sinon on retourne un keyword avec la
+     * string donnéée
+     * @param $repo Tous les mot cles de la bdd
+     * @param string $key
+     * @return Keyword
+     */
+    public function findKeyWord($repo,string $key)
+    {
+
+        $keyword = new Keyword();
+        $keyword->setName($key);
+        if($repo == null){
+            return $keyword;
+        }
+        foreach ($repo as $word )
+        {
+            if ($word->getName() == $key)
+            {
+                $keyword = $word;
+                break;
+            }
+        }
+
+        return $keyword;
+    }
+
+    /**
      * @Route("/admin/workshop/add", name="workshop_add")
      */
     public function add(Request $request): Response
@@ -54,12 +81,14 @@ class WorkshopController extends AbstractController
                 $workshop->setCategory($theme->getCategory());
             }
 
+            ##ne pas ajouter de keyword duplique
+            $keyRepository = $this->getDoctrine()->getRepository(Keyword::class)->findAll();
             $keywords = $workshop->getKeytext();
             if ($keywords != null) {
                 $arr = explode(',', $keywords);
                 foreach ($arr as $key) {
-                    $keyword = new Keyword();
-                    $keyword->setName($key);
+                    #trouver si le mot est dans le repositoyry, sinon en faire un nouveau Keyword
+                    $keyword = $this->findKeyWord($keyRepository, $key);
                     $workshop->addKeyword($keyword);
                 }
             }
@@ -109,20 +138,19 @@ class WorkshopController extends AbstractController
                 $workshop->setCategory($theme->getCategory());
             }
             $keysInDb = $this->getDoctrine()->getRepository(Keyword::class)->findByWorkshopId($workshop->getId());
-            if($keysInDb != null)
-            {
-                foreach ($keysInDb as $key)
-                {
+            if ($keysInDb != null) {
+                foreach ($keysInDb as $key) {
                     $workshop->removeKeyword($key);
                 }
             }
 
+            $keyRepository = $this->getDoctrine()->getRepository(Keyword::class)->findAll();
             $keywords = $workshop->getKeytext();
             if ($keywords != null) {
                 $arr = explode(',', $keywords);
                 foreach ($arr as $key) {
-                    $keyword = new Keyword();
-                    $keyword->setName($key);
+                    #trouver si le mot est dans le repositoyry, sinon en faire un nouveau Keyword
+                    $keyword = $this->findKeyWord($keyRepository, $key);
                     $workshop->addKeyword($keyword);
                 }
             }
@@ -200,14 +228,13 @@ class WorkshopController extends AbstractController
             }
 
 
+            $keyRepository = $this->getDoctrine()->getRepository(Keyword::class)->findAll();
             $keywords = $workshop->getKeytext();
             if ($keywords != null) {
                 $arr = explode(',', $keywords);
                 foreach ($arr as $key) {
-                    #find each keyword  or delete all keywords for this id
-
-                    $keyword = new Keyword();
-                    $keyword->setName($key);
+                    #trouver si le mot est dans le repositoyry, sinon en faire un nouveau Keyword
+                    $keyword = $this->findKeyWord($keyRepository, $key);
                     $workshop->addKeyword($keyword);
                 }
             }
@@ -287,5 +314,12 @@ class WorkshopController extends AbstractController
         return $this->redirectToRoute('admin', [
         ]);
     }
+
+    public function workshopsKeyword(Keyword $keyword, WorkshopRepository $repository): Response
+    {
+        
+    }
+
+
 
 }
