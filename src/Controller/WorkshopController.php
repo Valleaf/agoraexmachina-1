@@ -319,8 +319,9 @@ class WorkshopController extends AbstractController
      */
     public function workshopsKeyword(int $id, WorkshopRepository $repository): Response
     {
-
-        $workshops = $repository->searchByKeyword($id);
+        $user = $this->getUser();
+        #TODO: Filtrer la requete sql pour seulement retourner les public
+        $workshops = $repository->searchByKeyword($id,$user->getId());
 
         return  $this->render('workshop/index-by-keyword.html.twig',[
             'workshops'=>$workshops
