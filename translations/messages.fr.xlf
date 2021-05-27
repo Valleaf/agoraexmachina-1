@@ -309,6 +309,10 @@
                 <source>no.rights.delegation</source>
                 <target>Delegation non autorisée</target>
             </trans-unit>
+            <trans-unit id="delegation.self.error">
+                <source>delegation.self.error</source>
+                <target>Delegation impossible</target>
+            </trans-unit>
             <trans-unit id="everyone">
                 <source>everyone</source>
                 <target>Tout le monde</target>

@@ -78,6 +78,7 @@ class SecurityController extends AbstractController
             );
             $user->setIsAllowedEmails(false);
 
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
@@ -140,7 +141,7 @@ class SecurityController extends AbstractController
     /**
      * @Route ("/user", name="user_edit_by_user")
      */
-	public function editByuser(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+	public function editByuser(MailerInterface $mailer,Request $request, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = $this->getUser();
 
@@ -161,6 +162,18 @@ class SecurityController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
             $entityManager->flush();
+
+            $email = (new Email())
+                ->from('accounts@agora.com')
+                ->to($user->getEmail())
+                ->subject("TEST EDIT")
+                #->htmlTemplate('email/report.html.twig')
+                #give a link with a random password. Link will be something like public/setPw/userid
+                ->text("Bonjour ".$user->getUsername());
+            if ($user->getIsAllowedEmails())
+            {
+                $mailer->send($email);
+            }
 
             $this->addFlash("success", "edit.success");
         }
