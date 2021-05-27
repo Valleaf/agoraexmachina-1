@@ -13,10 +13,10 @@
 #### Ateliers
 ~~Ils reçoivent en héritage la catégorie à laquelle leur Thème est associé.~~
 
-À cela s’ajoute peut-être une autre forme de catégorisation par **Mots-clefs** permettant pour un utilisateur de passer d’un atelier à l’autre par mot-clefs plutôt que par navigation « verticale ». 
+~~À cela s’ajoute peut-être une autre forme de catégorisation par **Mots-clefs** permettant pour un utilisateur de passer d’un atelier à l’autre par mot-clefs plutôt que par navigation « verticale »~~
 #### Conclusion
 ~~1. Un **Thème** peut être associé à une **Catégorie**~~
-2. Un **Atelier** ou un **Thème** peuvent être associé à un ou plusieurs **Mots-clefs** (#)
+~~2. Un **Atelier** ou un **Thème** peuvent être associé à un ou plusieurs **Mots-clefs** (#)~~
 #### Public / privé
 ~~1. Ajouter à la base de données pour les **Themes** un champ *Public* (O/N) qui permet de savoir si l’atelier ou le thème va être visible dans l’espace public sans login. Par contre, il faut permettre que même dans la partie publique, en étant logué, on n’ait accès qu’à ce qui nous intéresse, d’où l’intérêt des **Catégories**.~~
 2. Ajouter deux champs aux**Thèmes** et **Ateliers** : permettre ou non la **Délégation** et établir la profondeur de la délégation « en cascade »: 

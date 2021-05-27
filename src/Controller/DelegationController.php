@@ -40,6 +40,18 @@ class DelegationController extends AbstractController
 	 */
 	public function addTheme(Request $request, Theme $theme, TranslatorInterface $translator): Response
 	{
+	    if (!$theme->getRightsDelegation())
+        {
+            $this->addFlash("warning", $translator->trans("no.rights.delegation"));
+            return $this->redirectToRoute('workshop_index',[
+                'slug'=>$theme->getName(),
+                'theme'=>$theme->getId()
+            ]);
+        }
+	    #compter les delegqtions recues; voir si on peut en deleger qussi. faire une liste des delegagtions
+	    #limiter les delegations aux utilisateurs de la categorie
+        #Mettre dans l'entité délégations un compteur de la profondeur?
+
 		$entityManager = $this->getDoctrine()->getManager();
 
 		$delegation = $entityManager->getRepository(Delegation::Class)->findOneBy(

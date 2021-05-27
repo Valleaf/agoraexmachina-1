@@ -303,7 +303,11 @@
             </trans-unit>
             <trans-unit id="rights.delegations">
                 <source>rights.delegations</source>
-                <target>Delegations autorisée</target>
+                <target>Delegation autorisée</target>
+            </trans-unit>
+            <trans-unit id="no.rights.delegation">
+                <source>no.rights.delegation</source>
+                <target>Delegation non autorisée</target>
             </trans-unit>
             <trans-unit id="everyone">
                 <source>everyone</source>
@@ -514,6 +518,7 @@
                 <source>keyword</source>
                 <target>Mot-clefs</target>
             </trans-unit>
+
 
 
         </body>

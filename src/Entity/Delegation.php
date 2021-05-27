@@ -38,6 +38,11 @@ class Delegation
      */
     private $theme;
 
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $deepness;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -87,6 +92,18 @@ class Delegation
     public function setTheme(?Theme $theme): self
     {
         $this->theme = $theme;
+
+        return $this;
+    }
+
+    public function getDeepness(): ?int
+    {
+        return $this->deepness;
+    }
+
+    public function setDeepness(?int $deepness): self
+    {
+        $this->deepness = $deepness;
 
         return $this;
     }

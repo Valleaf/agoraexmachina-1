@@ -8,6 +8,7 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use \Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use \Symfony\Component\Form\FormBuilderInterface;
 use \Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -39,6 +40,10 @@ class ThemeType extends AbstractType
             ])
             ->add('isPublic',CheckboxType::class,[
                 'label'=>'Public?',
+                'required'=>false
+            ])
+            ->add('rightsDelegation')
+            ->add('delegationDeepness',NumberType::class,[
                 'required'=>false
             ])
             ->add('Submit', SubmitType::class);

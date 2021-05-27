@@ -76,7 +76,7 @@ class SecurityController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-            $user->setIsAllowedEmails(true);
+            $user->setIsAllowedEmails(false);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
@@ -188,7 +188,7 @@ class SecurityController extends AbstractController
                     $form->get('plainPassword')->getData()
                 )
             );
-            $user->setIsAllowedEmails(true);
+            $user->setIsAllowedEmails(false);
             #$strings = ['d','2','$','@','D',0,3,8,6,1,2,'!'];
             #$random = rand(8000,15000).$strings[rand(0,10)].rand(100,500).$strings[rand(0,10)].rand(51,9531);
             $entityManager = $this->getDoctrine()->getManager();
