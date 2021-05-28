@@ -39,7 +39,7 @@ class DefaultController extends AbstractController
                 $entityManager->persist($website);
                 $entityManager->flush();
             }
-            if(count($this->getDoctrine()->getRepository(Category::class)->findAll() == 0))
+            if($this->getDoctrine()->getRepository(Category::class)->findAll() == 0)
             {
                 $category = new Category();
                 $category->setName('Default');
