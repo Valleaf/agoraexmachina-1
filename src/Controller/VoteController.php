@@ -44,7 +44,8 @@ class VoteController extends AbstractController
 
 		return $this->redirectToRoute('proposal_index', [
 					'slug'		 => $slug,
-					'workshop'	 => $proposal->getWorkshop()->getId()
+					'workshop'	 => $proposal->getWorkshop()->getId(),
+                    'proposal'   => $proposal->getId()
 		]);
 	}
 

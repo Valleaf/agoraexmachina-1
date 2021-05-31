@@ -196,8 +196,8 @@ class CategoryController extends AbstractController
             $category->getName());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($notification);
+            $entityManager->persist($request);
             $entityManager->flush();
-            $this->addFlash("success", "request.accepted");
             ##TODO: changer les autres requetes en isdone
         }
 

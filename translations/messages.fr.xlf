@@ -41,6 +41,10 @@
                 <source>edit</source>
                 <target>Modifier</target>
             </trans-unit>
+            <trans-unit id="profile">
+                <source>profile</source>
+                <target>Profil</target>
+            </trans-unit>
             <trans-unit id="submit">
                 <source>submit</source>
                 <target>Enregistrer</target>
@@ -521,6 +525,10 @@
             <trans-unit id="keyword">
                 <source>keyword</source>
                 <target>Mot-clefs</target>
+            </trans-unit>
+            <trans-unit id="your-threads">
+                <source>your-threads</source>
+                <target>Vos forums</target>
             </trans-unit>
 
 

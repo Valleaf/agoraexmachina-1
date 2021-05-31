@@ -111,17 +111,16 @@ La même page (navigation par onglet ajax ?) le renseigne sur :
 ## Statistiques 
 ## Partie publique
 ### Votes
-* Il faut revoir la présentation qui ne colle pas. Il faut savoir si on a voté à une proposition dès qu’on visionne la liste des propositions.
+~~* Il faut revoir la présentation qui ne colle pas. Il faut savoir si on a voté à une proposition dès qu’on visionne la liste des propositions.~~  **Fait**
 ### Ergonomie
-* Un ADMIN ou un ADMIN_RESTREINT peuvent tout autant devenir MODERATEUR. Des onglets doivent lui permettre de basculer d’un rôle à l’autre (dans les parties privées ou publiques).
+~~* Un ADMIN ou un ADMIN_RESTREINT peuvent tout autant devenir MODERATEUR. Des onglets doivent lui permettre de basculer d’un rôle à l’autre (dans les parties privées ou publiques).~~ **Par hierarchie, ils ont les status en dessous des leurs
 ### Ateliers
-* Ajouter l’affichage du ou des **Mots-clefs** 
+~~* Ajouter l’affichage du ou des **Mots-clefs**~~ **Fait** 
 ### Propositions
-Bug : une fois qu’on a voté, c’est la première proposition qui apparaît. Il faut que ce soit la proposition pour laquelle on a voté qui apparaisse. 
+~~Bug : une fois qu’on a voté, c’est la première proposition qui apparaît. Il faut que ce soit la proposition pour laquelle on a voté qui apparaisse.~~ **Fait**
 
 ## Installation
 ### Première installation
 ### Mise à jour d’une installation existante
 
-## FAIRE UN SYSTEME DE NOTIFICATIONS
-MODIFIER README
+~~## FAIRE UN SYSTEME DE NOTIFICATIONS~~ **Fait**

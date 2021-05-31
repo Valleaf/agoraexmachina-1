@@ -4,17 +4,18 @@
     <div class="container-fluid">
         <div class="row">
             <main class="col-10 col-lg-12 ml-sm-auto">
-                <div class="row mb-2" >
+                <div class="row mb-2">
                     <div class="col-12">
-                        <h4>{{'user' | trans }} : {{ userForm.vars.value.username }} , {{ userForm.vars.value.firstName }} {{ userForm.vars.value.lastName }}</h4>
+                        <h4>{{ 'user' | trans }} : {{ userForm.vars.value.username }}
+                            , {{ userForm.vars.value.firstName }} {{ userForm.vars.value.lastName }}</h4>
                     </div>
                 </div>
-                <div class="row mb-2" >
+                <div class="row mb-2">
                     <div class="col-12">
                         {% include 'flashbag.html.twig' %}
                     </div>
                 </div>
-                <div class="row" >
+                <div class="row">
                     <div class="col-2">
                         <div class="card">
                             <div class="card-body d-flex justify-content-center">
@@ -30,12 +31,66 @@
                         </div>
                     </div>
                     <div class="col-10">
-                        <div class="card">
-                            <div class="card-body">
-                                {% form_theme userForm 'bootstrap_4_layout.html.twig' %}
-                                {{ form(userForm) }}
+                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"
+                                   role="tab" aria-controls="pills-home" aria-selected="true">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
+                                   role="tab" aria-controls="pills-profile"
+                                   aria-selected="false">{{ 'edit' | trans }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact"
+                                   role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="pills-workshops-tab" data-toggle="pill" href="#pills-workshops"
+                                   role="tab" aria-controls="pills-workshops" aria-selected="false">Contact</a>
+                            </li>
+
+                        </ul>
+                        <div class="tab-content" id="pills-tabContent">
+                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+                                 aria-labelledby="pills-home-tab">
+                                <h3>{{ 'your-threads' | trans }}</h3>
+                                {% for f in forums %}
+                                    <div class="card text-center">
+                                        <div class="card-header">
+                                            {{ f.proposal.name }}
+                                        </div>
+                                        <div class="card-body">
+                                            <h5 class="card-title"> {{ f.name }}
+                                            </h5>
+                                            <p class="card-text">                                    {{ f.description }}
+                                            </p>
+                                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                                        </div>
+                                        <div class="card-footer text-muted">
+                                            2 days ago
+                                        </div>
+                                    </div>
+                                {% endfor %}
                             </div>
+                            <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+                                 aria-labelledby="pills-profile-tab">
+                                <div class="card">
+                                    <div class="card-body">
+                                        {% form_theme userForm 'bootstrap_4_layout.html.twig' %}
+                                        {{ form(userForm) }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane fade" id="pills-contact" role="tabpanel"
+                                 aria-labelledby="pills-contact-tab">NEW PROPOSALS IN ATELIERS
+                            </div>
+                            <div class="tab-pane fade" id="pills-workshops" role="tabpanel"
+                                 aria-labelledby="pills-workshops-tab">NEW ateliers IN themes
+                            </div>
+
                         </div>
+
                     </div>
                 </div>
             </main>

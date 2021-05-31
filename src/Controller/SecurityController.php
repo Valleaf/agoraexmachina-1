@@ -7,6 +7,7 @@ use App\Form\CategoryChoiceType;
 use App\Form\CategoryType;
 use App\Form\UserAddFormType;
 use App\Form\UserEditByUserType;
+use App\Repository\ForumRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -131,8 +132,6 @@ class SecurityController extends AbstractController
 
 			$this->addFlash("success", "edit.success");
 		}
-
-
         return $this->render('security/edit.html.twig', [
             'userForm' => $form->createView(),
         ]);
@@ -141,7 +140,8 @@ class SecurityController extends AbstractController
     /**
      * @Route ("/user", name="user_edit_by_user")
      */
-	public function editByuser(MailerInterface $mailer,Request $request, UserPasswordEncoderInterface $passwordEncoder)
+	public function editByuser(MailerInterface $mailer,Request $request, UserPasswordEncoderInterface
+    $passwordEncoder, ForumRepository $forumRepository)
     {
         $user = $this->getUser();
 
@@ -177,8 +177,12 @@ class SecurityController extends AbstractController
 
             $this->addFlash("success", "edit.success");
         }
+        #TODO: Envoyer les forums , puis les reponses dans deux var
+        $forums = $forumRepository->findBy(['user'=>$user]);
+
         return $this->render('security/edit-by-user.html.twig', [
             'userForm' => $form->createView(),
+            'forums' => $forums,
         ]);
 
     }
