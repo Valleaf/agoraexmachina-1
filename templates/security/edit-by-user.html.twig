@@ -16,7 +16,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-2">
+                    <div class="col-lg-2 col-md-6 col-sm-12">
                         <div class="card">
                             <div class="card-body d-flex justify-content-center">
                                 {% if app.user.image %}
@@ -43,11 +43,11 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact"
-                                   role="tab" aria-controls="pills-contact" aria-selected="false">Contact</a>
+                                   role="tab" aria-controls="pills-contact" aria-selected="false">{{ 'your-proposals' | trans }}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" id="pills-workshops-tab" data-toggle="pill" href="#pills-workshops"
-                                   role="tab" aria-controls="pills-workshops" aria-selected="false">Contact</a>
+                                   role="tab" aria-controls="pills-workshops" aria-selected="false">{{ 'workshops' | trans }}</a>
                             </li>
 
                         </ul>
@@ -56,21 +56,7 @@
                                  aria-labelledby="pills-home-tab">
                                 <h3>{{ 'your-threads' | trans }}</h3>
                                 {% for f in forums %}
-                                    <div class="card text-center">
-                                        <div class="card-header">
-                                            {{ f.proposal.name }}
-                                        </div>
-                                        <div class="card-body">
-                                            <h5 class="card-title"> {{ f.name }}
-                                            </h5>
-                                            <p class="card-text">                                    {{ f.description }}
-                                            </p>
-                                            <a href="#" class="btn btn-primary">Go somewhere</a>
-                                        </div>
-                                        <div class="card-footer text-muted">
-                                            2 days ago
-                                        </div>
-                                    </div>
+                                    {% include 'edit-by-user/threads.html.twig' %}
                                 {% endfor %}
                             </div>
                             <div class="tab-pane fade" id="pills-profile" role="tabpanel"
@@ -83,10 +69,17 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="pills-contact" role="tabpanel"
-                                 aria-labelledby="pills-contact-tab">NEW PROPOSALS IN ATELIERS
+                                 aria-labelledby="pills-contact-tab">
+                                <h3>{{ 'your-proposals' | trans }}</h3>
+                                {% for p in proposals %}
+                                    {% include 'edit-by-user/proposals.html.twig' %}
+                                {% endfor %}
                             </div>
                             <div class="tab-pane fade" id="pills-workshops" role="tabpanel"
-                                 aria-labelledby="pills-workshops-tab">NEW ateliers IN themes
+                                 aria-labelledby="pills-workshops-tab">
+                                {% for w in workshops %}
+                                    {% include 'edit-by-user/workshops.html.twig' %}
+                                {% endfor %}
                             </div>
 
                         </div>

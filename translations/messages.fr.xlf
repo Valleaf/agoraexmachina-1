@@ -530,7 +530,18 @@
                 <source>your-threads</source>
                 <target>Vos forums</target>
             </trans-unit>
-
+            <trans-unit id="goto">
+                <source>goto</source>
+                <target>Allez vers la page</target>
+            </trans-unit>
+            <trans-unit id="answer-to">
+                <source>answer-to</source>
+                <target>En réponse á</target>
+            </trans-unit>
+            <trans-unit id="your-proposals">
+                <source>your-proposals</source>
+                <target>Vos propositions</target>
+            </trans-unit>
 
 
         </body>

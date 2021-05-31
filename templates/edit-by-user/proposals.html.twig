@@ -1,0 +1,21 @@
+<div class="card text-center">
+    <div class="card-header">
+        {{ p.votes | length }} {{ 'votes' | trans }}
+    </div>
+    <div class="card-body">
+        <h5 class="card-title"> {{ p.name }}
+        </h5>
+        <p class="card-text">
+            {{ p.description | raw }}
+        </p>
+        <a href="{{ path('proposal_index',{'slug': p.workshop.theme.name ~ "_" ~ p.workshop.name | slugify, 'workshop' : p.workshop.id, 'proposal' : p.id}) }}"
+           class="btn btn-primary">
+            {{ 'goto' | trans }}
+        </a>
+    </div>
+    <div class="card-footer text-muted">
+        {{ 'workshop' | trans }}  : {{ p.workshop.name }}
+        {{ 'theme' | trans }}  : {{ p.workshop.theme.name }}
+
+    </div>
+</div>

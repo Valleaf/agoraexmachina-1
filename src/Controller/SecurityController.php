@@ -8,6 +8,8 @@ use App\Form\CategoryType;
 use App\Form\UserAddFormType;
 use App\Form\UserEditByUserType;
 use App\Repository\ForumRepository;
+use App\Repository\ProposalRepository;
+use App\Repository\WorkshopRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -141,7 +143,7 @@ class SecurityController extends AbstractController
      * @Route ("/user", name="user_edit_by_user")
      */
 	public function editByuser(MailerInterface $mailer,Request $request, UserPasswordEncoderInterface
-    $passwordEncoder, ForumRepository $forumRepository)
+    $passwordEncoder, ForumRepository $forumRepository, ProposalRepository $proposalRepository, WorkshopRepository $workshopRepository)
     {
         $user = $this->getUser();
 
@@ -177,12 +179,17 @@ class SecurityController extends AbstractController
 
             $this->addFlash("success", "edit.success");
         }
-        #TODO: Envoyer les forums , puis les reponses dans deux var
+        #TODO: verifier si on a besoin d'une fonction individuelle avec jointure pour eviter la multiplication de
+        # requetes
         $forums = $forumRepository->findBy(['user'=>$user]);
+        $proposals = $proposalRepository->findBy(['user'=>$user]);
+        $workshops = $workshopRepository->findWorkshopsInCategories($user->getId());
 
         return $this->render('security/edit-by-user.html.twig', [
             'userForm' => $form->createView(),
             'forums' => $forums,
+            'proposals' => $proposals,
+            'workshops' => $workshops,
         ]);
 
     }

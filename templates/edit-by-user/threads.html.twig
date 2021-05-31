@@ -1,0 +1,21 @@
+<div class="card text-center">
+    <div class="card-header">
+        {{ f.proposal.name }}
+    </div>
+    <div class="card-body">
+        <h5 class="card-title"> {{ f.name }}
+        </h5>
+        <p class="card-text">
+            {{ f.description | raw }}
+        </p>
+        <a href="{{ path('proposal_index',{'slug': f.proposal.workshop.theme.name ~ "_" ~ f.proposal.workshop.name | slugify, 'workshop' : f.proposal.workshop.id, 'proposal' : f.proposal.id}) }}"
+           class="btn btn-primary">
+            {{ 'goto' | trans }}
+        </a>
+    </div>
+    <div class="card-footer text-muted">
+        {% if f.parentForum %}
+            {{ 'answer-to' | trans }} {{ f.parentForum.name }}
+        {% endif %}
+    </div>
+</div>

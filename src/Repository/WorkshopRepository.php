@@ -65,4 +65,26 @@ class WorkshopRepository extends ServiceEntityRepository
         dump($query);
         return $query->getQuery()->getResult();
     }
+
+    public function findWorkshopsInCategories(int $userId)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQueryBuilder();
+        $query
+            ->select('w,c,t')
+            ->from('App\Entity\Workshop', 'w')
+            ->innerJoin('w.keywords','k')
+            ->innerJoin('w.category','c')
+            ->innerJoin('c.users','u')
+            ->innerJoin('w.theme','t')
+            ->andWhere('u.id IN (:userId)')
+            ->setParameter('userId',$userId)
+            ->andWhere('t.isPublic = true')
+            #->andWhere('k.id = '.$id)
+        ;
+        dump($query);
+        return $query->getQuery()->getResult();
+    }
+
+
 }

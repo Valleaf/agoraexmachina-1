@@ -1,0 +1,24 @@
+<div class="card text-center">
+    <div class="card-header">
+        {{ 'category' | trans }} : {{ w.category.name }}
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">
+            {{ w.name }}
+        </h5>
+        <p class="card-text">
+            {{ w.description | raw }}
+        </p>
+        <a href="{{ path('workshop_show',{'slug': w.theme.name ~ "_" ~ w.name | slugify, 'workshop' :w.id}) }}"
+           class="btn btn-primary">
+            {{ 'goto' | trans }}
+        </a>
+    </div>
+    <div class="card-footer text-muted">
+        {{ 'workshop' | trans }} : {{ w.name }}
+        </br>
+        {{ 'theme' | trans }} : {{ w.theme.name }}
+        </br>
+        {{ w.proposals | length }} {{ 'proposals' | trans }}
+    </div>
+</div>
