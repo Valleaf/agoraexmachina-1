@@ -12,6 +12,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 /**
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
  * @UniqueEntity("name")
+ * @class Category Les catégories permettent de ranger les thèmes et ateliers. Les utilisateurs peuvent être
+ * souscrits à des catégories pour accéder à leur contenu.
  */
 class Category
 {

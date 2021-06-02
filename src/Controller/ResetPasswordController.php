@@ -20,6 +20,7 @@ use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
 /**
  * @Route("/reset-password")
+ * Class ResetPasswordController Cette classe permet de changer le mot de passe d'un utilisateur grâce à un email
  */
 class ResetPasswordController extends AbstractController
 {

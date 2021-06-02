@@ -124,3 +124,7 @@ La même page (navigation par onglet ajax ?) le renseigne sur :
 ### Mise à jour d’une installation existante
 
 ~~## FAIRE UN SYSTEME DE NOTIFICATIONS~~ **Fait**
+
+systeme de points et systeme de 5 choix 
+Avec ou sans delegation
+Commentation code

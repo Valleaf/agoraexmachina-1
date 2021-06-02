@@ -13,17 +13,28 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportException;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\Mailer;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Constraints\Date;
 
+/**
+ * Class ForumController Cette classe gère les forums et réponses. Leur visualisation, ajout , suppression,
+ * modification et signalisation
+ * @package App\Controller
+ */
 class ForumController extends AbstractController
 {
 
     /**
      * @Route("/{slug}/workshop/{workshop}/forum", name="forum_index", methods={"GET"})
+     * @param Request $request
+     * @param string $slug Partie de l'URL avec le thème et l'atelier
+     * @param Workshop $workshop Atelier choisi
+     * @return Response Fonction qui affiche les forums d'un atelier
      */
     public function index(Request $request, string $slug, Workshop $workshop): Response
     {
@@ -37,9 +48,15 @@ class ForumController extends AbstractController
 
     /**
      * @Route("/{slug}/workshop/{workshop}/proposal/{proposal}/forum/add", name="forum_add", methods={"GET", "POST"})
+     * @param Request $request
+     * @param string $slug Partie de l'URL avec le thème et l'atelier
+     * @param Proposal $proposal Proposition choisie
+     * @param Workshop $workshop Atelier choisi
+     * @return Response Fonction qui ajoute un forum à une proposition
      */
     public function add(Request $request, string $slug, Proposal $proposal, Workshop $workshop): Response
     {
+        # Crée un forum et le suite avec la requête
         $forum = new Forum();
         $forum->setUser($this->getUser());
         $forum->setProposal($proposal);
@@ -51,6 +68,7 @@ class ForumController extends AbstractController
             $entityManager->persist($forum);
             $entityManager->flush();
 
+            # Rediriger l'utilisateur vers l'index des forums de la proposition avec un message de succès
             $this->addFlash("success", "add.success");
             return $this->redirectToRoute('proposal_index', ['slug' => $slug, 'workshop' => $proposal->getWorkshop()->getId(), 'proposal' => $proposal->getId()]);
         }
@@ -66,15 +84,23 @@ class ForumController extends AbstractController
 
     /**
      * @Route("/{slug}/workshop/{workshop}/proposal/{proposal}/forum/edit/{forum}", name="forum_edit", methods={"GET", "POST"})
+     * @param Request $request
+     * @param string $slug Partie de l'URL avec le thème et l'atelier
+     * @param Workshop $workshop Atelier choisi
+     * @param Proposal $proposal Proposition choisie
+     * @param Forum $forum Forum choisi
+     * @return Response Fonction qui permet de modifier un forum
      */
     public function edit(Request $request, string $slug, Workshop $workshop, Proposal $proposal, Forum $forum): Response
     {
+        # Création du formulaire et suivi avec la requête
         $form = $this->createForm(ForumType::class, $forum);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
+            # Rediriger l'utilisateur vers l'index des forums de la proposition avec un message de succès
             $this->addFlash("success", "edit.success");
             return $this->redirectToRoute('proposal_index', ['slug' => $slug, 'workshop' => $proposal->getWorkshop()->getId(), 'proposal' => $proposal->getId()]);
         }
@@ -89,6 +115,12 @@ class ForumController extends AbstractController
 
     /**
      * @Route("/{slug}/workshop/{workshop}/forum/delete/{forum}", name="forum_delete", methods={"GET"})
+     * @param Request $request
+     * @param string $slug Partie de l'URL avec le thème et l'atelier
+     * @param Workshop $workshop Atelier choisi
+     * @param Proposal $proposal Proposition choisie
+     * @param Forum $forum Forum choisi
+     * @return Response Fonction qui permet de supprimer un forum
      */
     public function delete(Request $request, string $slug, Workshop $workshop, Proposal $proposal, Forum $forum): Response
     {
@@ -96,19 +128,28 @@ class ForumController extends AbstractController
         $entityManager->remove($forum);
         $entityManager->flush();
 
+        # Rediriger l'utilisateur vers l'index des forums de la proposition avec un message de succès
         $this->addFlash("success", "delete.success");
         return $this->redirectToRoute('proposal_index', ['slug' => $slug, 'workshop' => $proposal->getWorkshop()->getId(), 'proposal' => $proposal->getId()]);
     }
 
     /**
      * @Route("/{slug}/workshop/{workshop}/proposal/{proposal}/forum/answer/{forum}", name="forum_answer", methods={"GET", "POST"})
+     * @param Request $request
+     * @param string $slug Partie de l'URL avec le thème et l'atelier
+     * @param Proposal $proposal Proposition choisie
+     * @param Workshop $workshop Atelier choisi
+     * @param Forum $forum Forum choisi parent
+     * @return Response Fonction qui permet de répondre à un forum
      */
     public function answer(Request $request, string $slug, Proposal $proposal, Workshop $workshop, Forum $forum): Response
     {
+        # Création d'un forum avec attribution du créateur et du forum parent
         $answer = new Forum();
         $answer->setUser($this->getUser());
         $answer->setProposal($proposal);
         $answer->setParentForum($forum);
+        # Création du formulaire avec suivi de la requête
         $form = $this->createForm(ForumAnswerType::class, $answer);
         $form->handleRequest($request);
 
@@ -117,11 +158,13 @@ class ForumController extends AbstractController
             $entityManager->persist($answer);
             $entityManager->flush();
 
+            # Envoi de notification à l'auteur du forum parent pour le prévenir d'une réponse
             $notification = $forum->getUser()->prepareNotification('Réponse : ' . $answer->getName());
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($notification);
             $entityManager->flush();
 
+            # Rediriger l'utilisateur vers l'index des forums de la proposition avec un message de succès
             $this->addFlash("success", "add.success");
             return $this->redirectToRoute('proposal_index', ['slug' => $slug, 'workshop' => $proposal->getWorkshop()->getId(), 'proposal' => $proposal->getId()]);
         }
@@ -137,6 +180,15 @@ class ForumController extends AbstractController
 
     /**
      * @Route("/{slug}/workshop/{workshop}/forum/report/{forum}", name="forum_report", methods={"GET"})
+     * @param MailerInterface $mailer Permet l'envoi d'email
+     * @param Request $request
+     * @param string $slug Partie de l'URL avec le thème et l'atelier
+     * @param Proposal $proposal Proposition choisie
+     * @param Workshop $workshop Atelier choisi
+     * @param Forum $forum Forum choisi
+     * @return Response Fonction qui permet de signaler un forum aux administrateurs restreints et modérateur de la
+     * catégorie. Disponible seulement pour les modérateurs et supérieurs
+     * @throws TransportExceptionInterface Si erreur d'envoi d'email
      */
     public function report(MailerInterface $mailer, Request $request, string $slug, Proposal $proposal, Workshop $workshop,
                            Forum $forum):
@@ -146,6 +198,7 @@ class ForumController extends AbstractController
 
         $users = $workshop->getCategory()->getUsers();
         foreach ($users as $user) {
+            # Cherche les administrateurs restreints et modérateurs des catégories correspondantes pour les prévenir
             if (in_array('ROLE_MODERATOR', $user->getRoles()) || in_array('ROLE_ADMIN_RESTRICTED', $user->getRoles())) {
                 $email = (new Email())
                     ->from($this->getUser()->getEmail())
@@ -155,8 +208,15 @@ class ForumController extends AbstractController
                     ->text($forum->getDescription());
                 if ($user->getIsAllowedEmails())
                 {
-                    $mailer->send($email);
+                    try {
+                        $mailer->send($email);
+                    }
+                    catch (TransportException $e)
+                    {
+                        #TODO: handle error
+                    }
                 }
+                # Envoi de notification aux administrateurs et modératuers concernés
                 $notification = $user->prepareNotification('Message signalé ' . $forum->getName() . " : "
                     . $forum->getDescription());
                 $entityManager = $this->getDoctrine()->getManager();
