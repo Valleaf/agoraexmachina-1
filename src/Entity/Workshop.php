@@ -8,6 +8,10 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
+ * Les ateliers font parti d'un thème et d'une catégorie dépendante de ce thème. Ils peuvent contenir des
+ * propositions et à l'heure actuelle les paramètres de délégations dépendent du thème. Ils ont aussi un interval de
+ * temps pour discuter et un autre pour voter. Ils peuvent également avoir des documents (pdf) associés. Ils peuvent
+ * avoir des mots-clés pour faciliter une traversée horizontale de l'application par les utilisateurs.
  * @ORM\Entity(repositoryClass="App\Repository\WorkshopRepository")
  * @Vich\Uploadable
  */
@@ -34,112 +38,134 @@ class Workshop
 	 * @ORM\Id()
 	 * @ORM\GeneratedValue()
 	 * @ORM\Column(type="integer")
+     * @var int L'identifiant dans la BDD
 	 */
 	private $id;
 	/**
 	 * @ORM\Column(type="string", length=50)
+     * @var string Nom de l'atelier
 	 */
 	private $name;
 	/**
 	 * @ORM\Column(type="text")
+     * @var string Description du sujet de l'atelier
 	 */
 	private $description;
 	/**
 	 * @ORM\Column(type="date")
+     * @var \DateTimeInterface Le début de la discussion sur l'atelier
 	 */
 	private $dateBegin;
 	/**
 	 * @ORM\Column(type="date")
+     * @var \DateTimeInterface La fin de la discussion sur l'atelier
 	 */
 	private $dateEnd;
 	/**
 	 * @ORM\Column(type="string", length=1024)
+     * @var string Actuellement disponible sur "Everyone"
 	 */
 	private $rightsSeeWorkshop;
 	/**
 	 * @ORM\Column(type="string", length=1024)
+     * @var string Actuellement disponible sur "Everyone"
 	 */
 	private $rightsVoteProposals;
 	/**
 	 * @ORM\Column(type="string", length=1024)
+     * @var string Actuellement disponible sur "Everyone"
 	 */
 	private $rightsWriteProposals;
+
 	/**
 	 * @ORM\Column(type="integer", nullable=true)
+     * @var integer En pourcent. Non utilisé à l'heure actuelle (?)
 	 */
 	private $quorumRequired;
 	/**
 	 * @ORM\Column(type="boolean")
+     * @var bool A l'heure actuelle délégations uniquement sur les thèmes. Non utilisé donc
 	 */
 	private $rightsDelegation;
 	/**
 	 * @ORM\ManyToOne(targetEntity="Theme", inversedBy="workshops")
 	 * @ORM\JoinColumn(nullable=false)
+     * @var Theme Le thème dont l'atelier dépend
 	 */
 	private $theme;
 	/**
 	 * @ORM\Column(type="string", length=255, nullable=true)
-	 * @var string
+	 * @var string Le chemin de l'image dans l'atelier
 	 */
 	private $image;
 	/**
 	 * @Vich\UploadableField(mapping="workshops_images", fileNameProperty="image")
-	 * @var File
+	 * @var File L'image de l'atelier
 	 */
 	private $imageFile;
 	/**
 	 * @ORM\Column(type="datetime", nullable=true)
-	 * @var \DateTime
+	 * @var \DateTime Date du téléversage de l'image
 	 */
 	private $updatedAt;
 	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\Proposal", mappedBy="workshop", orphanRemoval=true)
+     * @var Collection|Proposal[] Les propositions associés à l'atelier
 	 */
 	private $proposals;
 
 	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\Delegation", mappedBy="workshop")
+     * @var Collection|Delegation[] Actuellement non utilisé. Délégations sur les thèmes.
 	 */
 	private $delegations;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="workshops")
      * @ORM\JoinColumn(nullable=false)
+     * @var User L'utilisateur ayant crée l'atelier
      */
     private $user;
 
     /**
      * @ORM\OneToMany(targetEntity=Document::class, mappedBy="workshop", orphanRemoval=true,cascade={"persist","remove"})
+     * @var Collection|Document[] Les documents associés à l'atelier. Actuellement des pdf.
      */
     private $documents;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="workshops")
+     * @var Category La catégorie de l'atelier
      */
     private $category;
 
     /**
      * @ORM\Column(type="date")
+     * @var \DateTimeInterface Le début du vote
      */
     private $dateVoteBegin;
 
     /**
      * @ORM\Column(type="date")
+     * @var \DateTimeInterface Fin du vote
      */
     private $dateVoteEnd;
 
     /**
      * @ORM\ManyToMany(targetEntity=Keyword::class, inversedBy="workshops",cascade={"persist","remove"})
+     * @var Collection|Keyword[] Les mots-clés associés à cet atelier
      */
     private $keywords;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string Utilisé pour faciliter l'ajout de mots-clés à la BDD
      */
     private $keytext;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @var Collection|Delegation[] Actuellement non utilisé. Délégations sur les thèmes.
      */
     private $delegationDeepness;
 

@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Les votes se font sur les propositions par les utilisateurs. Ils peuvent être pour, contre ou neutre
  * @ORM\Entity(repositoryClass="App\Repository\VoteRepository")
  */
 class Vote
@@ -18,23 +19,27 @@ class Vote
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @var int L'identifiant dans la BDD
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Proposal", inversedBy="votes")
      * @ORM\JoinColumn(nullable=false)
+     * @var Proposal La proposition concernée par le vote
      */
     private $proposal;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="votes")
      * @ORM\JoinColumn(nullable=false)
+     * @var User L'utilisateur votant
      */
 	private $user;
 
     /**
      * @ORM\Column(type="date")
+     * @var \DateTimeInterface La date du vote
      */
     private $creationDate;
 

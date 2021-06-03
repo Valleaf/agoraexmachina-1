@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Les délégations permettent à un utilisateur de donner son vote à un autre utilisateur. Les conditions dépendent
+ * des thèmes. Sont ainsi définissables la profondeur possible et l'autorisation ou non des délégations.
  * @ORM\Entity(repositoryClass="App\Repository\DelegationRepository")
  */
 class Delegation
@@ -13,33 +15,40 @@ class Delegation
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @var int L'identifiant dans la BDD
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="delegationsFrom")
      * @ORM\JoinColumn(nullable=false)
+     * @var User L'utilisateur envoyant la délégation
      */
     private $userFrom;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="delegationsTo")
      * @ORM\JoinColumn(nullable=false)
+     * @var User L'utilisateur recevant la délégation
      */
     private $userTo;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Workshop", inversedBy="delegations")
+     * @var Workshop L'atelier concerné par la délégation
      */
     private $workshop;
 
     /**
      * @ORM\ManyToOne(targetEntity="Theme", inversedBy="delegations")
+     * @var Theme Le thème concerné par la délégation
      */
     private $theme;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @var int La profondeur actuelle de la délégation. (Est définie à 1 lors du la première délégation d'un vote,
+     * et est incrémentée un à un pour chaque transmission supplémentaire)
      */
     private $deepness;
 

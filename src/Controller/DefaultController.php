@@ -80,6 +80,7 @@ class DefaultController extends AbstractController
                           GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
 
+        #TODO: Remettre le panneau présentant l'agora
         #Vérifier qu'il y ait 0 administrateurs dans la BDD. Si non renvoie à l'index
         $numberOfAdmins = $this->getDoctrine()->getRepository(User::class)->findAdmins();
         $numberOfAdmins = count($numberOfAdmins);

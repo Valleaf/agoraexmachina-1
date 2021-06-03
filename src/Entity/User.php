@@ -12,6 +12,11 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
+ * C'est la classe utilisateur de l'application. Les utilisateurs ont un Prénom, nom, pseudo, adresse email, mot de
+ * passe. TODO: Ils peuvent aussi avoir un avatar (WIP)
+ * Les utilisateurs peuvent demander à rejoindre des catégories. Une fois acceptés, ils peuvent y soumettre des
+ * ateliers, des propositions, des forums et voter. Ils peuvent aussi déléguer leurs vote et délégations reçues selon
+ * les conditions des thèmes.
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @UniqueEntity(fields={"username"}, message="username.alreadyexists")
  * @UniqueEntity(fields={"email"}, message="email.alreadyexists")
@@ -23,14 +28,19 @@ class User implements UserInterface
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @var int L'identifiant dans la BDD
      */
     protected $id;
 
     /**
      * @ORM\Column(type="string", length=40, unique=true)
+     * @var string Le pseudo de l'utilisateur
      */
     private $username;
 
+    /**
+     * @return string Retourne le pseudo de l'utilisateur. Utilisé pour l'affichage
+     */
     public function __toString()
     {
         return $this->username;
@@ -39,15 +49,22 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
+     * @var Collection Les rôles disponibles sont ROLE_ADMIN, ROLE_ADMIN_RESTRICTED, ROLE_MODERATOR, ROLE_USER avec
+     * hiérarchie des rôles, ainsi un admin sera aussi considéré comme restreint, modérateur et user, etc..
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @var string Mot de passe encrypté
      */
     private $password;
 
+    /**
+     * @var string Non gardé dans la BDD, sert lors d'un changement de mot de passe. Il est ensuite encodé pour
+     * remplir la colonne password
+     */
     private $plainPassword;
 
     /**
@@ -85,11 +102,13 @@ class User implements UserInterface
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Proposal", mappedBy="user")
+     * @var Collection|Proposal[] Les propositions créées par l'utilisateur
      */
     private $proposals;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Vote", mappedBy="user", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity="App\Entity\Vote",mappedBy="user", orphanRemoval=true)
+     * @var Collection|Vote[] Les votes effectués par l'utilisateur
      */
     private $votes;
 
@@ -98,72 +117,83 @@ class User implements UserInterface
      * @Assert\Email(
      *    message = "email.notvalid"
      * )
+     * @var string L'email de l'utilisateur. Sert à se connecter avec le password
      */
     private $email;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Forum", mappedBy="user", orphanRemoval=true)
+     * @var Collection|Forum[] Les forums crées par l'utilisateur
      */
     private $forums;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Delegation", mappedBy="userFrom", orphanRemoval=true)
+     * @var Collection|Delegation[] Les délégations reçues par l'utilisateur
      */
     private $delegationsFrom;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Delegation", mappedBy="userTo", orphanRemoval=true)
+     * @var Collection|Delegation[] Les délégations envoyées par l'utilisateur
      */
     private $delegationsTo;
 
     /**
      * @ORM\OneToMany(targetEntity=Workshop::class, mappedBy="user",orphanRemoval=true)
+     * @var Collection|Workshop[] Les ateliers crées par cet utilisateur
      */
     private $workshops;
 
     /**
      * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="users",cascade={"persist"})
+     * @var Collection|Category[] Les catégories suivies par l'utilisateur
      */
     private $categories;
 
     /**
      * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="user", orphanRemoval=true)
+     * @var Collection|Notification[] Les notifications reçues par l'utilisateur
      */
     private $notifications;
 
     /**
      * @ORM\Column(type="boolean")
+     * @var bool Si vrai, l'envoi des emails à cet utilisateur est possible
      */
     private $isAllowedEmails;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @var string
+     * @var string Le chemin de l'image dans l'arborescence
      */
     private $image;
     /**
      * @Vich\UploadableField(mapping="users_images", fileNameProperty="image")
-     * @var File
+     * @var File L'avatar de l'utilisateur
      */
     private $imageFile;
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @var \DateTime
+     * @var \DateTime Date du téléversement de l'avatar
      */
     private $updatedAt;
 
     /**
      * @ORM\Column(type="string", length=40)
+     * @var string Prénom de l'utilisateur
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=40)
+     * @var string Le nom de famille de l'utilisateur
      */
     private $lastName;
 
     /**
      * @ORM\OneToMany(targetEntity=Request::class, mappedBy="user", orphanRemoval=true)
+     * @var Collection|Request[] Les requêtes pour catégorie faites par l'utilisateur
      */
     private $requests;
 
@@ -550,7 +580,11 @@ class User implements UserInterface
         return $this;
     }
 
-    public function prepareNotification($subject): Notification
+    /**
+     * @param $subject string Sujet de la notification et son texte
+     * @return Notification Une notification prête à être envoyée à l'utilisateur
+     */
+    public function prepareNotification(string $subject): Notification
     {
         $notification = new Notification();
         $notification
@@ -561,6 +595,9 @@ class User implements UserInterface
         return $notification;
     }
 
+    /**
+     * @return int Retourne le nombre de notifications non lues de l'utilisateur
+     */
     public function numberUnreadNotifications(): int
     {
         $count = 0;

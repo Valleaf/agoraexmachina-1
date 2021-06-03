@@ -10,6 +10,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * Les Thèmes sont, dans les catégories un emplacement sur un sujet précis. Dans un thème on peut ensuite créer des
+ * ateliers. Les thèmes ont un nom, une image, une description et permettent ou non les délégations ainsi que leur
+ * profondeur. Ils peuvent être publics (visibles aux utilisateurs non connectés ou non souscrits à la catégorie) ou
+ * non.
  * @ORM\Entity(repositoryClass="App\Repository\ThemeRepository")
  * @UniqueEntity(fields={"name"}, message="name.alreadyexists")
  * @Vich\Uploadable
@@ -20,26 +24,28 @@ class Theme
 	 * @ORM\Id()
 	 * @ORM\GeneratedValue()
 	 * @ORM\Column(type="integer")
+     * @var L'identifiant dans la BDD
 	 */
 	private $id;
 	/**
 	 * @ORM\Column(type="string", length=40)
 	 * @Assert\NotBlank
+     * @var string Nom du thème
 	 */
 	private $name;
 	/**
 	 * @ORM\Column(type="string", length=255, nullable=true)
-	 * @var string
+	 * @var string Chemin de l'image dans l'arborescence du site
 	 */
 	private $image;
 	/**
 	 * @Vich\UploadableField(mapping="themes_images", fileNameProperty="image")
-	 * @var File
+	 * @var File L'image elle-même
 	 */
 	private $imageFile;
 	/**
 	 * @ORM\Column(type="datetime", nullable=true)
-	 * @var \DateTime
+	 * @var \DateTime Le moment du téléversage de l'image
 	 */
 	private $updatedAt;
 	/**
@@ -51,34 +57,44 @@ class Theme
 	 * 	max = 1048576,
 	 * 	maxMessage = "length.max.1048576"
 	 * )
+     * @var string La description du thème. TODO: Le sauver/écrire en markdown. A l'heure actuelle avec CKEditor en HTML
 	 */
 	private $description;
 	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\Workshop", mappedBy="theme", orphanRemoval=true)
+     * @var Collection|Workshop[]  Les ateliers contenus dans ce thème
 	 */
 	private $workshops;
 	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\Delegation", mappedBy="theme", orphanRemoval=true)
+     * @var Collection|Delegation[] Les délégations concernant ce thème
 	 */
 	private $delegations;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="themes")
+     * @var Category La catégorie dans laquelle le thème est contenue. Si aucune n'est choisie il sera dans la
+     * catégorie Défaut
      */
     private $category;
 
     /**
      * @ORM\Column(type="boolean")
+     * @var bool Définit si le thème est public. Affecte la visibilité du thème auprès des utilisateurs souscrits ou
+     * non connectés
      */
     private $isPublic;
 
     /**
      * @ORM\Column(type="boolean")
+     * @var bool Autorise ou non la délégaitons des votes sur ce thème et l'ensemble de ses ateliers
      */
     private $rightsDelegation;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @var int Définit la profondeur de la délégation si elle est autorisée. 0 = infini, 1 = Une seule délégation,
+     * etc..
      */
     private $delegationDeepness;
 

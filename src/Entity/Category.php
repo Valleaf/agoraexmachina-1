@@ -10,10 +10,11 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
+ * Les catégories permettent de ranger les thèmes et ateliers. Les utilisateurs peuvent être
+ * souscrits à des catégories pour accéder à leur contenu. Les modérateurs et administrateurs restreints peuvent être
+ * inscrits à des catégories pour pouvoir opérer dans ces catégories
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
  * @UniqueEntity("name")
- * @class Category Les catégories permettent de ranger les thèmes et ateliers. Les utilisateurs peuvent être
- * souscrits à des catégories pour accéder à leur contenu.
  */
 class Category
 {
@@ -21,32 +22,38 @@ class Category
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @var int Identifiant dans la BDD
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255,unique=true)
      * @Assert\NotBlank()
+     * @var string Nom de la catégorie
      */
     private $name;
 
     /**
      * @ORM\OneToMany(targetEntity=Theme::class, mappedBy="category",cascade="remove")
+     * @var Collection|Theme[] Les thèmes associés à cette catégorie
      */
     private $themes;
 
     /**
      * @ORM\OneToMany(targetEntity=Workshop::class, mappedBy="category",cascade={"remove"})
+     * @var Collection|Workshop[] Les ateliers associés à cette catégorie
      */
     private $workshops;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="categories",cascade="detach")
+     * @var Collection|User[] Les utilisateurs souscrits à cette catégorie
      */
     private $users;
 
     /**
      * @ORM\OneToMany(targetEntity=Request::class, mappedBy="category", orphanRemoval=true)
+     * @var Collection|Request[] Les requêtes associés à une demande pour rejoindre cette catégorie
      */
     private $requests;
 

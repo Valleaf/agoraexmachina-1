@@ -8,6 +8,7 @@ use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestInterface;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestTrait;
 
 /**
+ * Cette classe permet à un utilisateur de récupérer son mot de passe. Elle indique les reauêtes faites
  * @ORM\Entity(repositoryClass=ResetPasswordRequestRepository::class)
  */
 class ResetPasswordRequest implements ResetPasswordRequestInterface
@@ -18,12 +19,14 @@ class ResetPasswordRequest implements ResetPasswordRequestInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @var int L'identifiant dans la BDD
      */
     private $id;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=false)
+     * @var User L'utilisateur concerné par la demande
      */
     private $user;
 

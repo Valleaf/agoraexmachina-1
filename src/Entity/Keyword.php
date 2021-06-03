@@ -8,6 +8,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Les mot-clés servent à donner une traversée du site alternative au lieu de la structure habituelle Catégorie =>
+ * Thème => Atelier
  * @ORM\Entity(repositoryClass=KeywordRepository::class)
  */
 class Keyword
@@ -16,16 +18,19 @@ class Keyword
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @var int Identifiant dans la BDD
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string Nom du mot-clé
      */
     private $name;
 
     /**
      * @ORM\ManyToMany(targetEntity=Workshop::class, mappedBy="keywords",cascade={"persist","remove"})
+     * @var Collection|Workshop[] Les ateliers associés à ce mot-clé
      */
     private $workshops;
 

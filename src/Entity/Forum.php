@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
+ * Les forums permettent à un utilisateur de lancer une discussion dans une proposition. Ils peuvent aussi être en
+ * réponse à un autre forum. La profondeur maximum de la réponse est actuellement de 1.
  * @ORM\Entity(repositoryClass="App\Repository\ForumRepository")
  */
 class Forum
@@ -15,38 +17,45 @@ class Forum
      * @ORM\Id()
      * @ORM\GeneratedValue()
      * @ORM\Column(type="integer")
+     * @var int L'identifiant dans la BDD
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @var string Le titre du forum
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
+     * @var string Le texte contenu dans le post
      */
     private $description;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="forums")
      * @ORM\JoinColumn(nullable=false)
+     * @var L'utilisateur ayant crée le forum
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Proposal", inversedBy="forums")
      * @ORM\JoinColumn(nullable=false)
+     * @var Proposal La proposition à laquelle le forum est rattaché
      */
     private $proposal;
 
     /**
      * @ORM\ManyToOne(targetEntity=Forum::class, inversedBy="forums")
+     * @var Forum Si le forum est en réponse à un forum, c'est dans cette variable qu'il se trouve
      */
     private $parentForum;
 
     /**
      * @ORM\OneToMany(targetEntity=Forum::class, mappedBy="parentForum")
+     * @var Collection|Forum[] Si le forum à des réponses, ils se trouveront ici
      */
     private $forums;
 
