@@ -21,6 +21,11 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 class KeywordType extends AbstractType
 {
 
+    /**
+     * Un mot-clé à tout simplement un nom
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 

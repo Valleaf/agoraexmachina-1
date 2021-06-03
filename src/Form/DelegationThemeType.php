@@ -14,7 +14,12 @@ use \Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class DelegationThemeType extends AbstractType
 {
-
+    /**
+     * Pour une délégation dans un thème, on va chercher la liste des utilisateurs. On peut ensuite choisir un parmi
+     * cette liste TODO: Limiter les utilisateurs ayant accès à la catégorie
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder

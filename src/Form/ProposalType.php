@@ -13,7 +13,11 @@ use \Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class ProposalType extends AbstractType
 {
-
+    /**
+     * Pour une proposition, il faut un nom et une description
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder

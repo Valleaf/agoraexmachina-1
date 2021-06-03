@@ -15,7 +15,16 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RegistrationFormType extends AbstractType
 {
-
+    /**
+     * Pour s'inscrire, un utilisateur doit renseigner :
+     * - Son prénom, 40 caractères maximum
+     * - Son nom, 40 caractères maximum
+     * - Son pseudo, 40 caractères maximum
+     * - Son email
+     * - Son mot de passe, 6 caractères minimum et 4096 maximum
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

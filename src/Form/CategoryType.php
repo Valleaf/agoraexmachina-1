@@ -15,6 +15,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CategoryType extends AbstractType
 {
+    /**
+     * Une catégorie a un nom et une liste d'utilisateurs qu'on pout y ajouter.
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add('name')

@@ -17,7 +17,11 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class UserEditByUserType extends AbstractType
 {
-
+    /**
+     * Un utilisateur peut modifier son pseudo, son email, son mot de passe et autoriser ou non les emails.
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

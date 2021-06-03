@@ -15,6 +15,12 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 class ForumAnswerType extends AbstractType
 {
 
+    /**
+     * Une réponse à un forum doit avoir un titre(nom), un sujet(description) et un forum parent (se fait en cliquant
+     * sur "répondre" pour un utilisateur)
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder

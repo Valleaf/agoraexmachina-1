@@ -17,7 +17,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserEditFormType extends AbstractType
 {
-
+    /**
+     * L'administrateur peut modifier pour un utilisateur son pseudo, son email et son rôle.
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder

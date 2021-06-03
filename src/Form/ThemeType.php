@@ -18,7 +18,17 @@ use \Symfony\Component\Validator\Constraints\File;
 
 class ThemeType extends AbstractType
 {
-
+    /**
+     * Pour créer un thème, doivent être renseignés :
+     * - Le nom du thème
+     * - La description du thème
+     * - Une image (facultatif)
+     * - La visibilité du thème (Public ou non?)
+     * - L'autorisation de la délégation ou non
+     * - La profondeur de la délégation (Facultatif)
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder

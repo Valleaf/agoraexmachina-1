@@ -14,6 +14,11 @@ use \Symfony\Component\Form\Extension\Core\Type\SubmitType;
 class ForumType extends AbstractType
 {
 
+    /**
+     * Le forum doit avec un titre et un texte descriptif
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder

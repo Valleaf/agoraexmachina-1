@@ -19,6 +19,11 @@ class KeywordRepository extends ServiceEntityRepository
         parent::__construct($registry, Keyword::class);
     }
 
+    /**
+     * Permet de récupérer les mots-clé liés à un atelier depuis la BDD grâce à un paramètre donné
+     * @param int $id En paramètre l'identifiant du mot-clé recherché
+     * @return int|mixed|string Retourne le mot-clé en son entité Keyword.
+     */
     public function findByWorkshopId(int $id)
     {
         $entityManager = $this->getEntityManager();

@@ -15,7 +15,11 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class DocumentType extends AbstractType
 {
-
+    /**
+     * Le document est limité à 1024ko et à un type de fichier .pdf
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 

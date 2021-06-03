@@ -11,6 +11,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Twig\Environment;
 
+/**
+ * Class TwigGlobalSubscriber Est utilisé en couple avec l'entité Website pour donner accès à cette variable dans
+ * toutes les templates Twig
+ * @package App\Twig
+ */
 class TwigGlobalSubscriber implements EventSubscriberInterface
 {
 

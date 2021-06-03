@@ -21,7 +21,18 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 
 class WorkshopType extends AbstractType
 {
-
+    /**
+     * Pour créer un atelier, doivent être renseignés :
+     * - Le thème parent
+     * - Le nom de l'atelier
+     * - La description de l'atelier
+     * - Une image (facultatif)
+     * - Une date de début et une date de fin de discussion
+     * - Une date de début et une date de fin de vote
+     * - Des mots-clés (facultatif)
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 

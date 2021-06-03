@@ -21,6 +21,12 @@ class ProposalRepository extends ServiceEntityRepository
 		parent::__construct($registry, Proposal::class);
 	}
 
+    /**
+     * Non utilisé à l'heure actuelle (?)
+     * @param $workshop L'atelier choisi
+     * @param $user L'utilisateur faisant la requête
+     * @return int|mixed|string
+     */
 	public function indexProposal($workshop, $user)
 	{
 		$entityManager = $this->getEntityManager();

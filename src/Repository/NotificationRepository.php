@@ -20,7 +20,9 @@ class NotificationRepository extends ServiceEntityRepository
     }
 
      /**
-     * @return Notification[] Returns an array of Notification objects
+      * Permet de trouver les notifications appartenant à un utilisateur
+     * @return Notification[] Returns an array of Notification objects - Toutes les notifications appartenant à un
+      * utilisateur
      */
     public function findByUserId($id): array
     {
