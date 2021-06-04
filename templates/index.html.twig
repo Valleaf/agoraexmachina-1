@@ -7,8 +7,8 @@
                 {% include 'default/jumbotron.html.twig' %}
             {% else %}
                 <div class="row row-cols-1 d-flex justify-content-around ">
-                    {% for theme in themes %}
 
+                    {% for theme in themes %}
                         {% if  theme.isPublic %}
                             {% if app.user %}
                                 {% if app.user in theme.category.users %}

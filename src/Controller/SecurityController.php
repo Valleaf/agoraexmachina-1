@@ -303,14 +303,14 @@ class SecurityController extends AbstractController
      * @param int $categoryId Identifiant de la catégorie
      * @return Response Fonction qui ajoute une catégorie à un utilisateur
      */
-    public function userAddCategory(int $id, int $categoryId)
+    public function userAddCategory(int $id, int $categoryId): Response
     {
         # On récupère l'utilisateur et la catégorie demandée et on l'ajoute
         $category = $this->getDoctrine()->getRepository(Category::class)->find($categoryId);
         $user = $this->getDoctrine()
             ->getRepository(User::class)
             ->find($id);
-        $user->addCategory($category);
+        $category->addUser($user);
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->flush();
 
@@ -327,7 +327,7 @@ class SecurityController extends AbstractController
      * @param int $categoryId Identifiant de la catégorie
      * @return Response Fonction qui enlève une catégorie à un utilisateur
      */
-    public function userRemoveCategory(int $id, int $categoryId)
+    public function userRemoveCategory(int $id, int $categoryId): Response
     {
         #TODO: Empecher l'acces a une page erreur en changeant l'URL ?
         # On récupère l'utilisateur et la catégorie demandée et on l'enlève
@@ -336,7 +336,7 @@ class SecurityController extends AbstractController
             ->getRepository(User::class)
             ->find($id);
 
-        $user->removeCategory($category);
+        $category->removeUser($user);
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->flush();
 

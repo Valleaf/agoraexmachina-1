@@ -46,7 +46,7 @@ class Category
     private $workshops;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="categories",cascade="detach")
+     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="categories",cascade="all")
      * @var Collection|User[] Les utilisateurs souscrits à cette catégorie
      */
     private $users;
@@ -154,7 +154,6 @@ class Category
     {
         if (!$this->users->contains($user)) {
             $this->users[] = $user;
-            $user->addCategory($this);
         }
 
         return $this;
@@ -162,9 +161,7 @@ class Category
 
     public function removeUser(User $user): self
     {
-        if ($this->users->removeElement($user)) {
-            $user->removeCategory($this);
-        }
+        $this->users->removeElement($user);
 
         return $this;
     }
