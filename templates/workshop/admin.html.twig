@@ -42,7 +42,7 @@
                                             {% if 'ROLE_ADMIN_RESTRICTED' not in app.user.roles %}
                                                 {% include 'workshop/admin-workshop.html.twig' %}
                                             {% else %}
-                                                {% if  workshop.category is null or app.user in workshop.category.users%}
+                                                {% if  workshop.theme.category is null or app.user in workshop.theme.category.users%}
                                                     {% include 'workshop/admin-workshop.html.twig' %}
                                                 {% endif %}
                                             {% endif %}

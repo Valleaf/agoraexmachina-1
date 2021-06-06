@@ -39,14 +39,9 @@ class Category
      */
     private $themes;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Workshop::class, mappedBy="category",cascade={"remove"})
-     * @var Collection|Workshop[] Les ateliers associés à cette catégorie
-     */
-    private $workshops;
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, inversedBy="categories",cascade="all")
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="categories",cascade="all")
      * @var Collection|User[] Les utilisateurs souscrits à cette catégorie
      */
     private $users;
@@ -60,7 +55,6 @@ class Category
     public function __construct()
     {
         $this->themes = new ArrayCollection();
-        $this->workshops = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->requests = new ArrayCollection();
     }
@@ -106,36 +100,6 @@ class Category
             // set the owning side to null (unless already changed)
             if ($theme->getCategory() === $this) {
                 $theme->setCategory(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Workshop[]
-     */
-    public function getWorkshops(): Collection
-    {
-        return $this->workshops;
-    }
-
-    public function addWorkshop(Workshop $workshop): self
-    {
-        if (!$this->workshops->contains($workshop)) {
-            $this->workshops[] = $workshop;
-            $workshop->setCategory($this);
-        }
-
-        return $this;
-    }
-
-    public function removeWorkshop(Workshop $workshop): self
-    {
-        if ($this->workshops->removeElement($workshop)) {
-            // set the owning side to null (unless already changed)
-            if ($workshop->getCategory() === $this) {
-                $workshop->setCategory(null);
             }
         }
 

@@ -146,7 +146,7 @@ class User implements UserInterface
     private $workshops;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Category::class, mappedBy="users",cascade="all")
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="users",cascade="all")
      * @var Collection|Category[] Les catégories suivies par l'utilisateur
      */
     private $categories;
