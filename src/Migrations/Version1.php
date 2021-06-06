@@ -63,6 +63,9 @@ final class Version20210606112551 extends AbstractMigration
         $this->addSql('ALTER TABLE workshop ADD CONSTRAINT FK_9B6F02C412469DE2 FOREIGN KEY (category_id) REFERENCES category (id)');
         $this->addSql('ALTER TABLE workshop_keyword ADD CONSTRAINT FK_18DC632C1FDCE57C FOREIGN KEY (workshop_id) REFERENCES workshop (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE workshop_keyword ADD CONSTRAINT FK_18DC632C115D4552 FOREIGN KEY (keyword_id) REFERENCES keyword (id) ON DELETE CASCADE');
+        $this->addSql("INSERT INTO `website` (`id`, `title`, `version`, `name`, `email`) VALUES ('1', 'AGORA Ex Machina', 'v0.9.2', 'CRLBazin', 'crlbazin@gmail.com')");
+        $this->addSql("INSERT INTO `category` (`name`) VALUES ('Defaut')");
+
     }
 
     public function down(Schema $schema) : void
