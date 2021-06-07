@@ -29,7 +29,7 @@
 
 `php bin/console doctrine:database:create`
 
-`php bin/console doctrine:schema:update --force`
+`php bin/console doctrine:migrations:execute --up 1`
 
 ### Mit composer.phar
 
@@ -39,7 +39,7 @@
 
 `php bin/console doctrine:database:create`
 
-`php bin/console doctrine:schema:update --force`
+`php bin/console doctrine:migrations:execute --up 1`
 
 ### Verfahren nach der Installation
 

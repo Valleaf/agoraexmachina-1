@@ -133,11 +133,7 @@ class Workshop
      */
     private $documents;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="workshops")
-     * @var Category La catégorie de l'atelier
-     */
-    private $category;
+
 
     /**
      * @ORM\Column(type="date")
@@ -434,17 +430,7 @@ class Workshop
         return $this;
     }
 
-    public function getCategory(): ?Category
-    {
-        return $this->category;
-    }
 
-    public function setCategory(?Category $category): self
-    {
-        $this->category = $category;
-
-        return $this;
-    }
 
     public function getDateVoteBegin(): ?\DateTimeInterface
     {

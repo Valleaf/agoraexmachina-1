@@ -34,14 +34,14 @@ class Category
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity=Theme::class, mappedBy="category",cascade="remove")
+     * @ORM\OneToMany(targetEntity=Theme::class, mappedBy="category",cascade={"remove"})
      * @var Collection|Theme[] Les thèmes associés à cette catégorie
      */
     private $themes;
 
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="categories",cascade="all")
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="categories",cascade={"all"})
      * @var Collection|User[] Les utilisateurs souscrits à cette catégorie
      */
     private $users;
