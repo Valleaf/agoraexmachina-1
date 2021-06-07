@@ -310,7 +310,7 @@ class SecurityController extends AbstractController
         $user = $this->getDoctrine()
             ->getRepository(User::class)
             ->find($id);
-        $category->addUser($user);
+        $user->addCategory($category);
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->flush();
 
@@ -336,7 +336,7 @@ class SecurityController extends AbstractController
             ->getRepository(User::class)
             ->find($id);
 
-        $category->removeUser($user);
+        $user->removeCategory($category);
         $this->getDoctrine()->getManager()->persist($user);
         $this->getDoctrine()->getManager()->flush();
 

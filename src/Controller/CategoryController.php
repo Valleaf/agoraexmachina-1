@@ -88,20 +88,31 @@ class CategoryController extends AbstractController
     public function edit(Request $request, Category $category): Response
     {
         #Création du formulaire gérant la catégorie grâce à CategoryType
+        $usersBefore = $category->getUsers();
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             #TODO: Permettre d'enlever des utilisateurs des categories, peut-être comparer les utilisateurs dans
             # getUsers et la liste d'utilisateurs globale?
+            # On enlève tous les utilisateurs de la catégorie pour ne remettre que ceux sélectionnés
+           # if($usersBefore->count() != 0){
+           #     foreach ($usersBefore as $user) {
+           #         $category->removeUser($user);
+           #         $this->getDoctrine()->getManager()->persist($user);
+           #     }
+           # }
+
             #Si il y a des utilisateurs choisis , on les ajoute un par un à la
             # catégorie
             if ($category->getUsers() != null) {
                 $users = $category->getUsers();
                 foreach ($users as $user) {
                     $user->addCategory($category);
+                    $this->getDoctrine()->getManager()->persist($user);
                 }
             }
+
 
             #Persistence de la catégorie dans la BDD
             $this->getDoctrine()->getManager()->persist($category);
@@ -251,7 +262,7 @@ class CategoryController extends AbstractController
             !$request->getIsDone()) {
             #On change le statut de la requête en isDone, et on ajoute l'utilisateur à la catégorie
             $request->setIsDone(true);
-            $category->addUser($userRequesting);
+            $userRequesting->addCategory($category);
             #Ajout d'un message flash indiquant le succès de l'opération
             $this->addFlash("success", "request.accept");
             #On envoie une notification de l'acceptation à l'utilisateur ayant demandé à rejoindre la catégorie
@@ -260,6 +271,7 @@ class CategoryController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($notification);
             $entityManager->persist($request);
+            $entityManager->persist($userRequesting);
             $entityManager->flush();
 
             ##TODO: changer les autres requetes en isdone ou n'avoir qu'une seule requête envoyée et attachée à

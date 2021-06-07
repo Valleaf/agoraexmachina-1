@@ -5,6 +5,7 @@ use App\Entity\Proposal;
 use App\Entity\Workshop;
 use App\Entity\Theme;
 use App\Form\ProposalType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -57,6 +58,7 @@ class ProposalController extends AbstractController
 
     /**
      * @Route("/{slug}/workshop/{workshop}/proposal/{proposal}", name="proposal_index", methods={"GET"})
+     * @IsGranted("ROLE_USER")
      * @param string $slug url de la page, combinaison du thème et de l'atelier
      * @param Workshop $workshop Atelier concerné
      * @param Proposal|null $proposal Proposition en question qui sera mise en avant. Si aucun selectionnée la
@@ -65,7 +67,9 @@ class ProposalController extends AbstractController
      */
 	public function index(string $slug, Workshop $workshop, Proposal $proposal = null): Response
 	{
-		return $this->render('proposal/index.html.twig', [
+
+
+        return $this->render('proposal/index.html.twig', [
 					'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
 					'workshops'	 => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
 					'workshop'	 => $workshop,
@@ -84,7 +88,9 @@ class ProposalController extends AbstractController
      */
 	public function edit(Request $request, string $slug, Proposal $proposal, Workshop $workshop): Response
 	{
-		$proposal->setUser($this->getUser());
+
+	    $proposal->setUser($this->getUser());
+
 		$proposal->setWorkshop($workshop);
 
 		$form = $this->createForm(ProposalType::class, $proposal);
