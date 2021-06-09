@@ -31,62 +31,59 @@
                         </div>
                     </div>
                     <div class="col-10">
-                        <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"
-                                   role="tab" aria-controls="pills-home" aria-selected="true">Home</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
-                                   role="tab" aria-controls="pills-profile"
-                                   aria-selected="false">{{ 'edit' | trans }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact"
-                                   role="tab" aria-controls="pills-contact" aria-selected="false">{{ 'your-proposals' | trans }}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="pills-workshops-tab" data-toggle="pill" href="#pills-workshops"
-                                   role="tab" aria-controls="pills-workshops" aria-selected="false">{{ 'workshops' | trans }}</a>
-                            </li>
-
-                        </ul>
-                        <div class="tab-content" id="pills-tabContent">
-                            <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
-                                 aria-labelledby="pills-home-tab">
-                                <h3>{{ 'your-threads' | trans }}</h3>
-                                {% for f in forums %}
-                                    {% include 'edit-by-user/threads.html.twig' %}
-                                {% endfor %}
-                            </div>
-                            <div class="tab-pane fade" id="pills-profile" role="tabpanel"
-                                 aria-labelledby="pills-profile-tab">
-                                <div class="card">
-                                    <div class="card-body">
-                                        {% form_theme userForm 'bootstrap_4_layout.html.twig' %}
-                                        {{ form(userForm) }}
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="pills-contact" role="tabpanel"
-                                 aria-labelledby="pills-contact-tab">
-                                <h3>{{ 'your-proposals' | trans }}</h3>
-                                {% for p in proposals %}
-                                    {% include 'edit-by-user/proposals.html.twig' %}
-                                {% endfor %}
-                            </div>
-                            <div class="tab-pane fade" id="pills-workshops" role="tabpanel"
-                                 aria-labelledby="pills-workshops-tab">
-                                {% for w in workshops %}
-                                    {% include 'edit-by-user/workshops.html.twig' %}
-                                {% endfor %}
-                            </div>
-
-                        </div>
-
+                        {# On inclut les onglets permettant de naviguer entre les differents elements du profil. Les moderateurs ont aussi acces a tous les forums de leurs categories #}
+                        {% include 'edit-by-user/tabs.html.twig' %}
                     </div>
                 </div>
             </main>
         </div>
     </div>
+{% endblock %}
+
+
+{% block javascript %}
+{{ parent() }}
+
+
+<script>
+      $(document).ready(function(){
+         $("#loadforums").on("click", function(event){
+            $.ajax({
+               url:        '{{ path('user_edit_by_user') }}',
+               type:       'POST',
+               dataType:   'json',
+               async:      true,
+
+               success: function(data, status) {
+                  let e = $('<tr><th>author</th><th>name</th><th>description</th></tr>');
+                  $('#forum').html('')
+                             .append(e);
+
+                  for(i = 0; i < data.length; i++) {
+                     forum = data[i];
+                     let e = $('<tr><td id = "author"></td><td id = "name"></td><td id = "description"></td></tr>');
+
+                     $('#author', e).html(forum['author']);
+                     $('#name', e).html(forum['name']);
+                     $('#description', e).html(forum['description']);
+                     $('#student').append(e);
+                  }
+               },
+               error : function(xhr, textStatus, errorThrown) {
+                  alert('Ajax request failed.');
+               }
+            });
+         });
+      });
+   </script>
+
+ <style>
+      .table { border-collapse: collapse; }
+      .table th, td {
+         border-bottom: 1px solid #ddd;
+         width: 250px;
+         text-align: left;
+      }
+   </style>
+
 {% endblock %}

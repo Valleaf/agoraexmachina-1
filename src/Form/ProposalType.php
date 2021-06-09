@@ -4,6 +4,7 @@ namespace App\Form;
 use App\Entity\Proposal;
 use App\Entity\Workshop;
 use App\Entity\User;
+use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -22,7 +23,11 @@ class ProposalType extends AbstractType
 	{
 		$builder
 				->add('name')
-				->add('description', TextareaType::class, array('attr' => array('class' => 'ckeditor')))
+				->add('description', CKEditorType::class, [
+				    'config' => [
+				        'required'=>true,
+                    ]
+                ])
 				->add('Submit', SubmitType::class)
 		;
 	}

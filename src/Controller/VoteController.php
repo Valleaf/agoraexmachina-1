@@ -29,6 +29,7 @@ class VoteController extends AbstractController
      */
 	public function add(Request $request, string $slug, Proposal $proposal, string $userVote, User $user): Response
 	{
+	    #TODO: VOTER A POIDS : MODAL QUI DEMANDE LE NOMBRE DE POINTS ?
 		$entityManager = $this->getDoctrine()->getManager();
         # On regarde si le vote existe déjà, ou non
 		$vote = $entityManager->getRepository(Vote::class)->findOneBy([

@@ -34,7 +34,9 @@
 							</div>
 							<div class="mr-5">
 								<div class="btn-group" role="group">
+									{% if theme.voteType == 'yes-delegation' %}
 									<a href="{{ path('delegation_add_theme', {'theme' : theme.id}) }}" class="btn btn-info" ><i class="fas fa-people-arrows"></i> {{ 'delegations' | trans }}</a>
+									{% endif %}
 								</div>
 							</div>
 							<div class="mr-5">

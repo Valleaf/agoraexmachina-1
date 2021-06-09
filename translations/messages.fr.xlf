@@ -71,11 +71,11 @@
             </trans-unit>
             <trans-unit id="date_vote_end">
                 <source>date_vote_end</source>
-                <target>Date de début du vote</target>
+                <target>Date de fin du vote</target>
             </trans-unit>
             <trans-unit id="date_vote_begin">
                 <source>date_vote_begin</source>
-                <target>Date de fin du vote</target>
+                <target>Date de début du vote</target>
             </trans-unit>
             <trans-unit id="year">
                 <source>year</source>
@@ -274,6 +274,26 @@
             <trans-unit id="theme">
                 <source>theme</source>
                 <target>Thème</target>
+            </trans-unit>
+            <trans-unit id="votes.with.delegation">
+                <source>votes.with.delegation</source>
+                <target>Votes avec délégation</target>
+            </trans-unit>
+            <trans-unit id="votes.without.delegations">
+                <source>votes.without.delegations</source>
+                <target>Votes sans délégation</target>
+            </trans-unit>
+            <trans-unit id="vote-three-levels">
+                <source>vote-three-levels</source>
+                <target>Votes à 3 niveaux</target>
+            </trans-unit>
+            <trans-unit id="vote-five-levels">
+                <source>vote-five-levels</source>
+                <target>Votes à 5 niveaux</target>
+            </trans-unit>
+            <trans-unit id="vote-weighted">
+                <source>vote-weighted</source>
+                <target>Votes à poids</target>
             </trans-unit>
 
 

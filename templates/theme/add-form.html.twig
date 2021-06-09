@@ -1,0 +1,13 @@
+{% form_theme form 'bootstrap_4_layout.html.twig' %}
+{{ form_start(form) }}
+{{ form_row(form.category) }}
+{{ form_row(form.name) }}
+{{ form_row(form.description) }}
+{{ form_row(form.imageFile) }}
+{{ form_row(form.isPublic) }}
+{{ form_row(form.voteType) }}
+{{ form_row(form.delegationDeepness) }}
+{{ form_rest(form) }}
+
+{{ form_end(form) }}
+

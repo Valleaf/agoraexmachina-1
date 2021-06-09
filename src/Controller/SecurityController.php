@@ -10,6 +10,7 @@ use App\Repository\ProposalRepository;
 use App\Repository\WorkshopRepository;
 use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
@@ -179,8 +180,27 @@ class SecurityController extends AbstractController
      * @throws TransportExceptionInterface
      */
 	public function editByUser(Request $request, UserPasswordEncoderInterface
-    $passwordEncoder, ForumRepository $forumRepository, ProposalRepository $proposalRepository, WorkshopRepository $workshopRepository): Response
+    $passwordEncoder, ForumRepository $forumRepository, ProposalRepository $proposalRepository, WorkshopRepository
+    $workshopRepository): Response
     {
+        # Si on reçoit une requête AJAX, on retourne les forums
+        if($request->isXmlHttpRequest())
+        {
+
+            $forums = $forumRepository->findAll();
+            $jsonData = array();
+            $idx = 0;
+            foreach($forums as $forum) {
+                $temp = array(
+                    'author' => $forum->getUser() ,
+                    'name' => $forum->getName(),
+                    'description' => $forum->getDescription(),
+                );
+                $jsonData[$idx++] = $temp;
+            }
+            return new JsonResponse($jsonData);
+        }
+
         #On récupère l'utilisateur
         $user = $this->getUser();
         #On crée le formulaire pour permettre de modifier son profil

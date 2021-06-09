@@ -1,0 +1,79 @@
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    {# Ici les onglets #}
+    <li class="nav-item">
+        <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"
+           role="tab" aria-controls="pills-home" aria-selected="true">Home</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
+           role="tab" aria-controls="pills-profile"
+           aria-selected="false">{{ 'edit' | trans }}</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact"
+           role="tab" aria-controls="pills-contact" aria-selected="false">{{ 'your-proposals' | trans }}</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" id="pills-workshops-tab" data-toggle="pill" href="#pills-workshops"
+           role="tab" aria-controls="pills-workshops" aria-selected="false">{{ 'workshops' | trans }}</a>
+    </li>
+
+    {% if is_granted('ROLE_MODERATOR') %}
+
+        <li class="nav-item">
+            <a class="nav-link" id="pills-forums-tab" data-toggle="pill" href="#pills-forums"
+               role="tab" aria-controls="pills-forums" aria-selected="false">{{ 'forums' | trans }}</a>
+        </li>
+
+    {% endif %}
+</ul>
+<div class="tab-content" id="pills-tabContent">
+    {# Ici le contenu des onglets #}
+    <div class="tab-pane fade show active" id="pills-home" role="tabpanel"
+         aria-labelledby="pills-home-tab">
+        <h3>{{ 'your-threads' | trans }}</h3>
+        {% for f in forums %}
+            {% include 'edit-by-user/threads.html.twig' %}
+        {% endfor %}
+    </div>
+
+    <div class="tab-pane fade" id="pills-profile" role="tabpanel"
+         aria-labelledby="pills-profile-tab">
+        <div class="card">
+            <div class="card-body">
+                {% form_theme userForm 'bootstrap_4_layout.html.twig' %}
+                {{ form(userForm) }}
+            </div>
+        </div>
+    </div>
+
+    <div class="tab-pane fade" id="pills-contact" role="tabpanel"
+         aria-labelledby="pills-contact-tab">
+        <h3>{{ 'your-proposals' | trans }}</h3>
+        {% for p in proposals %}
+            {% include 'edit-by-user/proposals.html.twig' %}
+        {% endfor %}
+    </div>
+
+    <div class="tab-pane fade" id="pills-workshops" role="tabpanel"
+         aria-labelledby="pills-workshops-tab">
+        {% for w in workshops %}
+            {% include 'edit-by-user/workshops.html.twig' %}
+        {% endfor %}
+    </div>
+
+    {% if is_granted('ROLE_MODERATOR') %}
+        <div class="tab-pane fade" id="pills-forums" role="tabpanel"
+             aria-labelledby="pills-forums-tab">
+            <a id = "loadforums" href = "#">{{ 'forums' | trans }}</a>
+
+            <table class = "table">
+                <tbody id = "forum"></tbody>
+            </table>
+        </div>
+    {% endif %}
+
+</div>

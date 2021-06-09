@@ -52,7 +52,7 @@ class DelegationController extends AbstractController
     {
         # On vérifie que le thème autorise la délégation
         # Si non; on redirige vers l'index des ateliers du thème avec un message flash prévenant de cela.
-        if (!$theme->getRightsDelegation()) {
+        if ($theme->getVoteType() != 'yes-delegation')  {
             $this->addFlash("warning", $translator->trans("no.rights.delegation"));
             return $this->redirectToRoute('workshop_index', [
                 'slug' => $theme->getName(),

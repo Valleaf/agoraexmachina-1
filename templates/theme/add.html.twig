@@ -26,8 +26,7 @@
 							<div class="card-body">
 								<div class="row">
 									<div class="col-12">
-										{% form_theme form 'bootstrap_4_layout.html.twig' %}
-										{{ form(form) }}
+										{% include 'theme/add-form.html.twig' %}
 									</div>
 								</div>
 							</div>
@@ -38,3 +37,4 @@
 		</div>
 	</div>
 {% endblock %}
+

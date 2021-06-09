@@ -89,14 +89,7 @@ class ThemeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            #On récupère les ateliers et si ils existent on leur attribue la même catégorie que le thème
-            $workshops = $theme->getWorkshops();
-            if ($workshops != null) {
-                foreach ($workshops as $workshop) {
-                    $workshop->setCategory($theme->getCategory());
-                }
-            }
-
+           
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash("success", "edit.success");
         }

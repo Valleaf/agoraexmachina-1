@@ -27,6 +27,7 @@ class ProposalController extends AbstractController
      */
 	public function add(Request $request, string $slug, Workshop $workshop): Response
 	{
+	    #TODO: EMPECHER LA DESCRIPTION NULLE
 	    #On crée une nouvelle proposition a laquelle on associe l'utilisateur
 		$proposal	 = new Proposal();
 		$proposal->setUser($this->getUser());

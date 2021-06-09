@@ -92,11 +92,8 @@ class WorkshopController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            # On récupère la catégorie de l'atelier pour vérifier qu'il correspond à celui de son thème
             $theme = $workshop->getTheme();
-            if ($theme->getCategory() != null) {
-                $workshop->setCategory($theme->getCategory());
-            }
+
 
             # Ajout des mots-clés à l'atelier
             # On n'ajoute pas de mot-clé dupliqué grâce à la fonction findKeyWord()
@@ -160,11 +157,7 @@ class WorkshopController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            # On récupère la catégorie de l'atelier pour vérifier qu'il correspond à celui de son thème
             $theme = $workshop->getTheme();
-            if ($theme->getCategory() != null) {
-                $workshop->setCategory($theme->getCategory());
-            }
 
             # On enlève tous les mots-clés, pour ensuite les remettre; pour éviter la duplication ou autres bugs
             # engendrés
@@ -276,11 +269,8 @@ class WorkshopController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            # On récupère la catégorie de l'atelier pour vérifier qu'il correspond à celui de son thème
             $theme = $workshop->getTheme();
-            if ($theme->getCategory() != null) {
-                $workshop->setCategory($theme->getCategory());
-            }
+
 
             # Ajout des mots-clés à l'atelier
             # On n'ajoute pas de mot-clé dupliqué grâce à la fonction findKeyWord()
