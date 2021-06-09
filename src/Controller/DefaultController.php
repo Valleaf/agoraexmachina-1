@@ -36,29 +36,14 @@ class DefaultController extends AbstractController
     public function index(): Response
     {
 
-        #Si aucun compte n'existe, rediriger vers une page pour creer un compte admin
-        $numberOfAdmins = $this->getDoctrine()->getRepository(User::class)->findAdmins();
-        $numberOfAdmins = count($numberOfAdmins);
-        if ($numberOfAdmins == 0) {
-            $entityManager = $this->getDoctrine()->getManager();
-            #Si aucune entité Website n'existe, on en crée une avec les paramètres de base de la classe.
-            if (count($this->getDoctrine()->getRepository(Website::class)->findAll()) == 0)
-            {
-                $website = new Website();
-                $entityManager->persist($website);
-                $entityManager->flush();
-            }
-            #Si aucune entité Catégorie n'existe, on en crée une par défaut.
-            if($this->getDoctrine()->getRepository(Category::class)->findAll() == 0)
-            {
-                $category = new Category();
-                $category->setName('Default');
-                $entityManager->persist($category);
-                $entityManager->flush();
-            }
-            #Redirection vers la fonction setup
-            return $this->redirectToRoute('setup');
-        }
+       ##Si aucun compte n'existe, rediriger vers une page pour creer un compte admin
+       #$numberOfAdmins = $this->getDoctrine()->getRepository(User::class)->findAdmins();
+       #$numberOfAdmins = count($numberOfAdmins);
+       #if ($numberOfAdmins == 0) {
+       #    $entityManager = $this->getDoctrine()->getManager();
+       #    #Redirection vers la fonction setup
+       #    return $this->redirectToRoute('setup');
+       #}
 
         #Si le setup est déjà faite, on affiche la page d'accueil
         return $this->render('index.html.twig', [
@@ -80,7 +65,6 @@ class DefaultController extends AbstractController
                           GuardAuthenticatorHandler $guardHandler, LoginFormAuthenticator $authenticator): Response
     {
 
-        #TODO: Remettre le panneau présentant l'agora
         #Vérifier qu'il y ait 0 administrateurs dans la BDD. Si non renvoie à l'index
         $numberOfAdmins = $this->getDoctrine()->getRepository(User::class)->findAdmins();
         $numberOfAdmins = count($numberOfAdmins);

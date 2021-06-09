@@ -65,6 +65,8 @@ final class Version1 extends AbstractMigration
         $this->addSql('ALTER TABLE workshop_keyword ADD CONSTRAINT FK_18DC632C115D4552 FOREIGN KEY (keyword_id) REFERENCES keyword (id) ON DELETE CASCADE');
         $this->addSql("INSERT INTO `website` (`id`, `title`, `version`, `name`, `email`) VALUES ('1', 'AGORA Ex Machina', 'v0.9.2', 'CRLBazin', 'crlbazin@gmail.com')");
         $this->addSql("INSERT INTO `category` (`name`) VALUES ('Defaut')");
+        $this->addSql("INSERT INTO `user` (`id`, `username`, `roles`, `password`, `email`, `is_allowed_emails`, `image`, `updated_at`, `first_name`, `last_name`) VALUES ('999', 'Administrateur', '[\"ROLE_ADMIN\"]', 'agora', 'admin@mail.com', '0', NULL, NULL, 'Admin', 'Nistrateur'); ");
+
     }
 
     public function down(Schema $schema) : void
