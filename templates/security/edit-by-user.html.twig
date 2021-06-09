@@ -44,10 +44,11 @@
 {% block javascript %}
 {{ parent() }}
 
-
+{# Ce script permet de recuperer les donnees de tous les forums , et de les afficher pour les moderateurs #}
 <script>
+// On lance l'ajax des que l'onglet forums est cliqué pour recuperer les forums
       $(document).ready(function(){
-         $("#loadforums").on("click", function(event){
+         $("#pills-forums-tab").on("click", function(event){
             $.ajax({
                url:        '{{ path('user_edit_by_user') }}',
                type:       'POST',
@@ -64,9 +65,9 @@
                      let e = $('<tr><td id = "author"></td><td id = "name"></td><td id = "description"></td></tr>');
 
                      $('#author', e).html(forum['author']);
-                     $('#name', e).html(forum['name']);
+                     $('#name', e).html(forum.name);
                      $('#description', e).html(forum['description']);
-                     $('#student').append(e);
+                     $('#forum').append(e);
                   }
                },
                error : function(xhr, textStatus, errorThrown) {

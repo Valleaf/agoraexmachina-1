@@ -191,13 +191,23 @@ class SecurityController extends AbstractController
             $jsonData = array();
             $idx = 0;
             foreach($forums as $forum) {
+                # On envoie les donnes de chaque forums dans un json, on a aussi le slug, l'id du workshop et l'id du
+                # proposal pour avoir une url generable
+               # $slug = $slug = strtolower(trim(preg_replace('/[^A-Za-z0-9-]+/', '-', $forum->getProposal()
+                #->getWorkshop()->getTheme()->getName().$forum->getProposal()
+               #         ->getWorkshop()->getName())));;
                 $temp = array(
-                    'author' => $forum->getUser() ,
+                    'author' => $forum->getUser()->getUsername() ,
                     'name' => $forum->getName(),
                     'description' => $forum->getDescription(),
+                  #'slug' =>$slug,
+                  #'workshop'=>$forum->getProposal()->getWorkshop()->getId(),
+                  #'proposal'=>$forum->getProposal()->getId(),
+
                 );
                 $jsonData[$idx++] = $temp;
             }
+
             return new JsonResponse($jsonData);
         }
 
