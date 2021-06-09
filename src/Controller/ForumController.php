@@ -196,7 +196,7 @@ class ForumController extends AbstractController
     {
 
 
-        $users = $workshop->getCategory()->getUsers();
+        $users = $workshop->getTheme()->getCategory()->getUsers();
         foreach ($users as $user) {
             # Cherche les administrateurs restreints et modérateurs des catégories correspondantes pour les prévenir
             if (in_array('ROLE_MODERATOR', $user->getRoles()) || in_array('ROLE_ADMIN_RESTRICTED', $user->getRoles())) {

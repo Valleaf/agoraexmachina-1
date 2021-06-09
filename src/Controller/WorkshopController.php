@@ -138,7 +138,7 @@ class WorkshopController extends AbstractController
         #On verifie que l'admin restreint est enregistré a cette catégorie, sinon on le redirige avec un message
         # flash le prévenant qu'il n'a pas les droits
         $admin = $this->getUser();
-        $users = $workshop->getCategory()->getUsers();
+        $users = $workshop->getTheme()->getCategory()->getUsers();
         if (
         !(
             in_array('ROLE_ADMIN_RESTRICTED', $admin->getRoles())
