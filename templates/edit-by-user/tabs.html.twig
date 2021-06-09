@@ -1,33 +1,39 @@
 <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
     {# Ici les onglets #}
+    {# Dans l'onglet de base sont les forums de l'utilisateur #}
     <li class="nav-item">
         <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home"
            role="tab" aria-controls="pills-home" aria-selected="true">Home</a>
     </li>
 
+{# Ici la modification de profil est possible #}
     <li class="nav-item">
         <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
            role="tab" aria-controls="pills-profile"
            aria-selected="false">{{ 'edit' | trans }}</a>
     </li>
 
+    {# Ici les propositions faites par l'utilisateur #}
     <li class="nav-item">
         <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#pills-contact"
            role="tab" aria-controls="pills-contact" aria-selected="false">{{ 'your-proposals' | trans }}</a>
     </li>
 
+    {# Ici les ateliers disponibles dans les categories de l'utilisateur #}
     <li class="nav-item">
         <a class="nav-link" id="pills-workshops-tab" data-toggle="pill" href="#pills-workshops"
            role="tab" aria-controls="pills-workshops" aria-selected="false">{{ 'workshops' | trans }}</a>
     </li>
 
     {% if is_granted('ROLE_MODERATOR') %}
-
+{# Si c'est au moins un moderateur, il aura aussi acces a d'autres donnees #}
+        {# Ici les forums de toutes les categories qu'il supervise #}
         <li class="nav-item">
             <a class="nav-link" id="pills-forums-tab" data-toggle="pill" href="#pills-forums"
                role="tab" aria-controls="pills-forums" aria-selected="false">{{ 'forums' | trans }}</a>
         </li>
 
+        {#TODO: Ici les signalements effectués #}
     {% endif %}
 </ul>
 <div class="tab-content" id="pills-tabContent">
