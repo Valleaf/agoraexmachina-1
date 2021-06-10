@@ -22,7 +22,7 @@ Verwendete Sprachen
 *********************
 * HTML5
 * CSS 3
-* PHP 7
+* PHP 7.4
 * MySql 5
 * Javascript
 
