@@ -38,3 +38,14 @@
 	</div>
 {% endblock %}
 
+{% block javascript %}
+{{ parent() }}
+<script >
+
+$("#theme_imageFile_file").change(function () {
+	console.log('change!');
+    filePreview(this);
+});
+</script>
+{% endblock %}
+

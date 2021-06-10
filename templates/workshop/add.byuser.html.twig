@@ -41,11 +41,22 @@
 						<div class="card">
 							<div class="card-body">
 								{% form_theme form 'bootstrap_4_layout.html.twig' %}
-								{{ form(form) }}
+								{{ form_start(form, {'attr': {'id': 'form_upload'}}) }}
+								{{ form_rest(form) }}
+								{{ form_end(form) }}
 							</div>
 						</div>
 					</div>
 				</div>
 		</div>
 	</div>
+{% endblock %}
+{% block javascript %}
+{{ parent() }}
+<script >
+
+$("#workshop_imageFile_file").change(function () {
+    filePreview(this);
+});
+</script>
 {% endblock %}

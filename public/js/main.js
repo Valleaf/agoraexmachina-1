@@ -57,30 +57,14 @@ function updateURLParameter(url, param, paramVal)
     return baseURL + "?" + newAdditionalURL + rows_txt;
 }
 
-function returnModalHtmlToShowForum(id){
-    return "<!-- Button trigger modal -->\n" +
-        "<button type=\"button\" class=\"btn btn-primary\" data-toggle=\"modal\" data-target=\"#exampleModal\">\n" +
-        "    Launch demo modal\n" +
-        "</button>\n" +
-        "\n" +
-        "<!-- Modal -->\n" +
-        "<div class=\"modal fade\" id=\"exampleModal\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalLabel\" aria-hidden=\"true\">\n" +
-        "    <div class=\"modal-dialog\" role=\"document\">\n" +
-        "        <div class=\"modal-content\">\n" +
-        "            <div class=\"modal-header\">\n" +
-        "                <h5 class=\"modal-title\" id=\"exampleModalLabel\">Modal title</h5>\n" +
-        "                <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n" +
-        "                    <span aria-hidden=\"true\">&times;</span>\n" +
-        "                </button>\n" +
-        "            </div>\n" +
-        "            <div class=\"modal-body\">\n" +
-        "                {{ render(controller('App\\\\Controller\\\\ForumController::showForum',{id: "+id+"}))|escape('js') }}\n" +
-        "            </div>\n" +
-        "            <div class=\"modal-footer\">\n" +
-        "                <button type=\"button\" class=\"btn btn-secondary\" data-dismiss=\"modal\">Close</button>\n" +
-        "                <button type=\"button\" class=\"btn btn-primary\">Supprimer</button>\n" +
-        "            </div>\n" +
-        "        </div>\n" +
-        "    </div>\n" +
-        "</div>";
+// Preview image thumbnail on upload for vich
+function filePreview(input) {
+    if (input.files && input.files[0]) {
+        let reader = new FileReader();
+        reader.onload = function (e) {
+            $('#form_upload + embed').remove();
+            $('#form_upload').after('<embed src="'+e.target.result+'" width="300" height="300"/>');
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
 }
