@@ -306,3 +306,70 @@ label
     width: 250px;
     text-align: left;
 }
+
+
+.sidebar-left {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1050;
+    top: 0;
+    left: 0;
+    background-color: #F0EDEE;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidebar-left a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar-left a:hover {
+    color: #f1f1f1;
+}
+
+.sidebar-left .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.openbtn {
+    position: sticky;
+top: 100px;
+    left: 0px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #161314;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    margin-right: auto;
+}
+
+.openbtn:hover {
+    background-color: #444;
+}
+
+#main-content {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidebar-left {padding-top: 15px;}
+    .sidebar-left a {font-size: 18px;}
+}
+
+.navbar-end-btn{
+    justify-content: end;
+}

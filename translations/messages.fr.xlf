@@ -562,6 +562,10 @@
                 <source>your-proposals</source>
                 <target>Vos propositions</target>
             </trans-unit>
+            <trans-unit id="Menu">
+                <source>Menu</source>
+                <target>Menu</target>
+            </trans-unit>
 
 
         </body>

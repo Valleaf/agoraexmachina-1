@@ -2,31 +2,42 @@
 
 {% block body %}
     <main main="role">
-        <div class="container">
+
+
+        <div class="container main-content">
             {% if themes is empty %}
                 {% include 'default/jumbotron.html.twig' %}
             {% else %}
-                <div class="row row-cols-1 d-flex justify-content-around ">
 
-                    {% for theme in themes %}
-                        {% if  theme.isPublic %}
-                            {% if app.user %}
-                                {% if app.user in theme.category.users %}
+                <div class="col-11">
+                    <div class="row row-cols-1 d-flex justify-content-around ">
+
+                        {% for theme in themes %}
+                            {% if  theme.isPublic %}
+                                {% if app.user %}
+                                    {% if app.user in theme.category.users %}
+                                        {% include 'default/themes.html.twig' %}
+                                    {% endif %}
+                                {% else %}
                                     {% include 'default/themes.html.twig' %}
                                 {% endif %}
-                            {% else %}
-                                {% include 'default/themes.html.twig' %}
+
                             {% endif %}
 
+                        {% endfor %}
+                        {% if app.user and app.user.categories.count == 0 %}
+                            {{ 'no-categories' |trans({'%link_start%' : '<a href="'~path('category_request')~'">', '%link_end%' : '</a>'}) | raw }}
+
                         {% endif %}
-
-                    {% endfor %}
-                    {% if app.user and app.user.categories.count == 0 %}
-                    {{ 'no-categories' |trans({'%link_start%' : '<a href="'~path('category_request')~'">', '%link_end%' : '</a>'}) | raw }}
-
-                    {% endif %}
+                    </div>
                 </div>
             {% endif %}
         </div>
     </main>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+
+
 {% endblock %}
