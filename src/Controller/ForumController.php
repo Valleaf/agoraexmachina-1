@@ -4,11 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Forum;
 use App\Entity\Notification;
+use App\Entity\Report;
 use App\Entity\Workshop;
 use App\Entity\Proposal;
 use App\Entity\Theme;
 use App\Form\ForumType;
 use App\Form\ForumAnswerType;
+use phpDocumentor\Reflection\Types\This;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -125,12 +127,17 @@ class ForumController extends AbstractController
     public function delete(Request $request, string $slug, Workshop $workshop, Proposal $proposal, Forum $forum): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
+        if ($forum->getParentForum() != null)
+        {
+            $forum->getParentForum()->removeForum($forum);
+        }
         $entityManager->remove($forum);
         $entityManager->flush();
 
         # Rediriger l'utilisateur vers l'index des forums de la proposition avec un message de succès
         $this->addFlash("success", "delete.success");
-        return $this->redirectToRoute('proposal_index', ['slug' => $slug, 'workshop' => $proposal->getWorkshop()->getId(), 'proposal' => $proposal->getId()]);
+        return $this->redirectToRoute('proposal_index', ['slug' => $slug, 'workshop' => $workshop->getId(), 'proposal' =>
+            $proposal->getId()]);
     }
 
     /**
@@ -144,6 +151,7 @@ class ForumController extends AbstractController
      */
     public function answer(Request $request, string $slug, Proposal $proposal, Workshop $workshop, Forum $forum): Response
     {
+        #TODO: Changer l'interface en reponse
         # Création d'un forum avec attribution du créateur et du forum parent
         $answer = new Forum();
         $answer->setUser($this->getUser());
@@ -194,8 +202,7 @@ class ForumController extends AbstractController
                            Forum $forum):
     Response
     {
-
-
+        $entityManager = $this->getDoctrine()->getManager();
         $users = $workshop->getTheme()->getCategory()->getUsers();
         foreach ($users as $user) {
             # Cherche les administrateurs restreints et modérateurs des catégories correspondantes pour les prévenir
@@ -206,29 +213,49 @@ class ForumController extends AbstractController
                     ->subject('Message signalé ' . $forum->getName())
                     #->htmlTemplate('email/report.html.twig')
                     ->text($forum->getDescription());
-                if ($user->getIsAllowedEmails())
-                {
+                if ($user->getIsAllowedEmails()) {
                     try {
                         $mailer->send($email);
-                    }
-                    catch (TransportException $e)
-                    {
+                    } catch (TransportException $e) {
                         #TODO: handle error
                     }
                 }
-                # Envoi de notification aux administrateurs et modératuers concernés
+                # Envoi de notification aux administrateurs et modérateurs concernés
                 $notification = $user->prepareNotification('Message signalé ' . $forum->getName() . " : "
                     . $forum->getDescription());
-                $entityManager = $this->getDoctrine()->getManager();
                 $entityManager->persist($notification);
-                $entityManager->flush();
+
 
             }
         }
 
+        # Creation d'un Report et envoi dans la BDD.
+        $entityManager->persist($forum->createReport());
+
+        $entityManager->flush();
         $this->addFlash("success", "report.success");
         return $this->redirectToRoute('proposal_index', ['slug' => $slug, 'workshop' => $proposal->getWorkshop()->getId(), 'proposal' => $proposal->getId()]);
 
     }
+
+    #TODO: Faire une fonction show one forum avec un affichage modal / fonction avec en parametre juste l'id du forum!!
+
+    /**
+     * @Route("/forum/show/{forumId}",defaults={"forumId"=1}, name="forum_show", methods={"GET"})
+     * Cette fonction permet de voir un seul forum. C'est un embedded Controller qui appelle une template apres a
+     * voir été appelé dans une template
+     */
+    public function showForum(int $forumId=1): Response
+    {
+        #TODO: Limiter l'acces aux utilisateurs ayant acces a la categorie
+        $forum = $this->getDoctrine()->getRepository(Forum::class)->find($forumId);
+        if ($forum!=null) {
+            return $this->render('forum/show.html.twig', [
+                'forum' => $forum,
+            ]);
+        }
+        else return $this->redirectToRoute('homepage');
+    }
+
 
 }

@@ -74,6 +74,7 @@ class Theme
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="themes")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @var Category La catégorie dans laquelle le thème est contenue. Si aucune n'est choisie il sera dans la
      * catégorie Défaut
      */

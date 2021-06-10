@@ -120,7 +120,7 @@ class User implements UserInterface
      * @var string L'email de l'utilisateur. Sert à se connecter avec le password
      */
     private $email;
-
+#TODO: FIX ALL THE CASCADE
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Forum", mappedBy="user", orphanRemoval=true)
      * @var Collection|Forum[] Les forums crées par l'utilisateur
@@ -198,6 +198,11 @@ class User implements UserInterface
     private $requests;
 
     /**
+     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="user", orphanRemoval=true)
+     */
+    private $reports;
+
+    /**
      * @return string
      */
     public function getImage()
@@ -240,6 +245,7 @@ class User implements UserInterface
         $this->categories = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->requests = new ArrayCollection();
+        $this->reports = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -715,6 +721,36 @@ class User implements UserInterface
             // set the owning side to null (unless already changed)
             if ($request->getUser() === $this) {
                 $request->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Report[]
+     */
+    public function getReports(): Collection
+    {
+        return $this->reports;
+    }
+
+    public function addReport(Report $report): self
+    {
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
+            $report->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReport(Report $report): self
+    {
+        if ($this->reports->removeElement($report)) {
+            // set the owning side to null (unless already changed)
+            if ($report->getUser() === $this) {
+                $report->setUser(null);
             }
         }
 

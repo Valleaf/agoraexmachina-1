@@ -48,20 +48,27 @@ class Forum
     private $proposal;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Forum::class, inversedBy="forums")
+     * @ORM\ManyToOne(targetEntity=Forum::class, inversedBy="forums",cascade={"remove"})
      * @var Forum Si le forum est en réponse à un forum, c'est dans cette variable qu'il se trouve
      */
     private $parentForum;
 
     /**
-     * @ORM\OneToMany(targetEntity=Forum::class, mappedBy="parentForum")
+     * @ORM\OneToMany(targetEntity=Forum::class, mappedBy="parentForum",orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @var Collection|Forum[] Si le forum à des réponses, ils se trouveront ici
      */
     private $forums;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Report::class, mappedBy="forum", orphanRemoval=true)
+     */
+    private $reports;
+
     public function __construct()
     {
         $this->forums = new ArrayCollection();
+        $this->reports = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -150,7 +157,6 @@ class Forum
     public function removeForum(self $forum): self
     {
         if ($this->forums->contains($forum)) {
-            $this->forums->removeElement($forum);
             // set the owning side to null (unless already changed)
             if ($forum->getParentForum() === $this) {
                 $forum->setParentForum(null);
@@ -158,5 +164,48 @@ class Forum
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Report[]
+     */
+    public function getReports(): Collection
+    {
+        return $this->reports;
+    }
+
+    public function addReport(Report $report): self
+    {
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
+            $report->setForum($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReport(Report $report): self
+    {
+        if ($this->reports->removeElement($report)) {
+            // set the owning side to null (unless already changed)
+            if ($report->getForum() === $this) {
+                $report->setForum(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Report Retourne un signalement pret a etre envoye a la BDD
+     */
+    public function createReport(): Report
+    {
+        $report = new Report;
+        $report->setUser($this->getUser());
+        $report->setDate(new \DateTime('now'));
+        $report->setForum($this);
+        return $report;
+
     }
 }

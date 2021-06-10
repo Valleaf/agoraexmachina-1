@@ -29,6 +29,7 @@ final class Version1 extends AbstractMigration
         $this->addSql('CREATE TABLE keyword (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE notification (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, request_id INT DEFAULT NULL, date DATE NOT NULL, subject MEDIUMTEXT NOT NULL, is_read TINYINT(1) NOT NULL, INDEX IDX_BF5476CAA76ED395 (user_id), INDEX IDX_BF5476CA427EB8A5 (request_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE proposal (id INT AUTO_INCREMENT NOT NULL, workshop_id INT NOT NULL, user_id INT NOT NULL, name VARCHAR(255) NOT NULL, description LONGTEXT NOT NULL, INDEX IDX_BFE594721FDCE57C (workshop_id), INDEX IDX_BFE59472A76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE report (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, forum_id INT NOT NULL, date DATETIME NOT NULL, INDEX IDX_C42F7784A76ED395 (user_id), INDEX IDX_C42F778429CCBAD0 (forum_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE request (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, category_id INT NOT NULL, is_done TINYINT(1) NOT NULL, INDEX IDX_3B978F9FA76ED395 (user_id), INDEX IDX_3B978F9F12469DE2 (category_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE reset_password_request (id INT AUTO_INCREMENT NOT NULL, user_id INT NOT NULL, selector VARCHAR(20) NOT NULL, hashed_token VARCHAR(100) NOT NULL, requested_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', expires_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', INDEX IDX_7CE748AA76ED395 (user_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE theme (id INT AUTO_INCREMENT NOT NULL, category_id INT DEFAULT NULL, name VARCHAR(40) NOT NULL, image VARCHAR(255) DEFAULT NULL, updated_at DATETIME DEFAULT NULL, description MEDIUMTEXT NOT NULL, is_public TINYINT(1) NOT NULL, delegation_deepness INT DEFAULT NULL, vote_type VARCHAR(255) NOT NULL, INDEX IDX_9775E70812469DE2 (category_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
@@ -50,10 +51,12 @@ final class Version1 extends AbstractMigration
         $this->addSql('ALTER TABLE notification ADD CONSTRAINT FK_BF5476CA427EB8A5 FOREIGN KEY (request_id) REFERENCES request (id)');
         $this->addSql('ALTER TABLE proposal ADD CONSTRAINT FK_BFE594721FDCE57C FOREIGN KEY (workshop_id) REFERENCES workshop (id)');
         $this->addSql('ALTER TABLE proposal ADD CONSTRAINT FK_BFE59472A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
+        $this->addSql('ALTER TABLE report ADD CONSTRAINT FK_C42F7784A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
+        $this->addSql('ALTER TABLE report ADD CONSTRAINT FK_C42F778429CCBAD0 FOREIGN KEY (forum_id) REFERENCES forum (id)');
         $this->addSql('ALTER TABLE request ADD CONSTRAINT FK_3B978F9FA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE request ADD CONSTRAINT FK_3B978F9F12469DE2 FOREIGN KEY (category_id) REFERENCES category (id)');
         $this->addSql('ALTER TABLE reset_password_request ADD CONSTRAINT FK_7CE748AA76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
-        $this->addSql('ALTER TABLE theme ADD CONSTRAINT FK_9775E70812469DE2 FOREIGN KEY (category_id) REFERENCES category (id)');
+        $this->addSql('ALTER TABLE theme ADD CONSTRAINT FK_9775E70812469DE2 FOREIGN KEY (category_id) REFERENCES category (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE user_category ADD CONSTRAINT FK_E6C1FDC1A76ED395 FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE user_category ADD CONSTRAINT FK_E6C1FDC112469DE2 FOREIGN KEY (category_id) REFERENCES category (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE vote ADD CONSTRAINT FK_5A108564F4792058 FOREIGN KEY (proposal_id) REFERENCES proposal (id)');
@@ -65,7 +68,6 @@ final class Version1 extends AbstractMigration
         $this->addSql("INSERT INTO `website` (`id`, `title`, `version`, `name`, `email`) VALUES ('1', 'AGORA Ex Machina', 'v0.9.2', 'CRLBazin', 'crlbazin@gmail.com')");
         $this->addSql("INSERT INTO `category` (`name`) VALUES ('Defaut')");
         $this->addSql("INSERT INTO `user` (`id`, `username`, `roles`, `password`, `email`, `is_allowed_emails`, `image`, `updated_at`, `first_name`, `last_name`) VALUES ('999', 'Administrateur', '[\"ROLE_ADMIN\"]', '\$argon2id\$v=19\$m=65536,t=4,p=1\$L2pxOS81eEpMaUdaVEFVQg\$IFC+9PjDXqNVtAKik1Wo21+kugImSmQgEnAvpXOzI1w', 'admin@mail.com', '0', NULL, NULL, 'Admin', 'Nistrateur'); ");
-
     }
 
     public function down(Schema $schema) : void
@@ -76,8 +78,8 @@ final class Version1 extends AbstractMigration
         $this->addSql('ALTER TABLE request DROP FOREIGN KEY FK_3B978F9F12469DE2');
         $this->addSql('ALTER TABLE theme DROP FOREIGN KEY FK_9775E70812469DE2');
         $this->addSql('ALTER TABLE user_category DROP FOREIGN KEY FK_E6C1FDC112469DE2');
-        $this->addSql('ALTER TABLE workshop DROP FOREIGN KEY FK_9B6F02C412469DE2');
         $this->addSql('ALTER TABLE forum DROP FOREIGN KEY FK_852BBECDB6011601');
+        $this->addSql('ALTER TABLE report DROP FOREIGN KEY FK_C42F778429CCBAD0');
         $this->addSql('ALTER TABLE workshop_keyword DROP FOREIGN KEY FK_18DC632C115D4552');
         $this->addSql('ALTER TABLE forum DROP FOREIGN KEY FK_852BBECDF4792058');
         $this->addSql('ALTER TABLE vote DROP FOREIGN KEY FK_5A108564F4792058');
@@ -89,6 +91,7 @@ final class Version1 extends AbstractMigration
         $this->addSql('ALTER TABLE forum DROP FOREIGN KEY FK_852BBECDA76ED395');
         $this->addSql('ALTER TABLE notification DROP FOREIGN KEY FK_BF5476CAA76ED395');
         $this->addSql('ALTER TABLE proposal DROP FOREIGN KEY FK_BFE59472A76ED395');
+        $this->addSql('ALTER TABLE report DROP FOREIGN KEY FK_C42F7784A76ED395');
         $this->addSql('ALTER TABLE request DROP FOREIGN KEY FK_3B978F9FA76ED395');
         $this->addSql('ALTER TABLE reset_password_request DROP FOREIGN KEY FK_7CE748AA76ED395');
         $this->addSql('ALTER TABLE user_category DROP FOREIGN KEY FK_E6C1FDC1A76ED395');
@@ -105,6 +108,7 @@ final class Version1 extends AbstractMigration
         $this->addSql('DROP TABLE keyword');
         $this->addSql('DROP TABLE notification');
         $this->addSql('DROP TABLE proposal');
+        $this->addSql('DROP TABLE report');
         $this->addSql('DROP TABLE request');
         $this->addSql('DROP TABLE reset_password_request');
         $this->addSql('DROP TABLE theme');

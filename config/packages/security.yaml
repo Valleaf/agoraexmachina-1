@@ -53,3 +53,5 @@ security:
         - { path: '/category/request/accept*', roles: ROLE_MODERATOR }
         - { path: '/category/request/deny*', roles: ROLE_MODERATOR }
         - { path: '/category/request*', roles: ROLE_USER }
+        - { path: '/forum/show/*', roles: ROLE_MODERATOR }
+        - { path: '/forum/show*', roles: ROLE_USER }

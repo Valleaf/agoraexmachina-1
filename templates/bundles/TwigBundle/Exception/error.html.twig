@@ -1,17 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block stylesheets %}
-	{{ parent() }}
-	<link href="{{ asset('css/signin.css') }}" rel="stylesheet"/>
+    {{ parent() }}
+    <link href="{{ asset('css/signin.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block body %}
-<form method="post" class="form-signin">
-    <img class="mb-4 bg-white rounded" src="{{ asset('img/logo_aem.png') }}" alt width="72" height="72" />    
-    
-    <div class="mb-3">
-	{{ 'error' | trans }} : <a href="mailto:{{ website.email}}">{{ website.email}}</a>.
-	<br /><a href="{{ path('homepage') }}">{{ 'home' | trans }}</a>
-    </div>
-</form>
+    <form method="post" class="form-signin">
+        <img class="mb-4 bg-white rounded" src="{{ asset('img/logo_aem.png') }}" alt width="72" height="72"/>
+
+        <div class="mb-3">
+            {{ 'error' | trans }} : <a href="mailto:{% if website.email %}
+                {{ website.email }}
+            {% else %}
+                crlbazin@gmail.com
+            {% endif %}">
+                {% if website.email %}
+                    {{ website.email }}
+                {% else %}
+                    crlbazin@gmail.com
+                {% endif %}</a>.
+            <br/><a href="{{ path('homepage') }}">{{ 'home' | trans }}</a>
+        </div>
+    </form>
 {% endblock %}

@@ -185,7 +185,7 @@
             </trans-unit>
             <trans-unit id="jumbotron.4">
                 <source>jumbotron.4</source>
-                <target>Pour commencer, vous devez vous connecter en tant qu'administrateur (nom d'utilisateur par défaut "admin" et mot de passe par défaut "password") et créer vos premières catégories. Les catégories regrouperont vos ateliers de discussions et de votes.</target>
+                <target>Pour commencer, vous devez vous connecter en tant qu'administrateur (nom d'utilisateur par défaut "admin@mail.com" et mot de passe par défaut "agora") et créer vos premières catégories. Les catégories regrouperont vos ateliers de discussions et de votes.</target>
             </trans-unit>
             <trans-unit id="jumbotron.5">
                 <source>jumbotron.5</source>

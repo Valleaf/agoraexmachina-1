@@ -51,7 +51,13 @@ class Proposal
 	 */
 	private $votes;
 
-	public function __construct()
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
+
+    public function __construct()
 	{
 		$this->votes	 = new ArrayCollection();
 		$this->forums	 = new ArrayCollection();

@@ -110,12 +110,14 @@ class Workshop
 	private $updatedAt;
 	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\Proposal", mappedBy="workshop", orphanRemoval=true)
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @var Collection|Proposal[] Les propositions associés à l'atelier
 	 */
 	private $proposals;
 
 	/**
 	 * @ORM\OneToMany(targetEntity="App\Entity\Delegation", mappedBy="workshop")
+     * @ORM\JoinColumn(onDelete="CASCADE")
      * @var Collection|Delegation[] Actuellement non utilisé. Délégations sur les thèmes.
 	 */
 	private $delegations;
@@ -148,7 +150,7 @@ class Workshop
     private $dateVoteEnd;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Keyword::class, inversedBy="workshops",cascade={"persist","remove"})
+     * @ORM\ManyToMany(targetEntity=Keyword::class, inversedBy="workshops",cascade={"persist"})
      * @var Collection|Keyword[] Les mots-clés associés à cet atelier
      */
     private $keywords;

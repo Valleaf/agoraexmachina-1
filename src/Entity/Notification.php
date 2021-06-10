@@ -48,7 +48,7 @@ class Notification
     private $isRead;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Request::class, inversedBy="notifications",cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Request::class, inversedBy="notifications",cascade={"persist"})
      * @var Request Une requête peut être attachée à une notification, pour faire une demande de rejoindre une
      * catégorie par un utilisateur.
      */

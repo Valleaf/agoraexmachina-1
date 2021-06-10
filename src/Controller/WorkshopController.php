@@ -83,6 +83,7 @@ class WorkshopController extends AbstractController
     public function add(Request $request): Response
     {
 
+        #TODO: Ne pas avoir de creation si aucun theme n'existe !
         # Création d'un nouvel atelier, attribution de l'utilisateur en tant que créateur
         $workshop = new Workshop();
         $workshop->setUser($this->security->getUser());

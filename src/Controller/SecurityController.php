@@ -193,6 +193,7 @@ class SecurityController extends AbstractController
             foreach($forums as $forum) {
                 # On envoie les donnes de chaque forums dans un json
                 $temp = array(
+                    'link' => $forum->getId(),
                     'author' => $forum->getUser()->getUsername() ,
                     'name' => $forum->getName(),
                     'description' => $forum->getDescription(),

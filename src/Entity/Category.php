@@ -34,20 +34,20 @@ class Category
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity=Theme::class, mappedBy="category",cascade={"remove"})
+     * @ORM\OneToMany(targetEntity=Theme::class, mappedBy="category",cascade={"remove","persist"})
      * @var Collection|Theme[] Les thèmes associés à cette catégorie
      */
     private $themes;
 
 
     /**
-     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="categories",cascade={"all"})
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="categories",cascade={"persist"})
      * @var Collection|User[] Les utilisateurs souscrits à cette catégorie
      */
     private $users;
 
     /**
-     * @ORM\OneToMany(targetEntity=Request::class, mappedBy="category", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Request::class, mappedBy="category", orphanRemoval=true,cascade={"persist"})
      * @var Collection|Request[] Les requêtes associés à une demande pour rejoindre cette catégorie
      */
     private $requests;

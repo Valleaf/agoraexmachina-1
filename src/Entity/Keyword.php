@@ -29,7 +29,7 @@ class Keyword
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Workshop::class, mappedBy="keywords",cascade={"persist","remove"})
+     * @ORM\ManyToMany(targetEntity=Workshop::class, mappedBy="keywords",cascade={"persist"})
      * @var Collection|Workshop[] Les ateliers associés à ce mot-clé
      */
     private $workshops;

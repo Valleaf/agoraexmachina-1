@@ -60,7 +60,7 @@ class ThemeController extends AbstractController
     }
 
     /**
-     * @Route("/admin/theme/edit/{theme}", name="theme_edit", methods={"GET", "POST"})
+     * @Route("/admin/theme/edit/{theme}", defaults={"theme"=1}, name="theme_edit", methods={"GET", "POST"})
      * @param Request $request Gère le formulaire
      * @param Theme $theme Thème à modifier
      * @return Response Fonction qui permet de modifier un thème
@@ -89,7 +89,7 @@ class ThemeController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-           
+
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash("success", "edit.success");
         }
