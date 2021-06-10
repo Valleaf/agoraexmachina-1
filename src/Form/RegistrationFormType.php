@@ -39,15 +39,9 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Please enter a password',
                     ]),
                     new Length([
-                        'min' => 10,
-                        'minMessage' => 'length.min.10',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
-                    new Regex([
-                        'pattern'=>'/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{10,}$/',
-                        'message'=>'pw.regex'
-                    ])
                 ],
             ])
             ->add('lastName', null, [
@@ -97,11 +91,15 @@ class RegistrationFormType extends AbstractType
                         'message' => 'Please enter a password',
                     ]),
                     new Length([
-                        'min' => 6,
-                        'minMessage' => 'length.min.6',
+                        'min' => 10,
+                        'minMessage' => 'length.min.10',
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
+                    new Regex([
+                        'pattern'=>'/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{10,}$/',
+                        'message'=>'pw.regex'
+                    ])
                 ],
                 'label' => false,
                 'attr' => [
