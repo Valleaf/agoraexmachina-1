@@ -13,6 +13,9 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Regex;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class UserEditByUserType extends AbstractType
@@ -33,6 +36,21 @@ class UserEditByUserType extends AbstractType
                 'first_options' => array('label' => 'New password'),
                 'second_options' => array('label' => 'Confirm new password'),
                 'invalid_message' => 'The password fields must match.',
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Please enter a password',
+                    ]),
+                    new Length([
+                        'min' => 10,
+                        'minMessage' => 'length.min.10',
+                        // max length allowed by Symfony for security reasons
+                        'max' => 4096,
+                    ]),
+                    new Regex([
+                        'pattern'=>'/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{10,}$/',
+                        'message'=>'pw.regex'
+                    ])
+                ],
             ))
             ->add('isAllowedEmails',CheckboxType::class,[
                 'label'=>'Emails autorisés?',

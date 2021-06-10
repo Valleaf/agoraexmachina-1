@@ -14,9 +14,9 @@
                 <source>email.notvalid</source>
                 <target>L'email n'est pas valide</target>
             </trans-unit>
-            <trans-unit id="length.min.6">
-                <source>length.min.6</source>
-                <target>6 caractères minimum</target>
+            <trans-unit id="length.min.10">
+                <source>length.min.10</source>
+                <target>10 caractères minimum</target>
             </trans-unit>
             <trans-unit id="length.max.40">
                 <source>length.max.40</source>
@@ -30,6 +30,10 @@
 				<source>name.alreadyexists</source>
 				<target>Ce nom existe déjà</target>
 			</trans-unit>
+            <trans-unit id="pw.regex">
+                <source>pw.regex</source>
+                <target>Le mot de passe doit avoir au moins une miniscule, une majuscule, un caractère special et un nombre </target>
+            </trans-unit>
 			
         </body>
     </file>

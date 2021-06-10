@@ -62,6 +62,9 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @Assert\Regex(
+     * pattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{10,}$/",
+     * match=true)
      * @var string Non gardé dans la BDD, sert lors d'un changement de mot de passe. Il est ensuite encodé pour
      * remplir la colonne password
      */
