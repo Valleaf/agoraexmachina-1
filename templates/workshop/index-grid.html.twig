@@ -1,0 +1,64 @@
+<div class="row row-cols-1 d-flex justify-content-around ">
+    {% for workshop in workshops %}
+        {% set nbProposals = 0 %}
+        {% set nbForums = 0 %}
+        {% set nbProposals =  nbProposals + workshop.proposals.count %}
+        {% for proposal in workshop.proposals %}
+            {% set nbForums = nbForums + proposal.forums.count %}
+        {% endfor %}
+
+        {# Si on peut voter, on le signale par un code vert et un message, de meme pour la discussion #}
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-4 " style="max-width:290px "
+             data-toggle="tooltip" data-html="true"
+             data-template='<div class="tooltip
+             {% if workshop.voteStatus %}
+              green-tooltip
+              {% else %}
+              red-tooltip
+              {% endif %}
+              {% if workshop.forumStatus %}
+              cyan-shadow
+              {% else %}
+              orange-shadow
+              {% endif %}
+              " role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+             data-placement="bottom" title='
+                {{ nbProposals }} {{ 'proposals' | trans }} | {{ nbForums }} {{ 'forums' | trans }}
+                 </br>
+                {% if workshop.voteStatus %}
+                                <span style="color:#B3E283;"><i class="bi bi-check-circle"></i> Vote ouvert</span>
+                {% else %}
+                                <span style="color:#E99497;"><i class="bi bi-x-circle"></i> Vote fermé</span>
+                {% endif %}
+                </br>
+                {% if workshop.forumStatus %}
+                                <span style="color:#00ADB5;"><i class="bi bi-x-circle"></i> Discussion ouverte</span>
+                {% else %}
+                                <span style="color:#F05945;"><i class="bi bi-x-circle"></i> Discussion fermée</span>
+                {% endif %}
+
+       '>
+
+            <a href="{{ path('workshop_show', {'workshop' : workshop.id, 'slug' : slug ~ "_" ~ workshop.name | slugify }) }}"
+               class="card-link">
+
+                <div class="card shadow-sm h-100">
+                    {% if workshop.image %}
+                        <img class="m-1 mr-2 float-left rounded img-fluid"
+                             src="{{ vich_uploader_asset(workshop, 'imageFile') | imagine_filter('themes_home') }}"/>
+                    {% else %}
+                        <img class="m-1 mr-2 float-left rounded img-fluid"
+                             src="{{ asset('img/logo_aem.png') }}"/>
+                    {% endif %}
+                    <div class="card-img-overlay">
+                        <div class="card-body container">
+                            <h4 class="card-theme-title">{{ workshop.name }}</h4>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+    {% endfor %}
+</div>
+

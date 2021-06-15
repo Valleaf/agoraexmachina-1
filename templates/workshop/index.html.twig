@@ -11,20 +11,9 @@
         {% include 'theme/overview.html.twig' %}
 
         <div class="row">
-
             <main class="col" id="content">
-                <div class="row mb-2">
-                    <div class="col-12 d-flex">
 
-                        <nav aria-label="breadcrumb text-secondary">
-                            <ol class="breadcrumb text-small">
-                                <li class="breadcrumb-item"><a href="{{ path('homepage') }}"><i class="fas fa-home"></i></a>
-                                </li>
-                                <li class="breadcrumb-item active" aria-current="page">{{ theme.name }}</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
+                {% include 'breadcrumb/template.html.twig' %}
 
                 <div class="row mb-3">
                     <div class="col-12">
@@ -48,12 +37,19 @@
                             </div>
                             <div class="mr-5">
                                 <div class="btn-group" role="group">
+
+                                    <a href="#" onclick="viewing('grid')"
+                                       class="btn btn-secondary {{ ((app.request.get('view') == "grid" ) or app.request.get('view') == null)  ? "disabled" : "" }}">
+                                        <i class="bi bi-grid"></i></a>
+
                                     <a href="#" onclick="viewing('tile')"
                                        class="btn btn-secondary {{ (app.request.get('view') == "tile")  ? "disabled" : "" }}"><i
                                                 class="fas fa-th-large"></i></a>
+
                                     <a href="#" onclick="viewing('list')"
-                                       class="btn btn-secondary {{ (app.request.get('view') == "tile")  ? "" : "disabled" }}"><i
+                                       class="btn btn-secondary {{ (app.request.get('view') == "list")  ? "disabled" : "" }}"><i
                                                 class="fas fa-th-list"></i></a>
+
                                 </div>
                             </div>
                             <div>
@@ -71,131 +67,11 @@
                 <div class="row mb-3">
                     <div class="col-12">
                         {% if app.request.get('view') == "tile" %}
-                            <div class="card-columns">
-                                {% for workshop in workshops %}
-                                    <a href="{{ path('workshop_show', {'workshop' : workshop.id, 'slug' : slug ~ "_" ~ workshop.name | slugify }) }}"
-                                       class="card-link">
-                                        <div class="card mb-4 p-1 shadow-sm">
-                                            {% if workshop.image %}
-                                                <img class="m-1 mr-2 float-left rounded img-fluid"
-                                                     src="{{ vich_uploader_asset(workshop, 'imageFile') | imagine_filter('workshops_home') }}"/>
-                                            {% else %}
-                                                {% if theme.image %}
-                                                    <img class="m-1 mr-2 float-left rounded img-fluid"
-                                                         src="{{ vich_uploader_asset(theme, 'imageFile') | imagine_filter('workshops_home') }}"/>
-                                                {% else %}
-                                                    <img class="m-1 mr-2 float-left rounded img-fluid"
-                                                         src="{{ asset('img/logo_aem.png') }}"/>
-                                                {% endif %}
-                                            {% endif %}
-                                            <div class="card-body pt-2">
-                                                <div class="row">
-                                                    <div class="{{ (app.request.get('view') == "tile")  ? "col-12" : "col-5" }}">
-                                                        <h4 class="card-title">{{ workshop.name }}</h4>
-                                                        <p class="card-text text-justify">{{ workshop.description | striptags | truncate(250, true) | raw }}</p>
-                                                    </div>
-                                                </div>
-
-                                                <!--<div class="d-flex d-flex-nowrap mt-2">
-                                                    <div class="avatar avatar-list avatar-sm bg-light text-secondary">CB</div>
-                                                    <div class="avatar avatar-list avatar-sm bg-light text-secondary">CB</div>
-                                                    <div class="avatar avatar-list avatar-sm bg-light text-secondary">CB</div>
-                                                    <div class="avatar avatar-list avatar-sm bg-light text-secondary">CB</div>
-                                                </div>-->
-                                                <hr/>
-                                                <div class="d-flex bd-highlight mb-3">
-                                                    <div class="mr-auto p-2 bd-highlight">{{ workshop.dateBegin |date("d/m/Y") }}</div>
-                                                    <div class="p-2 bd-highlight">{{ workshop.dateEnd |date("d/m/Y") }}</div>
-                                                </div>
-                                                <div class="progress">
-
-                                                    <div class="progress-bar bg-success" role="progressbar"
-                                                         style="width: {{ progress(workshop.dateBegin, workshop.dateEnd) }}%;"
-                                                         aria-valuenow="{{ progress(workshop.dateBegin, workshop.dateEnd) }}"
-                                                         aria-valuemin="0" aria-valuemax="100"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                {% endfor %}
-                            </div>
-                            <!----------------------------------------------------------------------------->
-                            <!----------------------------------------------------------------------------->
-                            <!----------------------------------------------------------------------------->
-                            <!----------------------------------------------------------------------------->
+                            {% include 'workshop/index-tile.html.twig' %}
+                        {% elseif app.request.get('view') == 'list' %}
+                            {% include 'workshop/index-list.html.twig' %}
                         {% else %}
-                            {% for workshop in workshops %}
-                                <a href="{{ path('workshop_show', {'workshop' : workshop.id, 'slug' : slug ~ "_" ~ workshop.name | slugify }) }}"
-                                   class="card-link">
-                                    <div class="card mb-4 p-1 shadow-sm">
-                                        <div class="progress">
-                                            <div class="progress-bar bg-success" role="progressbar"
-                                                 style="width: {{ progress(workshop.dateBegin, workshop.dateEnd) }}%;"
-                                                 aria-valuenow="{{ progress(workshop.dateBegin, workshop.dateEnd) }}"
-                                                 aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-1">
-                                                {% if workshop.image %}
-                                                    <img class="m-1 mr-2 float-left rounded img-fluid"
-                                                         src="{{ vich_uploader_asset(workshop, 'imageFile') | imagine_filter('workshops_home') }}"/>
-                                                {% else %}
-                                                    {% if theme.image %}
-                                                        <img class="m-1 mr-2 float-left rounded img-fluid"
-                                                             src="{{ vich_uploader_asset(theme, 'imageFile') | imagine_filter('workshops_home') }}"/>
-                                                    {% else %}
-                                                        <img class="m-1 mr-2 float-left rounded img-fluid"
-                                                             src="{{ asset('img/logo_aem.png') }}"/>
-                                                    {% endif %}
-                                                {% endif %}
-                                            </div>
-                                            <div class="col-11">
-                                                <div class="card-body pt-2">
-                                                    <div class="row">
-                                                        <div class="{{ (app.request.get('view') == "tile")  ? "col-12" : "col-5" }}">
-                                                            <h4 class="card-title">{{ workshop.name }}</h4>
-                                                            <p class="card-text text-justify">{{ workshop.description | striptags | truncate(250, true) | raw }}</p>
-                                                        </div>
-                                                        <div class="col-3 text-secondary">
-                                                            <div class="card-text d-flex {{ (app.request.get('view') == "tile")  ? "pt-3 pb-3 justify-content-between" : "flex-column" }}">
-                                                                <p>{{ status(workshop.dateEnd) }}</p>
-                                                                <p>
-                                                                    <i class="fas fa-clock"></i> {{ 'start' | trans }} {{ workshop.dateBegin | date("d/m/Y") }}
-                                                                </p>
-                                                                <p>
-                                                                    <i class="fas fa-clock"></i> {{ 'end' | trans }} {{ workshop.dateEnd |date("d/m/Y") }}
-                                                                </p>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-4 text-secondary">
-                                                            <p class="mr-auto"><i
-                                                                        class="fas fa-poll"></i> {{ workshop.proposals | length }} {{ 'proposals' | trans }}
-                                                            </p>
-                                                            <p>
-                                                                <i class="fas fa-comments"></i> {{ workshop.proposals | length }} {{ 'forums' | trans }}
-                                                            </p>
-                                                            <div class="d-flex d-flex-nowrap mt-2">
-                                                                <div class="avatar avatar-list avatar-sm bg-light text-secondary">
-                                                                    CB
-                                                                </div>
-                                                                <div class="avatar avatar-list avatar-sm bg-light text-secondary">
-                                                                    CB
-                                                                </div>
-                                                                <div class="avatar avatar-list avatar-sm bg-light text-secondary">
-                                                                    CB
-                                                                </div>
-                                                                <div class="avatar avatar-list avatar-sm bg-light text-secondary">
-                                                                    CB
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                            {% endfor %}
+                            {% include 'workshop/index-grid.html.twig' %}
                         {% endif %}
                     </div>
                 </div>
@@ -203,3 +79,4 @@
         </div>
     </div>
 {% endblock %}
+

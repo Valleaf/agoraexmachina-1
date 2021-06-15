@@ -1,0 +1,52 @@
+<div class="card-columns">
+    {% for workshop in workshops %}
+        <a href="{{ path('workshop_show', {'workshop' : workshop.id, 'slug' : slug ~ "_" ~ workshop.name | slugify }) }}"
+           class="card-link">
+            <div class="card mb-4 p-1 shadow-sm">
+                {% if workshop.image %}
+                    <img class="m-1 mr-2 float-left rounded img-fluid"
+                         src="{{ vich_uploader_asset(workshop, 'imageFile') | imagine_filter('workshops_home') }}"/>
+                {% else %}
+                    {% if theme.image %}
+                        <img class="m-1 mr-2 float-left rounded img-fluid"
+                             src="{{ vich_uploader_asset(theme, 'imageFile') | imagine_filter('workshops_home') }}"/>
+                    {% else %}
+                        <img class="m-1 mr-2 float-left rounded img-fluid"
+                             src="{{ asset('img/logo_aem.png') }}"/>
+                    {% endif %}
+                {% endif %}
+                <div class="card-body pt-2">
+                    <div class="row">
+                        <div class="{{ (app.request.get('view') == "tile")  ? "col-12" : "col-5" }}">
+                            <h4 class="card-title">{{ workshop.name }}</h4>
+                            <p class="card-text text-justify">{{ workshop.description | striptags | truncate(250, true) | raw }}</p>
+                        </div>
+                    </div>
+
+                    <!--<div class="d-flex d-flex-nowrap mt-2">
+                        <div class="avatar avatar-list avatar-sm bg-light text-secondary">CB</div>
+                        <div class="avatar avatar-list avatar-sm bg-light text-secondary">CB</div>
+                        <div class="avatar avatar-list avatar-sm bg-light text-secondary">CB</div>
+                        <div class="avatar avatar-list avatar-sm bg-light text-secondary">CB</div>
+                    </div>-->
+                    <hr/>
+                    <div class="d-flex bd-highlight mb-3">
+                        <div class="mr-auto p-2 bd-highlight">{{ workshop.dateBegin |date("d/m/Y") }}</div>
+                        <div class="p-2 bd-highlight">{{ workshop.dateEnd |date("d/m/Y") }}</div>
+                    </div>
+                    <div class="progress">
+
+                        <div class="progress-bar bg-success" role="progressbar"
+                             style="width: {{ progress(workshop.dateBegin, workshop.dateEnd) }}%;"
+                             aria-valuenow="{{ progress(workshop.dateBegin, workshop.dateEnd) }}"
+                             aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                </div>
+            </div>
+        </a>
+    {% endfor %}
+</div>
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->
+<!----------------------------------------------------------------------------->

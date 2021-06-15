@@ -1,0 +1,72 @@
+{% for workshop in workshops %}
+    <a href="{{ path('workshop_show', {'workshop' : workshop.id, 'slug' : slug ~ "_" ~ workshop.name | slugify }) }}"
+       class="card-link">
+        <div class="card mb-4 p-1 shadow-sm">
+            <div class="progress">
+                <div class="progress-bar bg-success" role="progressbar"
+                     style="width: {{ progress(workshop.dateBegin, workshop.dateEnd) }}%;"
+                     aria-valuenow="{{ progress(workshop.dateBegin, workshop.dateEnd) }}"
+                     aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+            <div class="row">
+                <div class="col-1">
+                    {% if workshop.image %}
+                        <img class="m-1 mr-2 float-left rounded img-fluid"
+                             src="{{ vich_uploader_asset(workshop, 'imageFile') | imagine_filter('workshops_home') }}"/>
+                    {% else %}
+                        {% if theme.image %}
+                            <img class="m-1 mr-2 float-left rounded img-fluid"
+                                 src="{{ vich_uploader_asset(theme, 'imageFile') | imagine_filter('workshops_home') }}"/>
+                        {% else %}
+                            <img class="m-1 mr-2 float-left rounded img-fluid"
+                                 src="{{ asset('img/logo_aem.png') }}"/>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                <div class="col-11">
+                    <div class="card-body pt-2">
+                        <div class="row">
+                            <div class="{{ (app.request.get('view') == "tile")  ? "col-12" : "col-5" }}">
+                                <h4 class="card-title">{{ workshop.name }}</h4>
+                                <p class="card-text text-justify">{{ workshop.description | striptags | truncate(250, true) | raw }}</p>
+                            </div>
+                            <div class="col-3 text-secondary">
+                                <div class="card-text d-flex {{ (app.request.get('view') == "tile")  ? "pt-3 pb-3 justify-content-between" : "flex-column" }}">
+                                    <p>{{ status(workshop.dateEnd) }}</p>
+                                    <p>
+                                        <i class="fas fa-clock"></i> {{ 'start' | trans }} {{ workshop.dateBegin | date("d/m/Y") }}
+                                    </p>
+                                    <p>
+                                        <i class="fas fa-clock"></i> {{ 'end' | trans }} {{ workshop.dateEnd |date("d/m/Y") }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-4 text-secondary">
+                                <p class="mr-auto"><i
+                                            class="fas fa-poll"></i> {{ workshop.proposals | length }} {{ 'proposals' | trans }}
+                                </p>
+                                <p>
+                                    <i class="fas fa-comments"></i> {{ workshop.proposals | length }} {{ 'forums' | trans }}
+                                </p>
+                                <div class="d-flex d-flex-nowrap mt-2">
+                                    <div class="avatar avatar-list avatar-sm bg-light text-secondary">
+                                        CB
+                                    </div>
+                                    <div class="avatar avatar-list avatar-sm bg-light text-secondary">
+                                        CB
+                                    </div>
+                                    <div class="avatar avatar-list avatar-sm bg-light text-secondary">
+                                        CB
+                                    </div>
+                                    <div class="avatar avatar-list avatar-sm bg-light text-secondary">
+                                        CB
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </a>
+{% endfor %}

@@ -393,3 +393,17 @@ label {
     color: white;
     text-shadow: 2px 2px 4px #000000;
 }
+
+.green-tooltip{
+    background-color: #B3E283;
+}
+.red-tooltip{
+    background-color: #E99497;
+}
+.cyan-shadow{
+    box-shadow: #00ADB5 6px 8px 6px 4px;
+}
+
+.orange-shadow{
+    box-shadow: #F05945 6px 8px 6px 4px;
+}

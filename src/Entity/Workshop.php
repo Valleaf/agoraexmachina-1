@@ -506,4 +506,55 @@ class Workshop
         return $this;
     }
 
+    /**
+     * @return bool Retourne vrai si le vote est ouvert.
+     */
+    public function voteStatus()
+    {
+        # Verification si la date de debut est dans le passé
+        $isStarted = date_diff(new \DateTime('now'),$this->getDateVoteBegin());
+        # On convertit la date en +/- et le nombres de jours, en entier
+        $isStarted = (int)$isStarted->format("%R%a");
+        if($isStarted > 0)
+        {
+            return false;
+        }
+
+        # Verification si la date de fin est dans le passé
+        $isOver = date_diff(new \DateTime('now'),$this->getDateVoteEnd());
+        # On convertit la date en +/- et le nombres de jours, en entier
+        $isOver = (int)$isOver->format("%R%a");
+        if($isOver < 0)
+        {
+            return false;
+        }
+        return true;
+
+    }
+
+    /**
+     * @return bool Retourne vrai si la discussion est ouverte.
+     */
+    public function forumStatus()
+    {
+        # Verification si la date de debut est dans le passé
+        $isStarted = date_diff(new \DateTime('now'),$this->getDateBegin());
+        # On convertit la date en +/- et le nombres de jours, en entier
+        $isStarted = (int)$isStarted->format("%R%a");
+        if($isStarted >= 0)
+        {
+            return false;
+        }
+
+        # Verification si la date de fin est dans le passé
+        $isOver = date_diff(new \DateTime('now'),$this->getDateEnd());
+        # On convertit la date en +/- et le nombres de jours, en entier
+        $isOver = (int)$isOver->format("%R%a");
+        if($isOver < 0)
+        {
+            return false;
+        }
+        return true;
+
+    }
 }
