@@ -47,21 +47,31 @@
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"/>
         <link href="{{ asset('css/main.css') }}" rel="stylesheet"/>
         <script src="https://kit.fontawesome.com/5b7521421d.js" crossorigin="anonymous"></script>
+        {% if website.imageFile %}
+        <style>
+            body {
+                background-image: url("{{ vich_uploader_asset(website,'imageFile') | imagine_filter('wallpaper') }}");
+                background-size: cover;
+                background-color: rgba(255, 255, 255, 0.3);
+                background-blend-mode: lighten;
+            }
+        </style>
+        {% endif %}
     {% endblock %}
 </head>
 <body>
 {% include 'menu.html.twig' %}
 <div id="main-content">
-{% block body %}{% endblock %}
+    {% block body %}{% endblock %}
 </div>
 {% block javascript %}
 <script src="{{ asset('js/jquery-3.4.1.slim.min.js') }}"></script>
-			<script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-			<script src="{{ asset('js/bootstrap-confirmation.min.js') }}"></script>
-			<script src="{{ asset('js/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
-			<script src="{{ asset('js/ckeditor/adapters/jquery.js') }}" type="text/javascript"></script>
-			<script src="{{ asset('js/main.js') }}"></script>
-			{# Script permettant l'ouverture et la fermeture de la sidebar #}
+          <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+          <script src="{{ asset('js/bootstrap-confirmation.min.js') }}"></script>
+          <script src="{{ asset('js/ckeditor/ckeditor.js') }}" type="text/javascript"></script>
+          <script src="{{ asset('js/ckeditor/adapters/jquery.js') }}" type="text/javascript"></script>
+          <script src="{{ asset('js/main.js') }}"></script>
+          {# Script permettant l'ouverture et la fermeture de la sidebar #}
 			<script>
                 function openNav() {
                     console.log('test');

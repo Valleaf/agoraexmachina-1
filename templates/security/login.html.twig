@@ -11,7 +11,11 @@
 			<h3 class="mb-3">{{'signin.please' | trans }}</h3>
 			<div class="card col-12 registration-message">
 				<div class="card-body">
-					Connexion etc
+					{% if website.loginMessage %}
+						{{ website.loginMessage | raw }}
+					{% else %}
+						Connexion
+					{% endif %}
 				</div>
 			</div>
 			<form method="post" class="form-signin">

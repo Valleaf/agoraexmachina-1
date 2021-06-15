@@ -11,7 +11,11 @@
 		<div class="container">
 			<div class="card col-12 registration-message">
 				<div class="card-body">
-					Inscription etc
+					{% if website.registrationMessage %}
+						{{ website.registrationMessage | raw }}
+					{% else %}
+						Inscription
+					{% endif %}
 				</div>
 			</div>
 			{% if app.user %}

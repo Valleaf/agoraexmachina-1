@@ -14,6 +14,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ThemeRepository extends ServiceEntityRepository
 {
+
+    #TODO: Recuperer avec du join
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Theme::class);

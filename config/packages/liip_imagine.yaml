@@ -13,6 +13,13 @@ liip_imagine:
         
     filter_sets :
         cache : ~
+        wallpaper:
+            quality: 100
+            filters:
+                thumbnail: { size: [ 2560, 1440 ], mode: outbound }
+                # set the background color to #00ffff
+                background :
+                    color: '#00ffff'
         themes_home :
             quality : 100
             filters :
@@ -29,3 +36,4 @@ liip_imagine:
             quality : 100
             filters :
                 thumbnail  : { size : [25, 25], mode : outbound }
+
