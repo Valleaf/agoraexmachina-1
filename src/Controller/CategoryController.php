@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Entity\Notification;
+use App\Entity\User;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use App\Repository\RequestRepository;
@@ -51,6 +52,9 @@ class CategoryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
+
+            # Pour chaque administrateur, on l'ajoute a la categorie
+            $this->addAllAdminsToCategory($category);
             #On sauvegarde la catégorie dans la BDD
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($category);
@@ -63,6 +67,7 @@ class CategoryController extends AbstractController
                     $user->addCategory($category);
                 }
             }
+
 
             $entityManager->flush();
             #Ajout d'un message flash indiquant le succès de l'opération
@@ -95,7 +100,8 @@ class CategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             #TODO: Permettre d'enlever des utilisateurs des categories, peut-être comparer les utilisateurs dans
             # getUsers et la liste d'utilisateurs globale?
-            # On enlève tous les utilisateurs de la catégorie pour ne remettre que ceux sélectionnés
+            # On enlève tous les utilisateurs de la catégorie pour ne remettre que ceux sélectionnés et ne pas
+            # pouvoir selectionner les admins
            # if($usersBefore->count() != 0){
            #     foreach ($usersBefore as $user) {
            #         $category->removeUser($user);
@@ -113,6 +119,8 @@ class CategoryController extends AbstractController
                 }
             }
 
+            # Pour chaque administrateur, on l'ajoute a la categorie
+            $this->addAllAdminsToCategory($category);
 
             #Persistence de la catégorie dans la BDD
             $this->getDoctrine()->getManager()->persist($category);
@@ -325,5 +333,19 @@ class CategoryController extends AbstractController
         ]);
     }
 
+    /**
+     * Cette fonction permet de recuperer tous les administrateurs dans la BDD et de les ajouter a une categorie
+     * passee en paramètre.
+     * @param Category $category
+     */
+    public function addAllAdminsToCategory(Category $category): void
+    {
+        $admins = $this->getDoctrine()->getRepository(User::class)->findAdmins();
+        foreach ($admins as $admin)
+        {
+            $category->addUser($admin);
+        }
+
+    }
 
 }

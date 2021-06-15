@@ -1,28 +1,31 @@
+{# On calcule le nombre de propositions et de forums dans chaque theme, pour pouvoir l'afficher dans un tooltip #}
+{% set nbProposals = 0 %}
+{% set nbForums = 0 %}
+   {% for w in theme.workshops %}
+       {% set nbProposals =  nbProposals + w.proposals.count %}
+       {% for p in w.proposals %}
+           {% set nbForums = nbForums + p.forums.count %}
+       {% endfor %}
+   {% endfor %}
+<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-4 red-tooltip" style="max-width:290px " data-toggle="tooltip"
+     data-placement="bottom" title="{{ nbProposals }} {{ 'proposals' | trans }} | {{ theme.workshops.count }} {{ 'workshops' | trans}} | {{ nbForums }} {{ 'forums' | trans }}">
 
-    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-4" style="max-width:290px">
-        <a href="{{ path('workshop_index', {'slug' : theme.name | slugify, 'theme' : theme.id }) }}"
-           class="card-link">
-            <div class="card shadow-sm h-100">
-                {% if theme.image %}
-                    <img class="bd-placeholder-img card-img-top" width="260" height="225"
-                         src="{{ vich_uploader_asset(theme, 'imageFile') | imagine_filter('themes_home') }}"/>
-                {% else %}
-                    <img class="bd-placeholder-img card-img-top" width="260" height="225"
-                         src="{{ asset('img/logo_aem-lg.png') }}"/>
-                {% endif %}
-                <div class="card-body">
-                    <h4 class="card-title">{{ theme.name }}</h4>
-                    <p class="card-text">
-                        {% if theme.description | length > 140 %}
-                            {{ theme.description | truncate(140, true)|raw }}
-                            <span class="badge badge-secondary" data-toggle="tooltip"
-                                  data-placement="top" title="{{ theme.description }}">Suite</span>
-                        {% else %}
+    <a href="{{ path('workshop_index', {'slug' : theme.name | slugify, 'theme' : theme.id }) }}"
+       class="card-link">
 
-                            {{ theme.description | raw }}
-                        {% endif %}
-                    </p>
-                </div>
+        <div class="card shadow-sm h-100">
+            {% if theme.image %}
+                <img class="bd-placeholder-img card-img-top" width="260" height="225"
+                     src="{{ vich_uploader_asset(theme, 'imageFile') | imagine_filter('themes_home') }}"/>
+            {% else %}
+                <img class="bd-placeholder-img card-img-top" width="260" height="225"
+                     src="{{ asset('img/logo_aem-lg.png') }}"/>
+            {% endif %}
+            <div class="card-img-overlay">
+            <div class="card-body container">
+                <h4 class="card-theme-title">{{ theme.name }}</h4>
             </div>
-        </a>
-    </div>
+        </div>
+        </div>
+    </a>
+</div>

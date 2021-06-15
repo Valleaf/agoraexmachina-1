@@ -37,7 +37,14 @@ class TwigGlobalSubscriber implements EventSubscriberInterface
     public function injectGlobalVariables(RequestEvent $event)
     {
         $website = $this->manager->getRepository(Website::class)->find(1);
-        $this->twig->addGlobal('website', $website);
+        if($website != null)
+        {
+            $this->twig->addGlobal('website', $website);
+        }
+        else
+        {
+            $this->twig->addGlobal('website', new Website());
+        }
 
     }
 

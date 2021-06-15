@@ -8,8 +8,13 @@
 {% block body %}
 	<main role="main">
 		<div class="container">
+			<h3 class="mb-3">{{'signin.please' | trans }}</h3>
+			<div class="card col-12 registration-message">
+				<div class="card-body">
+					Connexion etc
+				</div>
+			</div>
 			<form method="post" class="form-signin">
-				<img class="mb-4 bg-white rounded" src="{{ asset('img/logo_aem.png') }}" alt width="72" height="72" />
 
 				{% if error %}
 					<div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -20,7 +25,6 @@
 						<br /><a href="{{ path('app_logout') }}">{{ 'Logout' | trans }}</a>
 					</div>
 				{% else %}
-					<h3 class="mb-3">{{'signin.please' | trans }}</h3>
 					<input type="email" name="email" id="inputEmail" class="form-control mb-3" required autofocus placeholder="{{'email' | trans }}" />
 					<input type="password" name="password" id="inputPassword" class="form-control" required placeholder="{{ 'password' | trans }}" />
 					<hr />
@@ -30,7 +34,7 @@
 					<a href="{{path('app_register')}}">{{ 'or_create_account' | trans  }}</a>
 					<br />
 					{# Ajouter le forgot password dans la traduction #}
-					<a href="{{path('app_forgot_password_request')}}">{{ 'Forgot your password ?' }}</a>
+					<a href="{{path('app_forgot_password_request')}}">{{ 'Forgot your password ?' | trans }}</a>
 				{% endif %}
 			</form>
 		</div>

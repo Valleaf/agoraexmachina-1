@@ -65,9 +65,14 @@ final class Version1 extends AbstractMigration
         $this->addSql('ALTER TABLE workshop ADD CONSTRAINT FK_9B6F02C4A76ED395 FOREIGN KEY (user_id) REFERENCES user (id)');
         $this->addSql('ALTER TABLE workshop_keyword ADD CONSTRAINT FK_18DC632C1FDCE57C FOREIGN KEY (workshop_id) REFERENCES workshop (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE workshop_keyword ADD CONSTRAINT FK_18DC632C115D4552 FOREIGN KEY (keyword_id) REFERENCES keyword (id) ON DELETE CASCADE');
+        # On crée une entité Website qui sera ensuite modifiable
         $this->addSql("INSERT INTO `website` (`id`, `title`, `version`, `name`, `email`) VALUES ('1', 'AGORA Ex Machina', 'v0.9.2', 'CRLBazin', 'crlbazin@gmail.com')");
+        # Creation de la categorie par defaut
         $this->addSql("INSERT INTO `category` (`name`) VALUES ('Defaut')");
-        $this->addSql("INSERT INTO `user` (`id`, `username`, `roles`, `password`, `email`, `is_allowed_emails`, `image`, `updated_at`, `first_name`, `last_name`) VALUES ('999', 'Administrateur', '[\"ROLE_ADMIN\"]', '\$argon2id\$v=19\$m=65536,t=4,p=1\$L2pxOS81eEpMaUdaVEFVQg\$IFC+9PjDXqNVtAKik1Wo21+kugImSmQgEnAvpXOzI1w', 'admin@mail.com', '0', NULL, NULL, 'Admin', 'Nistrateur'); ");
+        # Creation de l'administrateur
+        $this->addSql("INSERT INTO `user` (`id`, `username`, `roles`, `password`, `email`, `is_allowed_emails`, `image`, `updated_at`, `first_name`, `last_name`) VALUES ('999', 'Administrateur', '[\"ROLE_ADMIN\"]', '\$argon2id\$v=19\$m=65536,t=4,p=1\$Q1BLTEFVM29kZHovLkFFTQ\$R2Kva8FJKipcwcaTYzPU6w+VSjty/X9aVjVqpvZdvLc', 'admin@mail.com', '0', NULL, NULL, 'Admin', 'Nistrateur'); ");
+        # Ajout de l'admin a la categorie defaut
+        $this->addSql("INSERT INTO `user_category` (`user_id`, `category_id`) VALUES ('999', '1'); ");
     }
 
     public function down(Schema $schema) : void

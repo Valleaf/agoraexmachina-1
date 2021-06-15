@@ -173,7 +173,7 @@
             </trans-unit>
             <trans-unit id="jumbotron.1">
                 <source>jumbotron.1</source>
-                <target>GORA Ex Machina facilite la prise de décisions via la "démocratie liquide".</target>
+                <target>AGORA Ex Machina facilite la prise de décisions via la "démocratie liquide".</target>
             </trans-unit>
             <trans-unit id="jumbotron.2">
                 <source>jumbotron.2</source>
@@ -185,11 +185,19 @@
             </trans-unit>
             <trans-unit id="jumbotron.4">
                 <source>jumbotron.4</source>
-                <target>Pour commencer, vous devez vous connecter en tant qu'administrateur (nom d'utilisateur par défaut "admin@mail.com" et mot de passe par défaut "agora") et créer vos premières catégories. Les catégories regrouperont vos ateliers de discussions et de votes.</target>
+                <target>Pour commencer, vous devez vous connecter en tant qu'administrateur (nom d'utilisateur par défaut "admin@mail.com" et mot de passe par défaut "Password0@") et créer vos premières catégories. Les catégories regrouperont vos ateliers de discussions et de votes.</target>
             </trans-unit>
             <trans-unit id="jumbotron.5">
                 <source>jumbotron.5</source>
                 <target>##En cas de problème, nous sommes sur **https://github.com/CRLbazin/agoraexmachina.**</target>
+            </trans-unit>
+            <trans-unit id="already.registered">
+                <source>already.registered</source>
+                <target>J'ai déjà un compte</target>
+            </trans-unit>
+            <trans-unit id="participate">
+                <source>participate</source>
+                <target>Je veux participer</target>
             </trans-unit>
 
             <trans-unit id="no-categories">
@@ -260,6 +268,10 @@
             <trans-unit id="admin">
                 <source>admin</source>
                 <target>Administration</target>
+            </trans-unit>
+            <trans-unit id="Forgot your password ?">
+                <source>Forgot your password ?</source>
+                <target>Mot de passe oublié?</target>
             </trans-unit>
 
 
@@ -502,6 +514,10 @@
                 <source>edit_document</source>
                 <target>Gérer les documents</target>
             </trans-unit>
+            <trans-unit id="pdf.max.size.1024">
+                <source>pdf.max.size.1024</source>
+                <target>Le document doit être en format pdf et en dessous de 1024kb</target>
+            </trans-unit>
 
         <!-- ******************************** -->
         <!-- NOTIFICATIONS -->
@@ -566,6 +582,8 @@
                 <source>Menu</source>
                 <target>Menu</target>
             </trans-unit>
+
+
 
 
         </body>

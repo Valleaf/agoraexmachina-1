@@ -1,0 +1,24 @@
+<div class="card">
+    <h2 class="card-header bg-secondary text-white">
+        {% if website.title %}
+        {{website.title}}
+        {% else %}
+        Agora Ex Machina
+        {% endif %}
+    </h2>
+    <div class="card-body">
+        <div class="card-img2">
+            <img width="260" height="225" src="{{ asset('img/logo_aem-lg.png') }}"  class="rounded mx-auto d-block" >
+        </div>
+        <h2 class="card-text" style="margin-top:1em;">{{'jumbotron.1' | trans }}</h2>
+        <p class="card-text">{{'jumbotron.2' | trans }}</p>
+        <p class="card-text">{{'jumbotron.3' | trans }}</p>
+
+
+    </div>
+</div>
+
+<div class="d-flex justify-content-around col-12 new-user-jumbotron">
+    <a class="btn btn-outline-primary login-button" href="{{ path('app_register') }}">{{ 'participate' | trans }}</a>
+    <a class="btn btn-primary login-button" href="{{path('app_login')}}" role="button"><i class="fas fa-user-cog"></i> {{'already.registered' | trans }}</a>
+</div>

@@ -1,16 +1,16 @@
 @font-face {
-	font-family: cgfont;
-	src: url(../fonts/gothic.ttf);
+    font-family: cgfont;
+    src: url(../fonts/gothic.ttf);
 }
 
 @font-face {
-	font-family: Nunito;
-	src: url(../fonts/Nunito-Regular.ttf);
+    font-family: Nunito;
+    src: url(../fonts/Nunito-Regular.ttf);
 }
 
 html, body {
     margin: 0;
-    font-family: Nunito,sans-serif;
+    font-family: Nunito, sans-serif;
     font-size: 15px;
     font-weight: 400;
     line-height: 1.5;
@@ -20,148 +20,132 @@ html, body {
 }
 
 
-a, button
-{	
+a, button {
     color: #343a40;
 }
 
-main 
-{
-	margin-top : 90px;
+main {
     /*overflow: hidden; TODO: Empeche l'affichage des elements, etait il la pour une raison?*/
     padding: 10px;
     min-height: 100vh;
 }
 
 
-nav.sidebar-grey + main
-{
-	margin-left : 75px;
+nav.sidebar-grey + main {
+    margin-left: 75px;
 }
-
 
 
 .sidebar {
-	position: fixed;
-	top : 0px;
-	bottom: 0;
-	left: 0;
-	z-index: 100; /* Behind the navbar */
-	padding: 90px 0 0; /* Height of navbar */
-	box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
-	min-width : 70px;
+    position: fixed;
+    top: 0px;
+    bottom: 0;
+    left: 0;
+    z-index: 100; /* Behind the navbar */
+    padding: 90px 0 0; /* Height of navbar */
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    min-width: 70px;
 }
 
-.sidebar-dark 
-{
-	color: rgba(255,255,255,.9);
+.sidebar-dark {
+    color: rgba(255, 255, 255, .9);
 }
-.sidebar-dark .nav .nav-item .nav-link 
-{
-	color: #cedce4;
+
+.sidebar-dark .nav .nav-item .nav-link {
+    color: #cedce4;
     display: block;
     padding: 10px 30px;
     position: relative;
     -webkit-transition: all .4s;
     transition: all .4s;
-	color: rgba(255,255,255,.5);
+    color: rgba(255, 255, 255, .5);
 }
 
-.breadcrumb 
-{
+.breadcrumb {
     font-size: 14px;
     padding: .35rem 0.6rem;
     margin-bottom: 0rem;
-	background : transparent;
-	color : grey;
+    background: transparent;
+    color: grey;
 }
 
-.sidebar-dark .nav .nav-item .active
-{
-	color: rgba(255,255,255,1) !important;
-	font-weight: bold;
+.sidebar-dark .nav .nav-item .active {
+    color: rgba(255, 255, 255, 1) !important;
+    font-weight: bold;
 }
 
-.sidebar-grey .nav .nav-item .active
-{
-	color: #555 !important;
-	font-weight: bold;	
+.sidebar-grey .nav .nav-item .active {
+    color: #555 !important;
+    font-weight: bold;
 }
 
 
 ::-webkit-scrollbar {
-	width: 10px;
+    width: 10px;
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-	background: #f1f1f1; 
+    background: #f1f1f1;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-	background: #888; 
+    background: #888;
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-	background: #555; 
+    background: #555;
 }
 
-.avatar
-{
-	width: 50px;
-	height: 50px;
-	text-align : center;
-	color : white;
-	font-weight : bold;
-	border-radius: 50%;
-	padding-top : 3px;
+.avatar {
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    border-radius: 50%;
+    padding-top: 3px;
 }
 
-.avatar-list
-{
-	border : 1px solid white;
-	margin-left : -5.5px;
+.avatar-list {
+    border: 1px solid white;
+    margin-left: -5.5px;
 }
 
-.avatar-sm
-{
-	width: 35px;
-	height: 35px;
-	padding-top : 5px;
+.avatar-sm {
+    width: 35px;
+    height: 35px;
+    padding-top: 5px;
 }
 
-.avatar-xs
-{
-	width: 20px;
-	height: 20px;
-	padding-top : 1px;
-	font-size : 12px;
+.avatar-xs {
+    width: 20px;
+    height: 20px;
+    padding-top: 1px;
+    font-size: 12px;
 }
 
 
-label
-{
-	font-weight: 600;
-	display: inline-block;
+label {
+    font-weight: 600;
+    display: inline-block;
     margin-bottom: .5rem;
 }
 
 
 .tooltip {
-	pointer-events: none;
+    pointer-events: none;
 }
 
-.card-link, .card-link:hover
-{
-	text-decoration: none !important;
-	color : #212529;
+.card-link, .card-link:hover {
+    text-decoration: none !important;
+    color: #212529;
 }
 
-.card-link + .card-link 
-{
-	margin-left: 0px !important;
+.card-link + .card-link {
+    margin-left: 0px !important;
 }
 
 @media (min-width: 540px) {
@@ -206,9 +190,8 @@ label
 }
 
 
-.active .img-thumbnail
-{
-	background-color : white !important;
+.active .img-thumbnail {
+    background-color: white !important;
 }
 
 .card > .progress {
@@ -220,6 +203,7 @@ label
     width: 100%;
     z-index: 1;
 }
+
 .progress {
     display: flex;
     height: 0.8rem;
@@ -229,8 +213,7 @@ label
     border-radius: 20rem;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link 
-{
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #17a2b8;
     background-color: #fff;
 }
@@ -240,67 +223,66 @@ label
     background-color: #ced4da;
 }
 
-.btn
-{
-	box-shadow:0 .125rem .25rem rgba(0,0,0,.075)!important;
+.btn {
+    box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075) !important;
 }
 
-.no-shadow
-{
-	box-shadow:0 0 0 !important;
+.no-shadow {
+    box-shadow: 0 0 0 !important;
 }
 
 
-.arrow-left 
-{
+.arrow-left {
     border-bottom: 12px solid transparent;
-    border-left: 12px solid #EAEAEA!important;
+    border-left: 12px solid #EAEAEA !important;
     border-top: 12px solid transparent;
     display: block;
     position: relative;
     float: right;
     top: 10px;
     right: -15px;
-	background-color: transparent;
+    background-color: transparent;
 }
-.arrow-right
-{
+
+.arrow-right {
     border-bottom: 12px solid transparent;
-    border-right: 12px solid #EAEAEA!important;
+    border-right: 12px solid #EAEAEA !important;
     border-top: 12px solid transparent;
     display: block;
     position: relative;
     float: left;
     top: 10px;
     left: -15px;
-	background-color: transparent;
+    background-color: transparent;
 }
 
-.arrow-right.arrow-white
-{
+.arrow-right.arrow-white {
     border-bottom: 12px solid transparent;
-    border-right: 12px solid #FFF!important;
+    border-right: 12px solid #FFF !important;
     border-top: 12px solid transparent;
-	background-color: transparent;
+    background-color: transparent;
 }
 
-.nav-proposal .nav-link.active
-{
-	color : #17a2b8;
+.nav-proposal .nav-link.active {
+    color: #17a2b8;
 }
 
-.category-card{
+.category-card {
     text-align: center;
 }
 
-.user_not_subscribed{
+.user_not_subscribed {
     background-color: #ce1f6a;
 }
-.user_subscribed{
+
+.user_subscribed {
     background-color: #81b214;
 }
 
-.table { border-collapse: collapse; }
+.table {
+    border-collapse: collapse;
+}
+
 .table th, td {
     border-bottom: 1px solid #ddd;
     width: 250px;
@@ -344,21 +326,22 @@ label
 
 .openbtn {
     position: sticky;
-top: 100px;
-    left: 0px;
-    font-size: 20px;
+    top: 20px;
+    left: 20px;
+    font-size: 2rem;
     cursor: pointer;
-    background-color: #161314;
-    color: white;
+    color: black;
     padding: 10px 15px;
     border: none;
     margin-right: auto;
+    z-index: 1049;
+    background-color: inherit;
 }
+
 
 .openbtn:hover {
-    background-color: #444;
+    color: darkred;
 }
-
 #main-content {
     transition: margin-left .5s;
     padding: 16px;
@@ -366,10 +349,47 @@ top: 100px;
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
-    .sidebar-left {padding-top: 15px;}
-    .sidebar-left a {font-size: 18px;}
+    .sidebar-left {
+        padding-top: 15px;
+    }
+
+    .sidebar-left a {
+        font-size: 18px;
+    }
 }
 
-.navbar-end-btn{
+.navbar-end-btn {
     justify-content: end;
+}
+
+.new-user-jumbotron {
+    margin: 50px auto;
+}
+
+.login-button {
+    width: 30%;
+}
+
+.footer {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    height: 30px;
+    line-height: 30px;
+    background-color: #c4c4c4;
+}
+
+.main-header-text{
+    font-size: 4rem;
+}
+
+.registration-message{
+    margin: 50px auto;
+}
+
+.card-theme-title{
+    font-size: 2rem;
+    font-weight: bold;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
 }

@@ -31,6 +31,7 @@ class DocumentType extends AbstractType
                 'download_uri' => '...',
                 'download_label' => '...',
                 'asset_helper' => true,
+                'help'=>'pdf.max.size.1024',
                 'constraints' =>[
                     new File([
                         'maxSize' => '1024k',

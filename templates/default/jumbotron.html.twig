@@ -9,6 +9,11 @@
 		<p class="card-text">{{'jumbotron.3' | trans }}</p>
 		<p class="card-text">{{'jumbotron.4' | trans }}</p>
 		<p class="card-text">{{ 'jumbotron.5' | trans |markdown_to_html  }}</p>
-		<a class="btn btn-primary" href="{{path('app_register')}}" role="button"><i class="fas fa-user-cog"></i> {{'register' | trans }}</a>
+		<div class="d-flex justify-content-around ">
+			<a class="btn btn-outline-primary" href="{{ path('app_login') }}">{{ 'signin' | trans }}</a>
+			<a class="btn btn-primary" href="{{path('app_register')}}" role="button"><i class="fas fa-user-cog"></i> {{'register' | trans }}</a>
+		</div>
+
 	</div>
 </div>
+

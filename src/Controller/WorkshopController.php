@@ -223,6 +223,8 @@ class WorkshopController extends AbstractController
      */
     public function index(Request $request, string $slug, Theme $theme): Response
     {
+        #TODO: Si aucun theme existant, rediriger
+
         if ($request->query->get('search') != "")
             $workshops = $this->getDoctrine()->getRepository(Workshop::class)->searchBy(['theme' => $theme, 'name' => $request->query->get('search')]);
         else

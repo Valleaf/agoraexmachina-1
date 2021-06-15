@@ -3,7 +3,6 @@
 {% block body %}
     <main main="role">
 
-
         <div class="container main-content">
             {% if themes is empty %}
                 {% include 'default/jumbotron.html.twig' %}
@@ -12,6 +11,12 @@
                 <div class="col-11">
                     <div class="row row-cols-1 d-flex justify-content-around ">
 
+                        {# Si l'utilisateur n'est pas connecté, on lui propose de se connecter ou de s'inscrire en lui montrant les themes publics #}
+                        {% if not app.user %}
+                            {% if not themes is empty %}
+                                {% include 'default/jumbotron-new-user.html.twig' %}
+                            {% endif %}
+                        {% endif %}
                         {% for theme in themes %}
                             {% if  theme.isPublic %}
                                 {% if app.user %}
