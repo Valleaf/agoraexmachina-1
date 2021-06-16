@@ -7,6 +7,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Mailer\Exception\ExceptionInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -602,6 +606,37 @@ class User implements UserInterface
             ->setSubject($subject)
             ->setUser($this);
         return $notification;
+    }
+
+    /**
+     * Cette fonction permet d'envoyer un courriel a l'utilisateur
+     * @param MailerInterface $mailer
+     * @param string $subject Le sujet du courriel
+     * @param string $body Le corps du courriel
+     */
+    public function sendEmailToUser(MailerInterface $mailer,$sender, string $subject, string $body): void
+    {
+        $pattern = '/:\/\//';
+        $sender = preg_split($pattern,$sender)[1];
+        $pattern = '/:/';
+        $sender = preg_split($pattern,$sender)[0];
+
+
+        $email = (new Email())
+            ->from($sender)
+            ->to($this->getEmail())
+            //->cc('cc@example.com')
+            //->bcc('bcc@example.com')
+            //->replyTo('fabien@example.com')
+            //->priority(Email::PRIORITY_HIGH)
+            ->subject($subject)
+            ->text($body);
+        try {
+            $mailer->send($email);
+        } catch (TransportExceptionInterface  $e)
+        {
+
+        }
     }
 
     /**

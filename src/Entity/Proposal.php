@@ -4,6 +4,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Les propositions sont dans les ateliers et autorisent en leur sein des forums et des votes.
@@ -31,6 +32,7 @@ class Proposal
 	private $name;
 	/**
 	 * @ORM\Column(type="text")
+     * @Assert\NotNull()
      * @var string La description de la proposition
 	 */
 	private $description;

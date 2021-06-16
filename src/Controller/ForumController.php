@@ -151,7 +151,6 @@ class ForumController extends AbstractController
      */
     public function answer(Request $request, string $slug, Proposal $proposal, Workshop $workshop, Forum $forum): Response
     {
-        #TODO: Changer l'interface en reponse
         # Création d'un forum avec attribution du créateur et du forum parent
         $answer = new Forum();
         $answer->setUser($this->getUser());

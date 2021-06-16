@@ -7,7 +7,11 @@
             {% if themes is empty %}
                 {% include 'default/jumbotron.html.twig' %}
             {% else %}
-
+                <div class="row mb-2">
+                    <div class="col-12">
+                        {% include 'flashbag.html.twig' %}
+                    </div>
+                </div>
                 <div class="col-11">
                     <div class="row row-cols-1 d-flex justify-content-around ">
                         {# Si l'utilisateur n'est pas connecté, on lui propose de se connecter ou de s'inscrire en lui montrant les themes publics #}

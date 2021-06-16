@@ -9,6 +9,8 @@ use App\Repository\ThemeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -24,8 +26,12 @@ class ThemeController extends AbstractController
      * @Route("/admin/theme", name="theme_admin", methods={"GET"})
      * @return Response Une fonction qui affiche les thèmes pour l'administrateur
      */
-    public function admin(): Response
+    public function admin(MailerInterface $mailer): Response
     {
+       #$user=$this->getUser();
+       #$user->sendEmailToUser($mailer,$this->getParameter('app.smtp_email'),'TEST','Bonjour!');
+
+
         return $this->render('theme/admin.html.twig', [
             'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
         ]);

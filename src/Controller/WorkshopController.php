@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class WorkshopController Cette classe s'occupe des ateliers, de leur gestion, affichage,  ainsi que de l'ajout des
@@ -80,10 +81,16 @@ class WorkshopController extends AbstractController
      * @param Request $request Gère le formulaire
      * @return Response Fonction qui ajoute un atelier à la BDD
      */
-    public function add(Request $request): Response
+    public function add(Request $request, TranslatorInterface $translator): Response
     {
 
-        #TODO: Ne pas avoir de creation si aucun theme n'existe !
+        $themes = $this->getDoctrine()->getRepository(Theme::class)->findAll();
+        if(is_null($themes))
+        {
+            $this->addFlash("warning", $translator->trans('no.themes'));
+            return $this->redirectToRoute('homepage');
+        }
+
         # Création d'un nouvel atelier, attribution de l'utilisateur en tant que créateur
         $workshop = new Workshop();
         $workshop->setUser($this->security->getUser());

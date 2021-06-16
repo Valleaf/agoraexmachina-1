@@ -147,7 +147,7 @@ class CategoryController extends AbstractController
      */
     public function delete(Category $category): Response
     {
-        #TODO: empêcher la catégorie DEFAULT d'etre supprimée
+
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($category);
         $entityManager->flush();

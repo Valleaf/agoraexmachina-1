@@ -37,9 +37,6 @@ class UserEditByUserType extends AbstractType
                 'second_options' => array('label' => 'Confirm new password'),
                 'invalid_message' => 'The password fields must match.',
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
                     new Length([
                         'min' => 10,
                         'minMessage' => 'length.min.10',

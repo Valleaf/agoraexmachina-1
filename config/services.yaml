@@ -24,6 +24,7 @@ parameters:
     # ici vos autres variables
     app.locales: [en, fr]
     app.app_env: '%env(APP_ENV)%'
+    app.smtp_email: '%env(MAILER_DSN)%'
 
 
 

@@ -53,6 +53,10 @@
   * le nom de votre site (affiché dans le menu et dans la balise title de la page `html`
   * Le non de la structure qui abrite le site
   * Le langage, la lang et l'écriture (pour certaines balises, voir dans le fichier `templates/base.html.twig` pour plus de détails).
+  
+### Installation du service d'email et passage en production
+
+https://symfony.com/doc/current/mailer.html
 
 ## Remarques
 La solution de démocratie liquide est en développement, et quelques bugs d'installation restent. Ne désespérez pas lors de l'installation. Ces quelques conseils vous aideront surement : 
