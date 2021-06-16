@@ -3,7 +3,7 @@
         <li class="nav-item">
             <a class="nav-link d-flex flex-row {{ 'admin' == app.request.attributes.get('_route') ? 'active' }}"
                href="{{ path('admin') }}">
-                <div><i class="fas fa-tachometer-alt"></i>&nbsp;</div>
+                <div><i class="bi bi-speedometer2"></i>&nbsp;</div>
                 <div class="d-none d-lg-block">{{ 'dashboard' | trans }}</div>
             </a>
         </li>
@@ -12,7 +12,7 @@
             <li class="nav-item">
                 <a class="nav-link d-flex flex-row"
                    href="{{ path('admin_configuration') }}">
-                    <div><i class="fas fa-tasks"></i>&nbsp;</div>
+                    <div><i class="bi bi-list-task"></i>&nbsp;</div>
                     <div class="d-none d-lg-block">{{ 'configuration' | trans }}</div>
                 </a>
             </li>
@@ -21,7 +21,7 @@
             <li class="nav-item">
                 <a class="nav-link d-flex flex-row  {{ 'user_' in app.request.attributes.get('_route') ? 'active' }}"
                    href="{{ path('user_admin') }}">
-                    <div><i class="fas fa-user"></i>&nbsp;</div>
+                    <div><i class="bi bi-person"></i>&nbsp;</div>
                     <div class="d-none d-lg-block">{{ 'users' | trans }}</div>
                 </a>
             </li>
@@ -29,7 +29,7 @@
             <li class="nav-item">
                 <a class="nav-link d-flex flex-row  {{ 'category_' in app.request.attributes.get('_route') ? 'active' }}"
                    href="{{ path('category_admin') }}">
-                    <div><i class="fas fa-folder"></i>&nbsp;</div>
+                    <div><i class="bi bi-folder2"></i>&nbsp;</div>
                     <div class="d-none d-lg-block">{{ 'categories' | trans }} </div>
                 </a>
             </li>
@@ -39,7 +39,7 @@
         <li class="nav-item">
             <a class="nav-link d-flex flex-row  {{ 'theme_' in app.request.attributes.get('_route') ? 'active' }}"
                href="{{ path('theme_admin') }}">
-                <div><i class="fas fa-folder"></i>&nbsp;</div>
+                <div><i class="bi bi-folder"></i>&nbsp;</div>
                 <div class="d-none d-lg-block">{{ 'themes' | trans }} </div>
             </a>
         </li>
@@ -47,7 +47,7 @@
         <li class="nav-item">
             <a class="nav-link d-flex flex-row  {{ 'workshop_' in app.request.attributes.get('_route') ? 'active' }}"
                href="{{ path('workshop_admin') }}">
-                <div><i class="fas fa-poll"></i>&nbsp;</div>
+                <div><i class="bi bi-bar-chart-line-fill"></i>&nbsp;</div>
                 <div class="d-none d-lg-block">{{ 'workshops' | trans }} <span class="sr-only">(current)</span></div>
             </a>
         </li>

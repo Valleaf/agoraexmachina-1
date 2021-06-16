@@ -13,7 +13,7 @@
 				</div>
 				<div class="row mb-2" >
 					<div class="col-12">
-						<a href="{{ path('user_add') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{
+						<a href="{{ path('user_add') }}" class="btn btn-primary"><i class="bi bi-plus"></i> {{
 							'add' |
 							trans }}</a>
 					</div>
@@ -44,8 +44,8 @@
 													<td>{{ user.username }}</td>
 													<td>{{ user.email }}</td>
 													<td>
-														<a href="{{ path('user_admin_edit', {'id' : user.id}) }}" class="text-primary"><i class="fas fa-edit"></i></a> 
-														<a href="{{ path('user_delete', {'id' : user.id}) }}" class="text-primary"  data-toggle="deleteConfirmation"><i class="fas fa-trash-alt"></i></a> 
+														<a href="{{ path('user_admin_edit', {'id' : user.id}) }}" class="text-primary"><i class="bi bi-list-task"></i></a>
+														<a href="{{ path('user_delete', {'id' : user.id}) }}" class="text-primary"  data-toggle="deleteConfirmation"><i class="bi bi-trash"></i></a>
 												</tr>
 											{% endfor %}
 										</tbody>

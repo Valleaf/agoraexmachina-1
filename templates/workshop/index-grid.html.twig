@@ -44,10 +44,10 @@
 
                 <div class="card shadow-sm h-100">
                     {% if workshop.image %}
-                        <img class="m-1 mr-2 float-left rounded img-fluid"
+                        <img class="bd-placeholder-img card-img-top"
                              src="{{ vich_uploader_asset(workshop, 'imageFile') | imagine_filter('themes_home') }}"/>
                     {% else %}
-                        <img class="m-1 mr-2 float-left rounded img-fluid"
+                        <img class="bd-placeholder-img card-img-top"
                              src="{{ asset('img/logo_aem.png') }}"/>
                     {% endif %}
                     <div class="card-img-overlay">

@@ -12,7 +12,7 @@
                 </div>
                 <div class="row mb-2" >
                     <div class="col-12">
-                         <a href="{{ path('category_add') }}" class="btn btn-primary"><i class="fas fa-plus"></i> {{ 'add' | trans }}</a>
+                         <a href="{{ path('category_add') }}" class="btn btn-primary"><i class="bi bi-plus"></i> {{ 'add' | trans }}</a>
                         </div>
                 </div>
                 <div class="row mb-2" >
@@ -40,8 +40,8 @@
                                                 <td>{{ category.name}}</td>
                                                 <td></td>
                                                 <td>
-                                                    <a href="{{ path('category_edit', {'category' : category.id}) }}" class="text-primary"><i class="fas fa-edit"></i></a>
-                                                  <a href="{{ path('category_delete', {'category' : category.id}) }}" class="text-primary"  data-toggle="deleteConfirmation"><i class="fas fa-trash-alt"></i></a>
+                                                    <a href="{{ path('category_edit', {'category' : category.id}) }}" class="text-primary"><i class="bi bi-list-task"></i></a>
+                                                  <a href="{{ path('category_delete', {'category' : category.id}) }}" class="text-primary"  data-toggle="deleteConfirmation"><i class="bi bi-trash"></i></a>
                                                 </tr>
                                         {% endfor %}
                                         </tbody>

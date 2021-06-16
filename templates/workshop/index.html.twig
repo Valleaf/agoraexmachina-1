@@ -22,7 +22,7 @@
                                 {% if app.user %}
                                     <div class="btn-group" role="group">
                                         <a href="{{ path('workshop_add_byuser', {'theme' : theme.id, 'slug' : slug }) }}"
-                                           class="btn btn-primary "><i class="fas fa-plus"></i> {{ 'add' | trans }}</a>
+                                           class="btn btn-primary "><i class="bi bi-plus"></i> {{ 'add' | trans }}</a>
                                     </div>
                                 {% endif %}
                             </div>
@@ -31,7 +31,7 @@
                                     {% if theme.voteType == 'yes-delegation' %}
                                         <a href="{{ path('delegation_add_theme', {'theme' : theme.id}) }}"
                                            class="btn btn-info"><i
-                                                    class="fas fa-people-arrows"></i> {{ 'delegations' | trans }}</a>
+                                                    class="bi bi-people-plus"></i> {{ 'delegations' | trans }}</a>
                                     {% endif %}
                                 </div>
                             </div>
@@ -44,11 +44,11 @@
 
                                     <a href="#" onclick="viewing('tile')"
                                        class="btn btn-secondary {{ (app.request.get('view') == "tile")  ? "disabled" : "" }}"><i
-                                                class="fas fa-th-large"></i></a>
+                                                class="bi bi-grid-3x2-gap"></i></a>
 
                                     <a href="#" onclick="viewing('list')"
                                        class="btn btn-secondary {{ (app.request.get('view') == "list")  ? "disabled" : "" }}"><i
-                                                class="fas fa-th-list"></i></a>
+                                                class="bi bi-list"></i></a>
 
                                 </div>
                             </div>
@@ -58,7 +58,7 @@
                                            placeholder="{{ 'search' | trans }}..."
                                            value="{{ (app.request.get('search')) }}"/>
                                     <a href="#" onclick="searching()" class="btn btn-secondary "><i
-                                                class="fas fa-search"></i></a>
+                                                class="bi bi-search"></i></a>
                                 </div>
                             </div>
                         </div>

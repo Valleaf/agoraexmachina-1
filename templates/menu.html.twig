@@ -8,7 +8,7 @@
         {% if app.user %}
             <button type="button" class="btn btn-link text-decoration-none no-shadow">
                 {% if app.user.numberUnreadNotifications != 0 %}
-                    <i class="fas fa-exclamation-circle"></i>{{ app.user.numberUnreadNotifications }}
+                    <i class="bi bi-exclamation-circle"></i>{{ app.user.numberUnreadNotifications }}
                 {% endif %}
                 <div class="btn btn-light btn-outline-secondary rounded-circle avatar avatar-sm text-secondary">
                     {{ app.user.username | first | capitalize }}
@@ -18,20 +18,20 @@
         {% endif %}
 
         <a class="" href="{{ path('delegation_index') }}"><i
-                    class="fas fa-people-arrows"></i> {{ 'delegations' | trans }}</a>
+                    class="bi bi-person-plus"></i> {{ 'delegations' | trans }}</a>
         {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ADMIN_RESTRICTED') %}
             <a class="" href="{{ path('admin') }}"><i
-                        class="fas fa-user-cog"></i> {{ 'admin' | trans }}</a>
+                        class="bi bi-sliders"></i> {{ 'admin' | trans }}</a>
         {% endif %}
         <a href="{{ path('user_edit_by_user') }}" class="-item">
-            <i class="fas fa-user-edit"></i>
+            <i class="bi bi-person-lines-fill"></i>
             {{ 'profile' | trans }}
         </a>
-        <a class="" href="{{ path('category_request') }}"><i class="fas fa-boxes"></i> {{ 'categories' | trans }}</a>
+        <a class="" href="{{ path('category_request') }}"><i class="bi bi-inboxes"></i> {{ 'categories' | trans }}</a>
         <a class="" href="{{ path('notification') }}"><i
-                    class="fas fa-dot-circle"></i> {{ 'notifications' | trans }}</a>
+                    class="bi bi-circle"></i> {{ 'notifications' | trans }}</a>
         <a class="" href="{{ path('app_logout') }}"><i
-                    class="fas fa-sign-out-alt"></i> {{ 'logout' | trans }}</a>
+                    class="bi bi-box-arrow-right"></i> {{ 'logout' | trans }}</a>
     </div>
 {% endif %}
 

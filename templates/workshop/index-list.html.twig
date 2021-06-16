@@ -34,19 +34,19 @@
                                 <div class="card-text d-flex {{ (app.request.get('view') == "tile")  ? "pt-3 pb-3 justify-content-between" : "flex-column" }}">
                                     <p>{{ status(workshop.dateEnd) }}</p>
                                     <p>
-                                        <i class="fas fa-clock"></i> {{ 'start' | trans }} {{ workshop.dateBegin | date("d/m/Y") }}
+                                        <i class="bi bi-clock"></i> {{ 'start' | trans }} {{ workshop.dateBegin | date("d/m/Y") }}
                                     </p>
                                     <p>
-                                        <i class="fas fa-clock"></i> {{ 'end' | trans }} {{ workshop.dateEnd |date("d/m/Y") }}
+                                        <i class="bi bi-clock"></i> {{ 'end' | trans }} {{ workshop.dateEnd |date("d/m/Y") }}
                                     </p>
                                 </div>
                             </div>
                             <div class="col-4 text-secondary">
                                 <p class="mr-auto"><i
-                                            class="fas fa-poll"></i> {{ workshop.proposals | length }} {{ 'proposals' | trans }}
+                                            class="bi bi-bar-chart-line"></i> {{ workshop.proposals | length }} {{ 'proposals' | trans }}
                                 </p>
                                 <p>
-                                    <i class="fas fa-comments"></i> {{ workshop.proposals | length }} {{ 'forums' | trans }}
+                                    <i class="bi bi-chat-text-fill"></i> {{ workshop.proposals | length }} {{ 'forums' | trans }}
                                 </p>
                                 <div class="d-flex d-flex-nowrap mt-2">
                                     <div class="avatar avatar-list avatar-sm bg-light text-secondary">
