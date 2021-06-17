@@ -1,0 +1,21 @@
+{% if app.user and date(workshop.dateEnd) > date() %}
+
+    <div class="btn-group m-1 float-right"
+         role="group">
+        {% if is_granted('ROLE_ADMIN_RESTRICTED') %}
+
+            <a href="{{ path('forum_edit', {'workshop' : proposal.workshop.id, 'proposal' : proposal.id, 'slug' : slug, 'forum' : f.id}) }}"
+               class="btn btn-light ml-1"><i
+                        class="bi bi-pencil-square"></i></a>
+            <a href="{{ path('forum_delete', {'workshop' : proposal.workshop.id, 'proposal' : proposal.id, 'slug' : slug, 'forum' : f.id}) }}"
+               class="btn btn-light ml-1"
+               data-toggle="deleteConfirmation"><i
+                        class="bi bi-trash"></i></a>
+        {% endif %}
+        {% if is_granted ('ROLE_MODERATOR') %}
+            <a class="btn btn-light ml-1"
+               href="{{ path('forum_report', {'workshop' : proposal.workshop.id, 'proposal' : proposal.id, 'slug' : slug, 'forum' : f.id}) }}"><i
+                        class="bi bi-flag"></i></a>
+        {% endif %}
+    </div>
+{% endif %}

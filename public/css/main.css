@@ -481,3 +481,15 @@ label {
     border: 12px solid #343F56;
     border-radius: 6px;
 }
+
+.js-answer-hidden{
+    display: none;
+}
+
+.chevron{
+    display: flex;
+}
+
+.chevron-closing{
+    display: none;
+}

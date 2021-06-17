@@ -173,8 +173,11 @@ class ForumController extends AbstractController
 
             # Rediriger l'utilisateur vers l'index des forums de la proposition avec un message de succès
             $this->addFlash("success", "add.success");
-            return $this->redirectToRoute('proposal_index', ['slug' => $slug, 'workshop' => $proposal->getWorkshop()->getId(), 'proposal' => $proposal->getId()]);
-        }
+            return $this->forward('App\\Controller\\WorkshopController::show',[
+                'slug'=>$slug,
+                'workshop'=>$proposal->getWorkshop(),
+            ]);        }
+
 
         return $this->render('forum/answer.html.twig', [
             'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),

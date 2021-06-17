@@ -93,12 +93,15 @@ function closeRightNav() {
 }
 
 function openAnswers(id) {
-    $('#js-answer'+id).show(500);
+    $('.js-answer'+id).show(500);
+    $('#js-chevron-close'+id).show(500);
+    $('#js-chevron-close'+id).css('display','flex');
+    $('#js-chevron-open'+id).hide(500);
+
 }
 
 function closeAnswers(id) {
-    console.log(id);
-    let e = $('.js-answer'+id);
-    console.log(e);
-    $('.js-answer'+id).show(500);
+    $('.js-answer'+id).hide(500);
+    $('#js-chevron-close'+id).hide(500);
+    $('#js-chevron-open'+id).show(500);
 }

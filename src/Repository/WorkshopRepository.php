@@ -18,6 +18,8 @@ class WorkshopRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Workshop::class);
     }
+
+    #TODO: Faire un join pour les requeutes de findall.
 	
 	public function searchBy(array $filters)
 	{
