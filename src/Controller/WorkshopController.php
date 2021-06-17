@@ -253,7 +253,7 @@ class WorkshopController extends AbstractController
      */
     public function show(Request $request, string $slug, Workshop $workshop): Response
     {
-        return $this->render('workshop/show.html.twig', [
+        return $this->render('workshop/details.html.twig', [
             'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
             'workshops' => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
             'workshop' => $this->getDoctrine()->getRepository(Workshop::class)->findOneById($workshop),

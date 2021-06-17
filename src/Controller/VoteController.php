@@ -55,12 +55,15 @@ class VoteController extends AbstractController
 		# On indique le succès de l'opération et on redirige l'utilisateur vers l'index des propositions et sur la
         # proposition votée mise en valeur
 		$this->addFlash("success", "vote.success");
-
-		return $this->redirectToRoute('proposal_index', [
-					'slug'		 => $slug,
-					'workshop'	 => $proposal->getWorkshop()->getId(),
-                    'proposal'   => $proposal->getId()
-		]);
+        return $this->forward('App\\Controller\\WorkshopController::show',[
+            'slug'=>$slug,
+            'workshop'=>$proposal->getWorkshop(),
+        ]);
+        #	return $this->redirectToRoute('proposal_index', [
+#				'slug'		 => $slug,
+#				'workshop'	 => $proposal->getWorkshop()->getId(),
+#                'proposal'   => $proposal->getId()
+#	]);
 	}
 
     /**

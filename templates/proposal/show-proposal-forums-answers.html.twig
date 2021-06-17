@@ -1,0 +1,42 @@
+{% for f in proposal.forums %}
+    {% if f.parentForum != "" and f.parentForum.id == forum.id %}
+        <div class="col-10 mb-3 d-flex flex-row float-right js-answer-hidden js-answer{{ f.parentForum.id }}">
+            <div class="forum-answer-border"
+                 style="width:75%;text-align:left;padding : 10px 10px 10px 0px;">
+                <div style="background-color : #EAEAEA;padding:	5px;">
+                    <span class="arrow-left"></span>
+                    <div class="content" style="padding : 10px">
+                        {% if app.user and date(workshop.dateEnd) > date() %}
+
+                            <div class="btn-group m-1 float-right"
+                                 role="group">
+                                {% if is_granted('ROLE_ADMIN_RESTRICTED') %}
+
+                                    <a href="{{ path('forum_edit', {'workshop' : proposal.workshop.id, 'proposal' : proposal.id, 'slug' : slug, 'forum' : f.id}) }}"
+                                       class="btn btn-light ml-1"><i
+                                                class="bi bi-pencil-square"></i></a>
+                                    <a href="{{ path('forum_delete', {'workshop' : proposal.workshop.id, 'proposal' : proposal.id, 'slug' : slug, 'forum' : f.id}) }}"
+                                       class="btn btn-light ml-1"
+                                       data-toggle="deleteConfirmation"><i
+                                                class="bi bi-trash"></i></a>
+                                {% endif %}
+                                {% if is_granted ('ROLE_MODERATOR') %}
+                                    <a class="btn btn-light ml-1"
+                                       href="{{ path('forum_report', {'workshop' : proposal.workshop.id, 'proposal' : proposal.id, 'slug' : slug, 'forum' : f.id}) }}"><i
+                                                class="bi bi-flag"></i></a>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+                        <h5 class="card-title">{{ f.name }}</h5>
+                        <span class="text-muted">{{ 'from' | trans }} {{ f.user.username }}</span>
+                        <hr/>
+                        <p class="card-text">{{ f.description | raw }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mr-4 mt-3">
+                <h5 class="avatar avatar-sm bg-secondary d-none d-lg-block">{{ f.user.username | first | capitalize }}</h5>
+            </div>
+        </div>
+    {% endif %}
+{% endfor %}

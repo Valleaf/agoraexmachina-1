@@ -1,0 +1,36 @@
+{% if is_granted('ROLE_MODERATOR') %}
+    <a href="{{ path('workshop_add_document', {'workshop' : workshop.id}) }}"><h4>Documents
+            :</h4></a>
+{% else %}
+    <h4>Documents :</h4>
+{% endif %}
+                {% for doc in workshop.documents %}
+                    <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-info" data-toggle="modal" data-target="#exampleModal">
+                        {{doc.name}}
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade modal-tall" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+                            <div class="modal-content">
+
+                                <div class="modal-body">
+                                    <object type="application/pdf"
+                                            width="100%"
+                                            height="100%"
+                                            data="{{ asset('pdf/upload/workshops/') ~ doc.path }}" >
+
+                                    </object>                                 </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                {% endfor %}

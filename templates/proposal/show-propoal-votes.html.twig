@@ -1,0 +1,75 @@
+<div class="btn-group mb-3 " role="group">
+    {% set vf = 0 %}
+    {% set va = 0 %}
+    {% set vb = 0 %}
+    {% for vote in proposal.votes %}
+        {% if vote.votedFor > 0 %} {% set vf = vf + 1 %} {% endif %}
+        {% if vote.votedAgainst > 0 %} {% set va = va + 1 %} {% endif %}
+        {% if vote.votedBlank > 0 %} {% set vb = vb + 1 %} {% endif %}
+    {% endfor %}
+
+
+
+{% if app.user and date(workshop.dateVoteEnd) > date() %}
+{# Si le vote est possible, on affiche les 3 icones de vote avec des possibilités de voter pour nos délégations ou nous meme. #}
+    <div class="dropdown">
+        <button class="btn btn-success progress-bar-striped dropdown-toggle vote-border"
+                type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+            {{ vf }}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a href="{{ path('vote_add', {'slug' : slug, 'proposal' : proposal.id, 'userVote' : 'votedFor', 'user' : app.user.id }) }}"
+               class="dropdown-item">{{ 'vote.me' | trans }}</a>
+            {% for delegation in app.user.delegationsTo %}
+                {% if (delegation.workshop and delegation.workshop.id == workshop.id) or (delegation.theme and delegation.theme.id == workshop.theme.id) %}
+                    <a href="{{ path('vote_add', {'slug' : slug, 'proposal' : proposal.id, 'userVote' : 'votedFor', 'user' : delegation.userFrom.id }) }}"
+                       class="dropdown-item">{{ 'vote.as' | trans }} {{ delegation.userFrom.username }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="dropdown">
+        <button class="btn btn-danger progress-bar-striped dropdown-toggle vote-border"
+                type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+            {{ va }}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a href="{{ path('vote_add', {'slug' : slug, 'proposal' : proposal.id, 'userVote' : 'votedAgainst', 'user' : app.user.id }) }}"
+               class="dropdown-item">{{ 'vote.me' | trans }}</a>
+            {% for delegation in app.user.delegationsTo %}
+                {% if (delegation.workshop and delegation.workshop.id == workshop.id) or (delegation.theme and delegation.theme.id == workshop.theme.id) %}
+                    <a href="{{ path('vote_add', {'slug' : slug, 'proposal' : proposal.id, 'userVote' : 'votedAgainst', 'user' : delegation.userFrom.id }) }}"
+                       class="dropdown-item">{{ 'vote.as' | trans }} {{ delegation.userFrom.username }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="dropdown">
+        <button class="btn btn-secondary progress-bar-striped  dropdown-toggle vote-border"
+                type="button" id="dropdownMenuButton"
+                data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+            {{ vb }}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a href="{{ path('vote_add', {'slug' : slug, 'proposal' : proposal.id, 'userVote' : 'votedBlank', 'user' : app.user.id }) }}"
+               class="dropdown-item">{{ 'vote.me' | trans }}</a>
+            {% for delegation in app.user.delegationsTo %}
+                {% if (delegation.workshop and delegation.workshop.id == workshop.id) or (delegation.theme and delegation.theme.id == workshop.theme.id) %}
+                    <a href="{{ path('vote_add', {'slug' : slug, 'proposal' : proposal.id, 'userVote' : 'votedBlank', 'user' : delegation.userFrom.id }) }}"
+                       class="dropdown-item">{{ 'vote.as' | trans }} {{ delegation.userFrom.username }}</a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    {# Si le vote n'est plus possible, on affiche juste des icones #}
+    <div class="btn btn-success progress-bar-striped ">{{ vf }}</div>
+    <div class="btn btn-danger progress-bar-striped">{{ va }}</div>
+    <div class="btn btn-secondary progress-bar-striped">{{ vb }}</div>
+{% endif %}
+</div>

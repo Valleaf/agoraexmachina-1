@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-12">
+        <div class="">
+            <div class="card-body">
+                <h4>{{ 'forums' | trans }}</h4>
+                {% if app.user and date(workshop.dateEnd) > date() %}
+                    <a href="{{ path('forum_add', {'workshop' : proposal.workshop.id, 'proposal' : proposal.id, 'slug' : slug }) }}"
+                       class="m-1"><i
+                                class="bi bi-plus"></i> {{ 'add' | trans }}</a>
+                {% endif %}
+                {% for forum in proposal.forums %}
+                {% if forum.parentForum == "" %}
+                <div class="col-12 mb-3 d-flex flex-row float-left ">
+                    <div class="mr-4 mt-3">
+                        <h5 class="avatar avatar-sm bg-secondary d-none d-lg-block">{{ forum.user.username | first | capitalize }}</h5>
+                    </div>
+                    <div class="forum-border" style="width:75%;text-align:left;padding : 10px 10px 10px 0px;">
+                        <div style="background-color : #EAEAEA;padding:	5px;">
+                            <span class="arrow-right"></span>
+                            <div class="content" style="padding : 10px">
+                                <h5 class="card-title">{{ forum.name }}</h5>
+                                <span class="text-muted">{{ 'from' | trans }} {{ forum.user.username }}</span>
+                                <hr/>
+                                <p class="card-text">{{ forum.description | raw }}</p>
+                            </div>
+                            <div class=" d-flex justify-content-end align-content-end" onclick="closeAnswers({{ forum.id }})">
+                                <i class="bi bi-chevron-right"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% include 'proposal/show-proposal-buttons.html.twig' %}
+            </div>
+            {# Ici les forums enfants #}
+            {% include 'proposal/show-proposal-forums-answers.html.twig' %}
+            {% endif %}
+
+            {% endfor %}
+        </div>
+    </div>
+</div>

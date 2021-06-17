@@ -7,6 +7,7 @@ use App\Entity\Theme;
 use App\Form\ProposalType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -131,5 +132,57 @@ class ProposalController extends AbstractController
 		$this->addFlash("success", "delete.success");
 		return $this->redirectToRoute('proposal_index', ['slug' => $slug, 'workshop' => $workshop->getId()]);
 	}
+
+    /**
+     * @Route ("/proposal/request/{id}", defaults={"id"=1},name="fetch_proposal_by_id")
+     * @param Request $request
+     * @param int $id
+     * @return Response
+     */
+	public function fetchProposal(Request $request,int $id): Response
+    {
+
+        $proposal = $this->getDoctrine()->getRepository(Proposal::class)->find($id);
+        # Si on reçoit une requête AJAX, on retourne la proposition
+        if($request->isXmlHttpRequest())
+        {
+            $user = $this->getUser();
+            $jsonData = array();
+            $idx = 0;
+            $jsonData = [
+                'name'=>$proposal->getName(),
+                'description' => $proposal->getDescription(),
+                'id'=>$proposal->getId(),
+                'author'=>$proposal->getUser()->getUsername()
+            ];
+            $forums = $proposal->getForums();
+            $jsonData['forums'] = [];
+            foreach($forums as $forum) {
+                # On envoie les donnes de chaque forums dans un json
+                $temp = array(
+                    'author' => $forum->getUser()->getUsername() ,
+                    'name' => $forum->getName(),
+                    'description' => $forum->getDescription(),
+                );
+                $jsonData['forums'][$idx++] = $temp;
+            }
+            $template =  $this->render('proposal/_show_.html.twig')->getContent();
+            $json = json_encode([$template,$jsonData]);
+            $response = new Response($json,200);
+            $response->headers->set('Content-type','application/json');
+            return  $response;
+            #return new JsonResponse($jsonData);
+        }
+        return new Response();
+    }
+
+
+    public function fetchProposal2(int $id)
+    {
+        $proposal = $this->getDoctrine()->getRepository(Proposal::class)->find($id);
+        return $this->render('proposal/_proposal_show_.twig',[
+            'proposal'=>$proposal
+        ]);
+    }
 
 }

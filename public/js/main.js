@@ -68,3 +68,37 @@ function filePreview(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+//Script permettant l'ouverture et la fermeture de la sidebar
+function openNav() {
+    document.getElementById("mySidebar").style.width = "250px";
+    document.getElementById("main-content").style.marginLeft = "250px";
+}
+
+function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("main-content").style.marginLeft= "0";
+}
+//Script permettant l'ouverture et la fermeture de la sidebar droite
+function openRightNav(id) {
+    let proposalId = id;
+    $('.proposal-sidebar').hide(500);
+    $('#proposal'+id).show(500);
+    document.getElementById("mySidebarProposal").style.width = "50vw";
+    document.getElementById("main-content").style.marginRight = "25vw";
+}
+
+function closeRightNav() {
+    document.getElementById("mySidebarProposal").style.width = "0";
+    document.getElementById("main-content").style.marginRight= "0";
+}
+
+function openAnswers(id) {
+    $('#js-answer'+id).show(500);
+}
+
+function closeAnswers(id) {
+    console.log(id);
+    let e = $('.js-answer'+id);
+    console.log(e);
+    $('.js-answer'+id).show(500);
+}

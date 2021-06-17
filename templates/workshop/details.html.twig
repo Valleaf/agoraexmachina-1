@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% set slug =  app.request.get('slug') %}
+
+    <div class="container-fluid">
+
+        <div class="row mb-2">
+            <div class="col-12">
+                {% include 'flashbag.html.twig' %}
+            </div>
+        </div>
+    </div>
+
+
+    {% include'breadcrumb/workshop.html.twig' %}
+    {% include 'workshop/overview.html.twig' %}
+    {% include 'proposal/ajax-proposal-show.html.twig' %}
+
+
+{% endblock %}

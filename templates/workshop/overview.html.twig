@@ -1,0 +1,25 @@
+<div  class="container-fluid">
+    <div class="card mb-3 mx-auto col-sm-12 col-lg-12 col-xl-10 full-border">
+        <div class="row g-0">
+            <div>
+                <img class="bd-placeholder-img card-img-top" width="260" height="225"
+                     src="{{ vich_uploader_asset(workshop, 'imageFile') | imagine_filter('workshops_home') }}"/>
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h2 class="card-title">{{ 'workshop' | trans }} : {{ workshop.name }}</h2>
+                    <p class="card-text">{{ workshop.description | raw }}</p>
+                    <p class="card-text"><small class="text-muted">{{ workshop.theme.category.name }}</small></p>
+                    <p>
+                        {% include 'workshop/document-view.html.twig' %}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        {% for proposal in workshop.proposals %}
+            {% include 'workshop/overview-workshop.html.twig' %}
+        {% endfor %}
+    </div>
+</div>
