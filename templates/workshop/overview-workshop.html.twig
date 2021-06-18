@@ -5,6 +5,18 @@
             <div class="card-body">
                 <h2 class="card-title">{{ 'proposal' | trans }} : {{ proposal.name }}</h2>
                 <p class="card-text">{{ proposal.description | raw }}</p>
+
+                {# Si l'utilisateur est un administrateur restreint ou complet, on lui montre l'etat du quorum #}
+                {% if is_granted ('ROLE_ADMIN_RESTRICTED')  %}
+                    {# Si le quorum est atteint, on le signale a l'administrateur #}
+                    {% set quorumRequired = proposal.workshop.quorumRequired %}
+                    {% set nbPossibleVoters = proposal.workshop.theme.category.users.count %}
+                    {% set nbCurrentVoters = proposal.votes.count %}
+                    {% set quorum =  nbPossibleVoters * quorumRequired / 100 %}
+                    {% if nbCurrentVoters >= quorum %}
+                        <div class="alert-success"> Quorum atteint ! </div>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
     </div>

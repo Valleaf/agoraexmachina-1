@@ -34,7 +34,7 @@
                 <source>pw.regex</source>
                 <target>Le mot de passe doit avoir au moins une miniscule, une majuscule, un caractère special et un nombre </target>
             </trans-unit>
-			
+
         </body>
     </file>
 </xliff>

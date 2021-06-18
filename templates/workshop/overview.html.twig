@@ -1,4 +1,4 @@
-<div  class="container-fluid">
+<div class="container-fluid">
     <div class="card mb-3 mx-auto col-sm-12 col-lg-12 col-xl-10 full-border">
         <div class="row g-0">
             <div>
@@ -9,7 +9,11 @@
                 <div class="card-body">
                     <h2 class="card-title">{{ 'workshop' | trans }} : {{ workshop.name }}</h2>
                     <p class="card-text">{{ workshop.description | raw }}</p>
-                    <p class="card-text"><small class="text-muted">{{ workshop.theme.category.name }}</small></p>
+                    <p class="card-text"><small class="text-muted">
+                            {% for k in workshop.keywords %}
+                                <a href="{{ path('workshop_tags',{'id':k.id}) }}"> #{{ k.name }}</a>
+                            {% endfor %}
+                        </small></p>
                     <p>
                         {% include 'workshop/document-view.html.twig' %}
                     </p>

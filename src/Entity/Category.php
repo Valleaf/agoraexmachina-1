@@ -26,6 +26,7 @@ class Category
      */
     private $id;
 
+    #TODO: Faire des assert
     /**
      * @ORM\Column(type="string", length=255,unique=true)
      * @Assert\NotBlank()
