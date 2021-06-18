@@ -273,7 +273,10 @@
                 <source>Forgot your password ?</source>
                 <target>Mot de passe oublié?</target>
             </trans-unit>
-
+            <trans-unit id="firstname">
+                <source>firstname</source>
+                <target>Prénom</target>
+            </trans-unit>
 
 
         <!-- ******************************** -->

@@ -41,6 +41,16 @@
 
 `php bin/console doctrine:migrations:execute --up 1`
 
+### Ubuntu
+
+`sudo composer install --no-plugins --no-scripts --no-dev --optimize-autoloader`
+
+`sudo composer require symfony/dotenv --no-plugins --no-scripts`
+
+`sudo php bin/console doctrine:database:create`
+
+`sudo php bin/console doctrine:migrations:execute --up 1`
+
 ### Verfahren nach der Installation
 
 * Gehen Sie in einem Browser auf die AEM-Verwaltungsoberfläche (http://mondomaine.com/agoraexmachina)

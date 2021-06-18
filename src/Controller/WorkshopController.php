@@ -84,7 +84,7 @@ class WorkshopController extends AbstractController
     public function add(Request $request, TranslatorInterface $translator): Response
     {
 
-        $themes = $this->getDoctrine()->getRepository(Theme::class)->findAll();
+        $themes = $this->getDoctrine()->getRepository(Theme::class)->findAllThemes();
         if(is_null($themes))
         {
             $this->addFlash("warning", $translator->trans('no.themes'));
@@ -238,7 +238,6 @@ class WorkshopController extends AbstractController
             $workshops = $this->getDoctrine()->getRepository(Workshop::class)->findBy(['theme' => $theme]);
 
         return $this->render('workshop/index.html.twig', [
-            'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
             'theme' => $theme,
             'workshops' => $workshops,
         ]);
@@ -254,8 +253,7 @@ class WorkshopController extends AbstractController
     public function show(Request $request, string $slug, Workshop $workshop): Response
     {
         return $this->render('workshop/details.html.twig', [
-            'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
-            'workshops' => $this->getDoctrine()->getRepository(Workshop::class)->findAll(),
+            'workshops' => $this->getDoctrine()->getRepository(Workshop::class)->findAllWorkshops(),
             'workshop' => $this->getDoctrine()->getRepository(Workshop::class)->findOneById($workshop),
         ]);
     }
@@ -308,7 +306,7 @@ class WorkshopController extends AbstractController
         }
 
         return $this->render('workshop/add.byuser.html.twig', [
-            'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
+            'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAllThemes(),
             'theme' => $theme,
             'form' => $form->createView(),
             'workshop' => $workshop,

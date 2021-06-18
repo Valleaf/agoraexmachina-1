@@ -1,9 +1,17 @@
 <div class="card mb-3 mx-auto col-sm-12 col-lg-12 col-xl-10" >
     <div class="row g-0">
         <div>
+            {% if theme.image %}
+
             <img class="bd-placeholder-img card-img-top" width="260" height="225"
                  src="{{ vich_uploader_asset(theme, 'imageFile') | imagine_filter('themes_home') }}"/>
+            {% else %}
+            <img class="bd-placeholder-img card-img-top" width="260" height="225"
+                 src="{{ asset('img/logo_aem-lg.png') }}"/>
+            {% endif %}
         </div>
+
+
         <div class="col-md-8">
             <div class="card-body">
                 <h2 class="card-title">{{ 'theme' | trans}} : {{ theme.name }}</h2>

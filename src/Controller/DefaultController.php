@@ -47,7 +47,7 @@ class DefaultController extends AbstractController
 
         #Si le setup est déjà faite, on affiche la page d'accueil
         return $this->render('index.html.twig', [
-            'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
+            'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAllThemes(),
             #Themes contient tous les thèmes présents dans la BDD
         ]);
     }

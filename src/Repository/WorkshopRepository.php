@@ -19,8 +19,21 @@ class WorkshopRepository extends ServiceEntityRepository
         parent::__construct($registry, Workshop::class);
     }
 
-    #TODO: Faire un join pour les requeutes de findall.
-	
+    public function findAllWorkshops()
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQueryBuilder();
+        $query
+            ->select('w','t','c','p','f')
+            ->from('App:Workshop', 'w')
+            ->leftJoin('w.theme','t')
+            ->leftJoin('t.category','c')
+            ->leftJoin('w.proposals','p')
+            ->leftJoin('p.forums','f')
+        ;
+        dump($query);
+        return $query->getQuery()->getResult();
+    }
 	public function searchBy(array $filters)
 	{
 		$entityManager = $this->getEntityManager();
