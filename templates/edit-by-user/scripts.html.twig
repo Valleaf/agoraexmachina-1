@@ -24,7 +24,6 @@
                             '</td><td id = "description">' +
                             '</td></tr>');
 
-                       // $('#link', e).html('<a href="{{ path('theme_edit') }}/'  + forum['link'] + '">' + returnModalHtmlToShowForum(10) + '</a>');
                         let xxhref = "{{ path('forum_show') }}/"+forum['link'];
                         let xx = "<a href=\""+xxhref+"\">Lien</a>";
                         $('#link', e).html(xx);
@@ -40,10 +39,6 @@
             });
         });
 
-
-        $("#buttontestajout").on("click", function (event) {
-            $("#testajout").attr('href', "{{ path('theme_edit') }}"+"\/10");
-        })
 
     });
 </script>

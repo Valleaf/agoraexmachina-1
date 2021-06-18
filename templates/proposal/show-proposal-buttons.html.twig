@@ -13,12 +13,14 @@
             <a href="{{ path('forum_delete', {'workshop' : proposal.workshop.id, 'proposal' : proposal.id, 'slug' : slug, 'forum' : forum.id}) }}"
                class="btn btn-light ml-1 btn-sm"
                data-toggle="deleteConfirmation"><i
-                        class="bi bi-trash"></i></a>
+                        class="bi bi-trash"></i>
+            </a>
         {% endif %}
         {% if is_granted ('ROLE_MODERATOR') %}
             <a class="btn btn-light ml-1"
-               href="{{ path('forum_report', {'workshop' : proposal.workshop.id, 'proposal' : proposal.id, 'slug' : slug, 'forum' : forum.id}) }}"><i
-                        class="bi bi-flag"></i></a>
+               href="{{ path('forum_report', {'slug' : slug, 'forum' : forum.id}) }}"><i
+                        class="bi bi-flag"></i>
+            </a>
         {% endif %}
     </div>
 {% endif %}

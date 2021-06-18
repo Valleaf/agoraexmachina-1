@@ -1,6 +1,7 @@
 {# templates/forum/show.html.twig #}
 {% extends 'base.html.twig' %}
 
+{% set slug = forum.proposal.workshop.theme.name | slugify ~ '_' ~ forum.proposal.workshop.name | slugify %}
 {% block body %}
     <main main="role">
         <div class="container">
@@ -15,7 +16,8 @@
             {% if is_granted('ROLE_MODERATOR') %}
                 <div class="row row-cols-1 d-flex justify-content-center ">
                     <div class="col-2">
-                        <a href="{{ path('forum_report', {'workshop' : forum.proposal.workshop.id, 'proposal' : forum.proposal.id, 'slug' :  forum.proposal.workshop.theme.name | slugify ~ '_' ~ forum.proposal.workshop.name | slugify, 'forum' : forum.id}) }}">
+                        {# report fix link #}
+                        <a href="{{ path('user_edit_by_user')}}">
                             <button class="btn btn-danger">Report</button>
                         </a>
                     </div>

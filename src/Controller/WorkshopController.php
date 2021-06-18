@@ -245,12 +245,11 @@ class WorkshopController extends AbstractController
 
     /**
      * @Route("/{slug}/workshop/{workshop}", name="workshop_show", methods={"GET"})
-     * @param Request $request
      * @param string $slug Partie de l'URL comprenant le thème et l'atelier
      * @param Workshop $workshop L'atelier choisi
      * @return Response Fonction qui permet de voir un atelier en détail
      */
-    public function show(Request $request, string $slug, Workshop $workshop): Response
+    public function show(string $slug, Workshop $workshop): Response
     {
         return $this->render('workshop/details.html.twig', [
             'workshops' => $this->getDoctrine()->getRepository(Workshop::class)->findAllWorkshops(),

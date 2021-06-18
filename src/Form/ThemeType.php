@@ -46,11 +46,11 @@ class ThemeType extends AbstractType
             ->add('name')
             ->add('description', TextareaType::class, array('attr' => array('class' => 'ckeditor')))
             #TODO: fix ckeditor
-            ->add('description', CKEditorType::class,[
-                'config'=>[
-                    'toolbar'=>'full',
-              ],
-            ])
+   #      ->add('description', CKEditorType::class,[
+   #          'config'=>[
+   #              'toolbar'=>'full',
+   #        ],
+   #      ])
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => true,

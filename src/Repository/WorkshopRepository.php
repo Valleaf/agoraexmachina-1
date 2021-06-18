@@ -31,7 +31,6 @@ class WorkshopRepository extends ServiceEntityRepository
             ->leftJoin('w.proposals','p')
             ->leftJoin('p.forums','f')
         ;
-        dump($query);
         return $query->getQuery()->getResult();
     }
 	public function searchBy(array $filters)

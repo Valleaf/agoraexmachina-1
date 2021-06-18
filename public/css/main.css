@@ -396,6 +396,13 @@ label {
     text-shadow: 2px 2px 4px #000000;
 }
 
+.breadcrumb{
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: black;
+    text-shadow: 2px 1px black;
+}
+
 .green-tooltip{
     background-color: #B3E283;
 }
@@ -470,7 +477,8 @@ label {
 
 .vote-border{
     border: 3px solid #0c5460;
-    border-radius: 6px;}
+    border-radius: 6px;
+}
 
 .forum-border{
     border: 12px solid #0A1D37;
@@ -492,4 +500,10 @@ label {
 
 .chevron-closing{
     display: none;
+}
+
+.threads{
+    background-color: ivory;
+    border: 4px solid #b0b0b0;
+    border-radius: 20px;
 }

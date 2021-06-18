@@ -72,7 +72,11 @@ class ForumController extends AbstractController
 
             # Rediriger l'utilisateur vers l'index des forums de la proposition avec un message de succès
             $this->addFlash("success", "add.success");
-            return $this->redirectToRoute('proposal_index', ['slug' => $slug, 'workshop' => $proposal->getWorkshop()->getId(), 'proposal' => $proposal->getId()]);
+            return $this->redirectToRoute('workshop_show', [
+                'slug' => $slug,
+                'workshop' => $workshop->getId(),
+                ]
+            );
         }
 
         return $this->render('forum/add.html.twig', [
@@ -104,8 +108,11 @@ class ForumController extends AbstractController
 
             # Rediriger l'utilisateur vers l'index des forums de la proposition avec un message de succès
             $this->addFlash("success", "edit.success");
-            return $this->redirectToRoute('proposal_index', ['slug' => $slug, 'workshop' => $proposal->getWorkshop()->getId(), 'proposal' => $proposal->getId()]);
-        }
+            return $this->redirectToRoute('workshop_show', [
+                    'slug' => $slug,
+                    'workshop' => $workshop->getId(),
+                ]
+            );        }
 
         return $this->render('forum/edit.html.twig', [
             'themes' => $this->getDoctrine()->getRepository(Theme::class)->findAll(),
@@ -136,8 +143,11 @@ class ForumController extends AbstractController
 
         # Rediriger l'utilisateur vers l'index des forums de la proposition avec un message de succès
         $this->addFlash("success", "delete.success");
-        return $this->redirectToRoute('proposal_index', ['slug' => $slug, 'workshop' => $workshop->getId(), 'proposal' =>
-            $proposal->getId()]);
+        return $this->redirectToRoute('workshop_show', [
+                'slug' => $slug,
+                'workshop' => $workshop->getId(),
+            ]
+        );
     }
 
     /**
@@ -189,7 +199,7 @@ class ForumController extends AbstractController
     }
 
     /**
-     * @Route("/{slug}/workshop/{workshop}/forum/report/{forum}", name="forum_report", methods={"GET"})
+     * @Route("/{slug}/workshop/forum/report/{forum}", name="forum_report", methods={"GET"})
      * @param MailerInterface $mailer Permet l'envoi d'email
      * @param Request $request
      * @param string $slug Partie de l'URL avec le thème et l'atelier
@@ -200,10 +210,11 @@ class ForumController extends AbstractController
      * catégorie. Disponible seulement pour les modérateurs et supérieurs
      * @throws TransportExceptionInterface Si erreur d'envoi d'email
      */
-    public function report(MailerInterface $mailer, Request $request, string $slug, Proposal $proposal, Workshop $workshop,
-                           Forum $forum):
+    public function report(MailerInterface $mailer, string $slug, Forum $forum):
     Response
     {
+
+        $workshop = $forum->getProposal()->getWorkshop();
         $entityManager = $this->getDoctrine()->getManager();
         $users = $workshop->getTheme()->getCategory()->getUsers();
         foreach ($users as $user) {
@@ -236,7 +247,11 @@ class ForumController extends AbstractController
 
         $entityManager->flush();
         $this->addFlash("success", "report.success");
-        return $this->redirectToRoute('proposal_index', ['slug' => $slug, 'workshop' => $proposal->getWorkshop()->getId(), 'proposal' => $proposal->getId()]);
+        return $this->redirectToRoute('workshop_show', [
+                'slug' => $slug,
+                'workshop' => $workshop->getId(),
+            ]
+        );
 
     }
 

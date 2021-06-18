@@ -8,7 +8,7 @@
         <p class="card-text">
             {{ f.description | raw }}
         </p>
-        <a href="{{ path('proposal_index',{'slug': f.proposal.workshop.theme.name ~ "_" ~ f.proposal.workshop.name | slugify, 'workshop' : f.proposal.workshop.id, 'proposal' : f.proposal.id}) }}"
+        <a href="{{ path('workshop_show',{'slug': f.proposal.workshop.theme.name ~ "_" ~ f.proposal.workshop.name | slugify, 'workshop' :f.proposal.workshop.id}) }}"
            class="btn btn-primary">
             {{ 'goto' | trans }}
         </a>

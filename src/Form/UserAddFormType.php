@@ -39,7 +39,9 @@ class UserAddFormType extends AbstractType
 
 
         $builder
-            ->add('username')
+            ->add('username',TextType::class,[
+                'label'=>'lastname'
+            ])
             ->add('firstName',TextType::class,[
                 'label'=>'firstname'
             ])
