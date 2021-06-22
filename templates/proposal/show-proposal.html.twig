@@ -32,6 +32,12 @@
             </div>
         </div>
     </div>
-    {% include 'proposal/show-proposal-forums.html.twig' %}
-
+    {% if app.user and date(workshop.dateEnd) > date() %}
+        <a href="{{ path('forum_add', {'workshop' : proposal.workshop.id, 'proposal' : proposal.id, 'slug' : slug }) }}"
+           class="m-1"><i
+                    class="bi bi-plus"></i> {{ 'add' | trans }}</a>
+    {% endif %}
+    {% if proposal.forums.count != 0 %}
+        {% include 'proposal/show-proposal-forums.html.twig' %}
+    {% endif %}
 </div>

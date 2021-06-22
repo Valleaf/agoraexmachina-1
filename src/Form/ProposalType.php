@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Form;
 
 use App\Entity\Proposal;
@@ -19,24 +20,19 @@ class ProposalType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param array $options
      */
-	public function buildForm(FormBuilderInterface $builder, array $options)
-	{
-		$builder
-				->add('name')
-				->add('description', CKEditorType::class, [
-				    'config' => [
-				        'required'=>true,
-                    ]
-                ])
-				->add('Submit', SubmitType::class)
-		;
-	}
+    public function buildForm(FormBuilderInterface $builder, array $options)
+    {
+        $builder
+            ->add('name')
+            ->add('description', TextareaType::class, array('attr' => array('class' => 'ckeditor')))
+            ->add('Submit', SubmitType::class);
+    }
 
-	public function configureOptions(OptionsResolver $resolver)
-	{
-		$resolver->setDefaults([
-			'data_class' => Proposal::class,
-		]);
-	}
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'data_class' => Proposal::class,
+        ]);
+    }
 
 }

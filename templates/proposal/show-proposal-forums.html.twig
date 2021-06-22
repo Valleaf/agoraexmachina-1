@@ -3,11 +3,8 @@
         <div class="">
             <div class="card-body">
                 <h4>{{ 'forums' | trans }}</h4>
-                {% if app.user and date(workshop.dateEnd) > date() %}
-                    <a href="{{ path('forum_add', {'workshop' : proposal.workshop.id, 'proposal' : proposal.id, 'slug' : slug }) }}"
-                       class="m-1"><i
-                                class="bi bi-plus"></i> {{ 'add' | trans }}</a>
-                {% endif %}
+
+
                 {% for forum in proposal.forums %}
                 {% if forum.parentForum == "" %}
                 <div class="col-12 mb-3 d-flex flex-row float-left ">
@@ -24,12 +21,16 @@
                                 <p class="card-text">{{ forum.description | raw }}</p>
                             </div>
                             {% if forum.forums.count != 0 %}
-                            <div id="js-chevron-open{{ forum.id }}" class=" chevron justify-content-end align-content-end" onclick="openAnswers({{ forum.id }})">
-                                <i class="bi bi-chevron-right"></i>
-                            </div>
-                            <div id="js-chevron-close{{ forum.id }}" class=" chevron justify-content-end align-content-end chevron-closing" onclick="closeAnswers({{ forum.id }})">
-                                <i class="bi bi-chevron-down"></i>
-                            </div>
+                                <div id="js-chevron-open{{ forum.id }}"
+                                     class=" chevron justify-content-end align-content-end"
+                                     onclick="openAnswers({{ forum.id }})">
+                                    <i class="bi bi-chevron-right"></i>
+                                </div>
+                                <div id="js-chevron-close{{ forum.id }}"
+                                     class=" chevron justify-content-end align-content-end chevron-closing"
+                                     onclick="closeAnswers({{ forum.id }})">
+                                    <i class="bi bi-chevron-down"></i>
+                                </div>
                             {% endif %}
                         </div>
                     </div>

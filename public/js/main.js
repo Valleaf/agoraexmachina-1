@@ -87,7 +87,8 @@ function openRightNav(id) {
     document.getElementById("main-content").style.marginRight = "25vw";
 }
 
-function closeRightNav() {
+function closeRightNav(id) {
+    $('#proposal'+id).hide(500);
     document.getElementById("mySidebarProposal").style.width = "0";
     document.getElementById("main-content").style.marginRight= "0";
 }

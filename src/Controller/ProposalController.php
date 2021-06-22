@@ -44,7 +44,7 @@ class ProposalController extends AbstractController
             #Affichage d'un message flash indiquant le succès de l'opération et on redirige vers la proposition en
             # question en donnant en paramètre le slug et l'id de l'atelier
 			$this->addFlash("success", "add.success");
-			return $this->redirectToRoute('proposal_index', ['slug' => $slug, 'workshop' => $workshop->getId()]);
+			return $this->redirectToRoute('workshop_show', ['slug' => $slug, 'workshop' => $workshop->getId()]);
 		}
 
 		#Affiche la page en donnant à twig tous les themes, tous les ateliers, ainsi que l'atelier qu'on souhaite
