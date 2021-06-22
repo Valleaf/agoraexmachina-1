@@ -3,10 +3,10 @@
     {# Dans l'onglet de base sont les forums de l'utilisateur #}
     <li class="nav-item">
         <a class="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-home"
-           role="tab" aria-controls="pills-home" aria-selected="true">Home</a>
+           role="tab" aria-controls="pills-home" aria-selected="true">{{ 'your-threads'  | trans }}</a>
     </li>
 
-{# Ici la modification de profil est possible #}
+    {# Ici la modification de profil est possible #}
     <li class="nav-item">
         <a class="nav-link active" id="pills-profile-tab" data-toggle="pill" href="#pills-profile"
            role="tab" aria-controls="pills-profile"
@@ -26,14 +26,18 @@
     </li>
 
     {% if is_granted('ROLE_MODERATOR') %}
-{# Si c'est au moins un moderateur, il aura aussi acces a d'autres donnees #}
+        {# Si c'est au moins un moderateur, il aura aussi acces a d'autres donnees #}
         {# Ici les forums de toutes les categories qu'il supervise #}
         <li class="nav-item">
             <a class="nav-link" id="pills-forums-tab" data-toggle="pill" href="#pills-forums"
                role="tab" aria-controls="pills-forums" aria-selected="false">{{ 'forums' | trans }}</a>
         </li>
         {# Ici les nouvelles propositions #}
-        {#TODO: Ici les signalements effectués #}
+        {# TODO: Ici les signalements effectués #}
+        <li class="nav-item">
+            <a class="nav-link" id="pills-reports-tab" data-toggle="pill" href="#pills-reports"
+               role="tab" aria-controls="pills-reports" aria-selected="false">{{ 'reports' | trans }}</a>
+        </li>
     {% endif %}
 </ul>
 <div class="tab-content" id="pills-tabContent">
@@ -72,13 +76,27 @@
     </div>
 
     {% if is_granted('ROLE_MODERATOR') %}
-        <div class="tab-pane fade" id="pills-forums" role="tabpanel"
+        <div class="tab-pane fade table-responsive-lg " id="pills-forums" role="tabpanel"
              aria-labelledby="pills-forums-tab">
+            <div id="forum">
 
-            <table class = "card table">
-                <tbody id = "forum"></tbody>
-            </table>
+            </div>
+
+            {# <table class="card table table-bordered table-responsive-lg table-hover ">
+                <tbody  id="forum"></tbody>
+
+            </table> #}
         </div>
+
+
+
+
+        <div class="tab-pane fade table-responsive " id="pills-reports" role="tabpanel"
+             aria-labelledby="pills-reports-tab">
+
+            <div id="js-reports"></div>
+        </div>
+
     {% endif %}
 
 </div>

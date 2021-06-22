@@ -10,9 +10,11 @@ use App\Entity\Proposal;
 use App\Entity\Theme;
 use App\Form\ForumType;
 use App\Form\ForumAnswerType;
+use App\Repository\ForumRepository;
 use phpDocumentor\Reflection\Types\This;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportException;
@@ -151,6 +153,24 @@ class ForumController extends AbstractController
     }
 
     /**
+     * Permet une supression d'un forum depuis un signalement
+     * @Route("/forum/delete-forum/{id}", name="forum_delete_from_report")
+     * @param Forum $forum Le forum choisi
+     */
+    public function deleteFromReport(Forum $forum)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        if ($forum->getParentForum() != null)
+        {
+            $forum->getParentForum()->removeForum($forum);
+        }
+        $entityManager->remove($forum);
+        $entityManager->flush();
+        $this->addFlash("success", "delete.success");
+        return $this->redirectToRoute('user_edit_by_user');
+    }
+
+    /**
      * @Route("/{slug}/workshop/{workshop}/proposal/{proposal}/forum/answer/{forum}", name="forum_answer", methods={"GET", "POST"})
      * @param Request $request
      * @param string $slug Partie de l'URL avec le thème et l'atelier
@@ -272,6 +292,36 @@ class ForumController extends AbstractController
             ]);
         }
         else return $this->redirectToRoute('homepage');
+    }
+
+    /**
+     * @Route ("/forums/ajax", name="forums_ajax_user")
+     * @param Request $request
+     * @param ForumRepository $forumRepository
+     * @return JsonResponse
+     */
+    function ajaxForumsByUser(Request $request,ForumRepository $forumRepository): JsonResponse
+    {
+        # Si on reçoit une requête AJAX, on retourne les forums
+        if($request->isXmlHttpRequest())
+        {
+            $user = $this->getUser();
+            $forums = $forumRepository->findForumsInCategories($user->getId());
+            $jsonData = array();
+            $idx = 0;
+            foreach($forums as $forum) {
+                # On envoie les donnes de chaque forums dans un json
+                $temp = array(
+                    'link' => $forum->getId(),
+                    'author' => $forum->getUser()->getUsername() ,
+                    'name' => $forum->getName(),
+                    'description' => $forum->getDescription(),
+                );
+                $jsonData[$idx++] = $temp;
+            }
+
+            return new JsonResponse($jsonData);
+        }
     }
 
 

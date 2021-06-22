@@ -600,7 +600,26 @@
                 <source>Menu</source>
                 <target>Menu</target>
             </trans-unit>
-
+            <trans-unit id="reports">
+                <source>reports</source>
+                <target>Signalements</target>
+            </trans-unit>
+            <trans-unit id="link">
+                <source>link</source>
+                <target>Lien</target>
+            </trans-unit>
+            <trans-unit id="subject">
+                <source>subject</source>
+                <target>Sujet</target>
+            </trans-unit>
+            <trans-unit id="report">
+                <source>report</source>
+                <target>Signalement</target>
+            </trans-unit>
+            <trans-unit id="ban">
+                <source>ban</source>
+                <target>Ban</target>
+            </trans-unit>
 
 
 

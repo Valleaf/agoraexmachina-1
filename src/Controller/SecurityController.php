@@ -183,27 +183,6 @@ class SecurityController extends AbstractController
     $passwordEncoder, ForumRepository $forumRepository, ProposalRepository $proposalRepository, WorkshopRepository
     $workshopRepository): Response
     {
-        # Si on reçoit une requête AJAX, on retourne les forums
-        if($request->isXmlHttpRequest())
-        {
-            $user = $this->getUser();
-            $forums = $forumRepository->findForumsInCategories($user->getId());
-            $jsonData = array();
-            $idx = 0;
-            foreach($forums as $forum) {
-                # On envoie les donnes de chaque forums dans un json
-                $temp = array(
-                    'link' => $forum->getId(),
-                    'author' => $forum->getUser()->getUsername() ,
-                    'name' => $forum->getName(),
-                    'description' => $forum->getDescription(),
-                );
-                $jsonData[$idx++] = $temp;
-            }
-
-            return new JsonResponse($jsonData);
-        }
-
         #On récupère l'utilisateur
         $user = $this->getUser();
         #On crée le formulaire pour permettre de modifier son profil
@@ -226,6 +205,7 @@ class SecurityController extends AbstractController
             $entityManager->persist($user);
             $entityManager->flush();
             $this->addFlash("success", "edit.success");
+            return $this->redirectToRoute('homepage');
         }
         #TODO: verifier si on a besoin d'une fonction individuelle avec jointure pour éviter la multiplication de
         # requetes
@@ -260,7 +240,7 @@ class SecurityController extends AbstractController
         $user = new User();
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
-
+#Si on enregistre un admin, il faut lui ajouter toutes les catégories.
         if ($form->isSubmitted() && $form->isValid()) {
             // encode the plain password
             $user->setPassword(

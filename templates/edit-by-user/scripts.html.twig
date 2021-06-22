@@ -1,31 +1,36 @@
-
 {# Ce script permet de recuperer les donnees de tous les forums , et de les afficher pour les moderateurs #}
+{# Une fonction similaire est appellée pour recuperer les signalements #}
 <script>
-    // On lance l'ajax des que l'onglet forums est cliqué pour recuperer les forums
-    $(document).ready(function(){
-        $("#pills-forums-tab").on("click", function(event){
+    $(document).ready(function () {
+        // On lance l'ajax des que l'onglet forums est cliqué pour recuperer les forums
+        $("#pills-forums-tab").on("click", function (event) {
             $.ajax({
-                url:        '{{ path('user_edit_by_user') }}',
-                type:       'POST',
-                dataType:   'json',
-                async:      true,
+                url: '{{ path('forums_ajax_user') }}',
+                type: 'POST',
+                dataType: 'json',
+                async: true,
 
-                success: function(data, status) {
-                    let e = $('<tr><th>link</th><th>author</th><th>name</th><th>description</th></tr>');
-                    $('#forum').html('')
-                        .append(e);
+                success: function (data, status) {
+                    $('#forum').html('');
 
-                    for(i = 0; i < data.length; i++) {
+                    for (i = 0; i < data.length; i++) {
                         forum = data[i];
-                        let e = $('<tr>' +
-                            '<td id="link"> </td>' +
-                            ' <td id = "author">' +
-                            '</td><td id = "name">' +
-                            '</td><td id = "description">' +
-                            '</td></tr>');
+                        let e = $('<div class="card text-center">' +
+                            '<div class="card-header" id="name">' +
+                            '</div>' +
+                            '<div class="card-body">' +
+                            '<h5 class="card-title" id="author">' +
+                            '</h5>' +
+                            '<p class="card-text" id="description">' +
+                            '</p>' +
+                            '<button id="link" class="btn btn-light">' +
+                            '</button>' +
+                            '</div>' +
+                            '</div>'
+                        );
 
-                        let xxhref = "{{ path('forum_show') }}/"+forum['link'];
-                        let xx = "<a href=\""+xxhref+"\">Lien</a>";
+                        let xxhref = "{{ path('forum_show') }}/" + forum['link'];
+                        let xx = "<a href=\"" + xxhref + "\">Lien</a>";
                         $('#link', e).html(xx);
                         $('#author', e).html(forum['author']);
                         $('#name', e).html(forum.name);
@@ -33,12 +38,74 @@
                         $('#forum').append(e);
                     }
                 },
-                error : function(xhr, textStatus, errorThrown) {
+                error: function (xhr, textStatus, errorThrown) {
                     alert('Ajax request failed.');
                 }
             });
         });
 
 
+        // On lance l'ajax des que l'onglet reports est cliqué pour recuperer les signalements
+        $("#pills-reports-tab").on("click", function (event) {
+            $.ajax({
+                url: '{{ path('report_ajax') }}',
+                type: 'POST',
+                dataType: 'json',
+                async: true,
+
+                success: function (data, status) {
+                    $('#js-reports').html('');
+
+                    for (i = 0; i < data.length; i++) {
+                        report = data[i];
+                        let e = $('<div class="card text-center">' +
+                            '<div class="card-header">' +
+                            ' {{ "report" | trans }}' +
+                            ' <div id="id"></div>' +
+                            '</div>' +
+                            '<div class="card-body">' +
+                            '<h5 class="card-title" id="about">' +
+                            '</h5>' +
+                            '<p class="card-text" id="forum">' +
+                            '</p>' +
+                            '<p class="card-text" id="forum-name">' +
+                            '</p>' +
+                            '<p class="card-text" id="date">' +
+                            '</p>' +
+                            '<div class=btn-group>' +
+                            '<button id="link" class="btn btn-danger">' +
+                            '{{ 'ban' | trans }}' +
+                            '</button>' +
+                            '<button id="link" class="btn btn-warning">' +
+                            '{{ 'delete' | trans }}' +
+                            '</button>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>'
+                        );
+
+                        {# let xxhref = "{{ path('forum_show') }}/" + forum['link']; #}
+                        {# let xx = "<a href=\"" + xxhref + "\">Lien</a>"; #}
+                        {# $('#link', e).html(xx); #}
+
+                        $('#about', e).html(report['about']);
+                        $('#id', e).html(report['id']);
+                        $('#name', e).html(report.name);
+                        $('#forum', e).html(report['forum']);
+                        $('#forum-name', e).html(report['forum-name']);
+                        $('#date', e).html(report['date'].date.split(' ')[0]);
+                        $('#js-reports').append(e);
+                        {# TDOO: Ajouter les liens aux bans et delete #}
+                    }
+                },
+                    error: function (xhr, textStatus, errorThrown) {
+                        alert('Ajax request failed.');
+                    }
+                });
+
+
+        });
     });
+
+
 </script>

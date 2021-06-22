@@ -38,9 +38,12 @@ class WorkshopRepository extends ServiceEntityRepository
 		$entityManager = $this->getEntityManager();
 		$query = $entityManager->createQueryBuilder();
 		$query
-				->select('w')
-				->from('App\Entity\Workshop', 'w');
-		
+            ->select('w','t','c','p','f')
+            ->from('App:Workshop', 'w')
+            ->leftJoin('w.theme','t')
+            ->leftJoin('t.category','c')
+            ->leftJoin('w.proposals','p')
+            ->leftJoin('p.forums','f');
 		
 		foreach($filters as $key => $value)
 		{

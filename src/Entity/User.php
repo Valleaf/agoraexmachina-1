@@ -653,7 +653,7 @@ class User implements UserInterface
         }
         return $count;
     }
-    /*
+
         public function __serialize(): array
         {
             return [
@@ -698,18 +698,10 @@ class User implements UserInterface
             $this->updatedAt = $data['updatedAt'];
 
             return $this;
-        }*/
+        }
 
-    public function serialize()
-    {
-        return serialize($this->id);
-    }
 
-    public function unserialize($serialized)
-    {
-        $this->id = unserialize($serialized);
 
-    }
 
     public function getFirstName(): ?string
     {
