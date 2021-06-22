@@ -31,6 +31,7 @@ class ThemeRepository extends ServiceEntityRepository
             ->leftJoin('t.workshops','w')
             ->leftJoin('w.proposals','p')
             ->leftJoin('p.forums','f')
+            ->orderBy('c.name')
             ;
         dump($query);
         return $query->getQuery()->getResult();

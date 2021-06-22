@@ -21,9 +21,9 @@
                             {% endif %}
                         {% endif %}
                         {% for theme in themes %}
-                            {% if  theme.isPublic %}
+                            {% if  theme.isPublic or is_granted('ROLE_ADMIN_RESTRICTED') %}
                                 {% if app.user %}
-                                    {% if app.user in theme.category.users %}
+                                    {% if app.user in theme.category.users or is_granted('ROLE_ADMIN')%}
                                         {% include 'default/themes.html.twig' %}
                                     {% endif %}
                                 {% else %}
