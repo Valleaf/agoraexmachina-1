@@ -8,7 +8,8 @@
        {% endfor %}
    {% endfor %}
 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12 mb-4 " style="max-width:290px " data-toggle="tooltip"
-     data-placement="bottom" title="{{ nbProposals }} {{ 'proposals' | trans }} | {{ theme.workshops.count }} {{ 'workshops' | trans}} | {{ nbForums }} {{ 'forums' | trans }}">
+     data-placement="bottom"
+     title="{{ nbProposals }} {{ 'proposals' | trans }} | {{ theme.workshops.count }} {{ 'workshops' | trans }} | {{ nbForums }} {{ 'forums' | trans }}">
 
     <a href="{{ path('workshop_index', {'slug' : theme.name | slugify, 'theme' : theme.id }) }}"
        class="card-link">
@@ -22,11 +23,21 @@
                      src="{{ asset('img/logo_aem-lg.png') }}"/>
             {% endif %}
             <div class="card-img-overlay">
-            <div class="card-body container">
-                <h4 class="card-theme-title">{{ theme.name }}</h4>
-                <h6 class="card-theme-subtitle">{{ 'category' | trans}} {{ theme.category.name }}</h6>
+                <div class="card-body container">
+                    <h4 class="card-theme-title">{{ theme.name }}</h4>
+                    <h6 class="card-theme-subtitle">{{ 'category' | trans }} {{ theme.category.name }}</h6>
+                </div>
             </div>
-        </div>
+            <p class="card-text">
+                {% if theme.description | length > 100 %}
+                    {{ theme.description | truncate(100, true)|raw }}
+                    <span class="badge badge-secondary" data-toggle="tooltip"
+                          data-placement="top" title="{{ theme.description }}">Suite</span>
+                {% else %}
+
+                    {{ theme.description | raw }}
+                {% endif %}
+            </p>
         </div>
     </a>
 </div>

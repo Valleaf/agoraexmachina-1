@@ -1,12 +1,13 @@
-
 <div id="mySidebarProposal" class="sidebar-right">
     <a href="javascript:void(0)" class="closebtn" onclick="closeRightNav()">×</a>
 
-
-    <div id="js-sidebar-content" >
-        {% for proposal in workshop.proposals %}
-            {% include 'proposal/show-proposal.html.twig' %}
-        {% endfor %}
+{#Essayer une sidebar par proposal#}
+    <div id="js-sidebar-content">
+        <div class="content">
+            {% for proposal in workshop.proposals %}
+                {% include 'proposal/show-proposal.html.twig' %}
+            {% endfor %}
+        </div>
     </div>
 
 

@@ -52,6 +52,10 @@
 
 `sudo php bin/console doctrine:migrations:execute --up 1`
 
+`sudo chmod 777 public/img/upload`
+
+`sudo chmod 777 public/pdf/upload`
+
 ### Post-installation procedure
 
 * In a browser, go to the AEM administration interface (http://mondomaine.com/agoraexmachina/public)

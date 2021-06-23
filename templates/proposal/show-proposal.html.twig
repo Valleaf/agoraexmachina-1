@@ -1,39 +1,42 @@
-    <div id="proposal{{ proposal.id }}" class="col-12 proposal-sidebar">
-        <div class="row mb-3">
-            <div class="col-12">
-                    <div class="card-body container-fluid ">
-                        <div class="row">
-                            <div class="col-10">
-                                <h4 class="d-flex justify-content-center">{{ 'proposal' | trans }}
-                                    : {{ proposal.name }}</h4>
-                                <span class="text-muted"><div
-                                            class="avatar avatar-xs float-left bg-primary">{{ proposal.user.username | first | capitalize }}</div>&nbsp;{{ 'from' | trans }} {{ proposal.user.username }}</span>
-                                <hr/>
-                                {{ proposal.description | raw }}
-                            </div>
-                            <div class="col-2 align-self-end">
-                                {% if app.user and app.user == proposal.user and date(workshop.dateEnd) > date() %}
-                                    <div class="btn-group mb-3 ml-3 " role="group">
-                                        <a href="{{ path('proposal_edit', {'workshop' : workshop.id, 'proposal' : proposal.id, 'slug' : slug}) }}"
-                                           class="btn btn-light "><i class="bi bi-list-task"
-                                                                     aria-hidden="true"></i></a>
-                                        <a href="{{ path('proposal_delete', {'workshop' : workshop.id, 'proposal' : proposal.id, 'slug' : slug}) }}"
-                                           class="btn btn-light" data-toggle="deleteConfirmation"><i
-                                                    class="bi bi-trash" aria-hidden="true"></i></a>
-                                    </div>
-                                {% endif %}
-                                {% include 'proposal/show-propoal-votes.html.twig' %}
-                            </div>
-                        </div>
+<div id="proposal{{ proposal.id }}" class="col-12 proposal-sidebar">
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="card-body container-fluid ">
+                <div class="row">
+                    <div class="col-10">
+                        <h4 class="d-flex justify-content-center">{{ 'proposal' | trans }}
+                            : {{ proposal.name }}</h4>
+                        <span class="text-muted"><div
+                                    class="avatar avatar-xs float-left bg-primary">{{ proposal.user.username | first | capitalize }}</div>&nbsp;{{ 'from' | trans }} {{ proposal.user.username }}</span>
+                        <hr/>
+                        {{ proposal.description | raw }}
                     </div>
+                    <div class="col-2 align-self-end">
+                        {% if app.user and app.user == proposal.user and date(workshop.dateEnd) > date() %}
+                            <div class="btn-group mb-3 ml-3 " role="group">
+                                <a href="{{ path('proposal_edit', {'workshop' : workshop.id, 'proposal' : proposal.id, 'slug' : slug}) }}"
+                                   class="btn btn-light "><i class="bi bi-list-task"
+                                                             aria-hidden="true"></i></a>
+                                <a href="{{ path('proposal_delete', {'workshop' : workshop.id, 'proposal' : proposal.id, 'slug' : slug}) }}"
+                                   class="btn btn-light" data-toggle="deleteConfirmation"><i
+                                            class="bi bi-trash" aria-hidden="true"></i></a>
+                            </div>
+                        {% endif %}
+                        {% include 'proposal/show-propoal-votes.html.twig' %}
+                    </div>
+                </div>
             </div>
         </div>
-        {% if app.user and date(workshop.dateEnd) > date() %}
-            <a href="{{ path('forum_add', {'workshop' : proposal.workshop.id, 'proposal' : proposal.id, 'slug' : slug }) }}"
-               class="m-1"><i
-                        class="bi bi-plus"></i> {{ 'add' | trans }}</a>
-        {% endif %}
-        {% if proposal.forums.count != 0 %}
-            {% include 'proposal/show-proposal-forums.html.twig' %}
-        {% endif %}
     </div>
+
+
+    {% if app.user and date(workshop.dateEnd) > date() %}
+        <a href="{{ path('forum_add', {'workshop' : proposal.workshop.id, 'proposal' : proposal.id, 'slug' : slug }) }}"
+           class="m-1"><i
+                    class="bi bi-plus"></i> {{ 'add' | trans }}</a>
+    {% endif %}
+    {% if proposal.forums.count != 0 %}
+        {% include 'proposal/show-proposal-forums.html.twig' %}
+    {% endif %}
+
+</div>
