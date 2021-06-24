@@ -57,7 +57,7 @@ class WorkshopController extends AbstractController
         # On crée un nouveau mot-clé
         $keyword = new Keyword();
         # Trim de la key donnée, pour éviter les espaces inutiles puis association au nouveau mot clé
-        $keyword->setName(trim($key));
+        $keyword->setName(strtolower(trim($key)));
         # Si aucun mot-clé n'existe dans la BDD, alors on renvoi celui-là
         if($repo == null){
             return ($keyword);

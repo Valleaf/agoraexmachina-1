@@ -55,7 +55,9 @@
         <div class="card">
             <div class="card-body">
                 {% form_theme userForm 'bootstrap_4_layout.html.twig' %}
-                {{ form(userForm) }}
+                {{ form_start(userForm, {'attr': {'id': 'form_upload'}}) }}
+                {{ form_rest(userForm) }}
+                {{ form_end(userForm) }}
             </div>
         </div>
     </div>

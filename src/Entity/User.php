@@ -672,7 +672,7 @@ class User implements UserInterface
                 'notifications' => $this->notifications,
                 'isAllowedEmails' => $this->isAllowedEmails,
                 'image' => $this->image,
-                'imageFile' => $this->imageFile,
+                'imageFile' => $this->imageFile = base64_encode($this->imageFile),
                 'updatedAt' => $this->updatedAt,
             ];
         }
@@ -694,11 +694,12 @@ class User implements UserInterface
             $this->notifications = $data['notifications'];
             $this->isAllowedEmails = $data['isAllowedEmails'];
             $this->image = $data['image'];
-            $this->imageFile = $data['imageFile'];
+            $this->imageFile = base64_decode($this->imageFile);
             $this->updatedAt = $data['updatedAt'];
 
             return $this;
         }
+
 
 
 
@@ -786,6 +787,7 @@ class User implements UserInterface
 
         return $this;
     }
+
 
 
 }

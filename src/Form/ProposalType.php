@@ -24,7 +24,12 @@ class ProposalType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('description', TextareaType::class, array('attr' => array('class' => 'ckeditor')))
+            ->add('description', CKEditorType::class, [
+                'config' => [
+                    'uiColor' => '#ffffff',
+                    'toolbar' => 'full',
+                ],
+            ])
             ->add('Submit', SubmitType::class);
     }
 

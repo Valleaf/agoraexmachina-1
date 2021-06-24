@@ -44,23 +44,23 @@ class ThemeType extends AbstractType
                 'choice_label' => 'name'
             ])
             ->add('name')
-            ->add('description', TextareaType::class, array('attr' => array('class' => 'ckeditor')))
-            #TODO: fix ckeditor
-   #      ->add('description', CKEditorType::class,[
-   #          'config'=>[
-   #              'toolbar'=>'full',
-   #        ],
-   #      ])
+            ->add('description', CKEditorType::class, [
+                'config' => [
+                    'uiColor' => '#ffffff',
+                    'toolbar' => 'full',
+                ],
+            ])
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => true,
+                'help'=>'img.max.size.2048',
             ])
-            ->add('isPublic',CheckboxType::class,[
-                'label'=>'Public?',
-                'required'=>false
+            ->add('isPublic', CheckboxType::class, [
+                'label' => 'Public?',
+                'required' => false
             ])
-            ->add('voteType',ChoiceType::class,[
-                'required'=> true,
+            ->add('voteType', ChoiceType::class, [
+                'required' => true,
                 'multiple' => false,
                 'choices' => [
                     'votes.with.delegation' => [
@@ -73,25 +73,22 @@ class ThemeType extends AbstractType
                     ],
                 ],
             ])
-            ->add('delegationDeepness',NumberType::class,[
-                'disabled'=>false,
-                'required'=>false,
-            ])
-        ;
+            ->add('delegationDeepness', NumberType::class, [
+                'disabled' => false,
+                'required' => false,
+            ]);
 
         # On affiche ou non le champ delegationsDeepness si il est nécessaire
         # Premiere etape, ajouter au formulaire le champ si voteType est egal a yes-delegation(Equivalent a un
         # systeme de votes a 3 niveaux avec delegation)
-        $formModifier = function (FormInterface $form, string $voteType = 'yes-delegation')
-        {
-          if($voteType === 'yes-delegation')
-          {
-              $form
-                  ->add('delegationDeepness',NumberType::class,[
-                      'attr' => ['min'=>'0'],
-                      'required'=>false
-              ]);
-          }
+        $formModifier = function (FormInterface $form, string $voteType = 'yes-delegation') {
+            if ($voteType === 'yes-delegation') {
+                $form
+                    ->add('delegationDeepness', NumberType::class, [
+                        'attr' => ['min' => '0'],
+                        'required' => false
+                    ]);
+            }
         };
         # Seconde étape, on ajoute un EventListener qui va recuperer le formulaire
         $builder->addEventListener(
@@ -99,23 +96,23 @@ class ThemeType extends AbstractType
             function (FormEvent $event) use ($formModifier) {
                 # $data représente une entité Theme
                 $data = $event->getData();
-                $formModifier($event->getForm(),$data->getVoteType());
+                $formModifier($event->getForm(), $data->getVoteType());
             }
         );
 
         # On ajoute un event listener sur le post submit
         $builder->get('voteType')->addEventListener(
             FormEvents::POST_SUBMIT,
-            function(FormEvent $event) use ($formModifier) {
+            function (FormEvent $event) use ($formModifier) {
                 # On récupère le theme dans le post submit, pour recuperer toutes les informations y compris l'ID
                 $theme = $event->getForm()->getData();
 
                 # On ajoute au parent les fonctions en callback
-                $formModifier($event->getForm()->getParent(),$theme);
+                $formModifier($event->getForm()->getParent(), $theme);
             }
         );
 
-            $builder->add('Submit', SubmitType::class);
+        $builder->add('Submit', SubmitType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

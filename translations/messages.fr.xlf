@@ -519,6 +519,10 @@
                 <source>no.categories</source>
                 <target>Aucune catégorie existante</target>
             </trans-unit>
+            <trans-unit id="categories.request">
+                <source>categories.request</source>
+                <target>Rejoindre une catégorie</target>
+            </trans-unit>
 
 
         <!-- ******************************** -->
@@ -535,6 +539,14 @@
             <trans-unit id="pdf.max.size.1024">
                 <source>pdf.max.size.1024</source>
                 <target>Le document doit être en format pdf et en dessous de 1024kb</target>
+            </trans-unit>
+
+        <!-- ******************************** -->
+        <!-- IMAGES -->
+        <!-- ******************************** -->
+            <trans-unit id="img.max.size.2048">
+                <source>img.max.size.2048</source>
+                <target>Format image, taille maximale : 2MB</target>
             </trans-unit>
 
         <!-- ******************************** -->
@@ -620,6 +632,7 @@
                 <source>ban</source>
                 <target>Ban</target>
             </trans-unit>
+
 
 
 

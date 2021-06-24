@@ -98,14 +98,22 @@
                         {# TDOO: Ajouter les liens aux bans et delete #}
                     }
                 },
-                    error: function (xhr, textStatus, errorThrown) {
-                        alert('Ajax request failed.');
-                    }
-                });
+                error: function (xhr, textStatus, errorThrown) {
+                    alert('Ajax request failed.');
+                }
+            });
 
 
         });
     });
 
 
+</script>
+
+
+<script>
+
+    $("#user_imageFile_file").change(function () {
+        filePreview(this);
+    });
 </script>

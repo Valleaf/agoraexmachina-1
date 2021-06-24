@@ -44,21 +44,21 @@ class UserEditByUserType extends AbstractType
                         'max' => 4096,
                     ]),
                     new Regex([
-                        'pattern'=>'/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{10,}$/',
-                        'message'=>'pw.regex'
+                        'pattern' => '/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{10,}$/',
+                        'message' => 'pw.regex'
                     ])
                 ],
             ))
-            ->add('isAllowedEmails',CheckboxType::class,[
-                'label'=>'Emails autorisés?',
-                'required'=>false,
+            ->add('isAllowedEmails', CheckboxType::class, [
+                'label' => 'Emails autorisés?',
+                'required' => false,
             ])
-           # ->add('imageFile', VichImageType::class,[
-           #     'required' => false,
-           #     'allow_delete' => true,
-           # ])
-            ->add('Submit', SubmitType::class)
-        ;
+            ->add('imageFile', VichImageType::class, [
+                'required' => false,
+                'allow_delete' => true,
+                'help'=>'img.max.size.2048',
+            ])
+            ->add('Submit', SubmitType::class);
 
     }
 

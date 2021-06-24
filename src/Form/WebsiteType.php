@@ -41,6 +41,7 @@ class WebsiteType extends AbstractType
             ->add('imageFile', VichImageType::class, [
                 'required' => false,
                 'allow_delete' => true,
+                'help'=>'img.max.size.2048',
             ])
             ->add('Submit', SubmitType::class);
     }

@@ -7,8 +7,11 @@ use App\Entity\Notification;
 use App\Entity\User;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
+use App\Repository\ForumRepository;
 use App\Repository\RequestRepository;
+use App\Repository\ThemeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -102,12 +105,12 @@ class CategoryController extends AbstractController
             # getUsers et la liste d'utilisateurs globale?
             # On enlève tous les utilisateurs de la catégorie pour ne remettre que ceux sélectionnés et ne pas
             # pouvoir selectionner les admins
-           # if($usersBefore->count() != 0){
-           #     foreach ($usersBefore as $user) {
-           #         $category->removeUser($user);
-           #         $this->getDoctrine()->getManager()->persist($user);
-           #     }
-           # }
+            # if($usersBefore->count() != 0){
+            #     foreach ($usersBefore as $user) {
+            #         $category->removeUser($user);
+            #         $this->getDoctrine()->getManager()->persist($user);
+            #     }
+            # }
 
             #Si il y a des utilisateurs choisis , on les ajoute un par un à la
             # catégorie
@@ -341,9 +344,36 @@ class CategoryController extends AbstractController
     public function addAllAdminsToCategory(Category $category): void
     {
         $admins = $this->getDoctrine()->getRepository(User::class)->findAdmins();
-        foreach ($admins as $admin)
-        {
+        foreach ($admins as $admin) {
             $category->addUser($admin);
+        }
+
+    }
+
+    /**
+     * @Route ("/category/ajax/{theme}", defaults={"theme"=1}, name="category_ajax_theme")
+     * @param Request $request
+     * @param ForumRepository $forumRepository
+     * @return JsonResponse
+     */
+    public function ajax_fetchCategoryFromTheme(Request $request, CategoryRepository $categoryRepository,
+                                                ThemeRepository $themeRepository, string $theme)
+    {
+        if ($request->isXmlHttpRequest()) {
+
+
+            $themes = $themeRepository->findBy(['name'=>$theme]);
+            $jsonData = array();
+            $idx = 0;
+            foreach($themes as $theme) {
+                # On envoie les donnes de chaque forums dans un json
+                $temp = array(
+                    'category' => $theme->getCategory()->getName(),
+                );
+                $jsonData[$idx++] = $temp;
+            }
+
+            return new JsonResponse($jsonData);
         }
 
     }

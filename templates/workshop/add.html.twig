@@ -1,47 +1,106 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<div class="container-fluid">
-		<div class="row">
-			{% include 'admin.menu.html.twig' %}
-			<main class="col-11 col-lg-10 ml-sm-auto">
-				<div class="row mb-2" >
-					<div class="col-12">
-						<h4>{{ 'add' | trans }} {{'workshop' | trans | lower}}</h4>
-					</div>
-				</div>
-				<div class="row mb-2" >
-					<div class="col-12">
-						<a href="{{ path('workshop_admin') }}" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-bar-left"></i> {{ 'list_of' | trans }} {{ 'workshops' | trans | lower }}</a>
-					</div>
-				</div>
-				<div class="row mb-2" >
-					<div class="col-12">
-						{% include 'flashbag.html.twig' %}
-					</div>
-				</div>
-				<div class="row" >
-					<div class="col-12">
-						<div class="card">
-							<div class="card-body">
-								{% form_theme form 'bootstrap_4_layout.html.twig' %}
-								{{ form_start(form, {'attr': {'id': 'form_upload'}}) }}
-								{{ form_rest(form) }}
-								{{ form_end(form) }}							</div>
-						</div>
-					</div>
-				</div>
-			</main>
-		</div>
-	</div>
+    <div class="container-fluid">
+        <div class="row">
+            {% include 'admin.menu.html.twig' %}
+            <main class="col-11 col-lg-10 ml-sm-auto">
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <h4>{{ 'add' | trans }} {{ 'workshop' | trans | lower }}</h4>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-12">
+                        <a href="{{ path('workshop_admin') }}" class="btn btn-secondary btn-sm"><i
+                                    class="bi bi-arrow-bar-left"></i> {{ 'list_of' | trans }} {{ 'workshops' | trans | lower }}
+                        </a>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-12">
+                        {% include 'flashbag.html.twig' %}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                {% form_theme form 'bootstrap_4_layout.html.twig' %}
+                                {{ form_start(form, {'attr': {'id': 'form_upload'}}) }}
+                                {{ form_row(form.theme) }}
+                                <div>{{ 'category' | trans }} :
+                                    <span id="js_category_theme_name">
+                                    </span>
+                                </div>
+                                {{ form_rest(form) }}
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
 {% endblock %}
 
 {% block javascript %}
 {{ parent() }}
+{#  On a besoin de la version non slim de jquery pour avoir acces a l'ajax #}
+			 <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
 <script >
+
+
 
 $("#workshop_imageFile_file").change(function () {
     filePreview(this);
 });
+$(document).ready(function () {
+    let theme = $('#workshop_theme option:selected').text();
+    $.ajax({
+        url: '{{ path('category_ajax_theme') }}/'+theme,
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+
+        success: function (data,status) {
+            console.log(data);
+             $('#js_category_theme_name' ).html("<strong>"+data[0].category+"</strong>");
+        },
+        error: function (xhr, textStatus, errorThrown) {
+                    alert('Ajax request failed.');
+                }
+    });
+
+
+
+    $('#workshop_theme').on('change',function () {
+       theme = $('#workshop_theme option:selected').text();
+    $.ajax({
+        url: '{{ path('category_ajax_theme') }}/'+theme,
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+
+        success: function (data,status) {
+            console.log(data);
+             $('#js_category_theme_name' ).html("<strong>"+data[0].category+"</strong>");
+        },
+        error: function (xhr, textStatus, errorThrown) {
+                    alert('Ajax request failed.');
+                }
+    });
+
+
+
+
+
+
+
+   })
+
+})
+
+
 </script>
 {% endblock %}

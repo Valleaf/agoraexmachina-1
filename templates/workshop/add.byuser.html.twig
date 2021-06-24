@@ -42,6 +42,11 @@
 							<div class="card-body">
 								{% form_theme form 'bootstrap_4_layout.html.twig' %}
 								{{ form_start(form, {'attr': {'id': 'form_upload'}}) }}
+								{{ form_row(form.theme) }}
+								<div>{{ 'category' | trans }} :
+									<span id="js_category_theme_name">
+                                    </span>
+								</div>
 								{{ form_rest(form) }}
 								{{ form_end(form) }}
 							</div>
@@ -53,10 +58,56 @@
 {% endblock %}
 {% block javascript %}
 {{ parent() }}
+{#  On a besoin de la version non slim de jquery pour avoir acces a l'ajax #}
+			 <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
 <script >
 
 $("#workshop_imageFile_file").change(function () {
     filePreview(this);
 });
+
+
+$(document).ready(function () {
+    let theme = $('#workshop_theme option:selected').text();
+    $.ajax({
+        url: '{{ path('category_ajax_theme') }}/'+theme,
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+
+        success: function (data,status) {
+            console.log(data);
+             $('#js_category_theme_name' ).html("<strong>"+data[0].category+"</strong>");
+        },
+        error: function (xhr, textStatus, errorThrown) {
+                    alert('Ajax request failed.');
+                }
+    });
+
+
+
+    $('#workshop_theme').on('change',function () {
+       theme = $('#workshop_theme option:selected').text();
+    $.ajax({
+        url: '{{ path('category_ajax_theme') }}/'+theme,
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+
+        success: function (data,status) {
+            console.log(data);
+             $('#js_category_theme_name' ).html("<strong>"+data[0].category+"</strong>");
+        },
+        error: function (xhr, textStatus, errorThrown) {
+                    alert('Ajax request failed.');
+                }
+    });
+
+
+
+   })
+
+})
+
 </script>
 {% endblock %}

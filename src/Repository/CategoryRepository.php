@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Category;
+use App\Entity\Theme;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -17,6 +18,25 @@ class CategoryRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Category::class);
+    }
+
+    /**
+     * Cette fonction permet de trouver une categorie depuis le nom d'un theme. Utilisé avec de l'ajax dans le
+     * formulaire
+     * @param array $array
+     */
+    public function searchByThemeName(int $theme)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQueryBuilder();
+        $query
+            ->select('c')
+            ->from('App:Category','c')
+            ->innerJoin('c.themes','t')
+            ->andWhere('t.id = '.$theme)
+        ;
+
+        return $query->getQuery()->getResult();
     }
 
     // /**
@@ -47,4 +67,5 @@ class CategoryRepository extends ServiceEntityRepository
         ;
     }
     */
+
 }

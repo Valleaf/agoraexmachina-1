@@ -7,14 +7,17 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * Les catégories permettent de ranger les thèmes et ateliers. Les utilisateurs peuvent être
  * souscrits à des catégories pour accéder à leur contenu. Les modérateurs et administrateurs restreints peuvent être
  * inscrits à des catégories pour pouvoir opérer dans ces catégories
  * @ORM\Entity(repositoryClass=CategoryRepository::class)
- * @UniqueEntity("name")
+ * @UniqueEntity(fields={"name"}, message="name.alreadyexists")
+ * @Vich\Uploadable
  */
 class Category
 {
@@ -52,6 +55,28 @@ class Category
      * @var Collection|Request[] Les requêtes associés à une demande pour rejoindre cette catégorie
      */
     private $requests;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string Chemin de l'image dans l'arborescence du site
+     */
+    private $image;
+    /**
+     * @Vich\UploadableField(mapping="categories_images", fileNameProperty="image")
+     * @var File L'image elle-même
+     */
+    private $imageFile;
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     * @var \DateTime Le moment du téléversage de l'image
+     */
+    private $updatedAt;
+
 
     public function __construct()
     {
@@ -159,5 +184,58 @@ class Category
         }
 
         return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): self
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+
+    public function setImageFile(File $image = null)
+    {
+        $this->imageFile = $image;
+
+        // VERY IMPORTANT:
+        // It is required that at least one field changes if you are using Doctrine,
+        // otherwise the event listeners won't be called and the file is lost
+        if ($image) {
+            // if 'updatedAt' is not defined in your entity, use another property
+            $this->updatedAt = new \DateTime('now');
+        }
+    }
+
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    public function setImage($image)
+    {
+        $this->image = $image;
+    }
+
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    public function __serialize()
+    {
+        return [
+            $this->imageFile = base64_encode($this->imageFile)
+        ];
+    }
+
+    public function __unserialize($serialized)
+    {
+        $this->imageFile = base64_decode($this->imageFile);
     }
 }

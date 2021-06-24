@@ -12,7 +12,7 @@
                 </div>
                 <div class="row mb-2" >
                     <div class="col-12">
-                        <a href="{{ path('category_admin') }}" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-bar-left"></i> {{ 'list_of' | trans }} {{ 'themes' | trans | lower }}</a>
+                        <a href="{{ path('category_admin') }}" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-bar-left"></i> {{ 'list_of' | trans }} {{ 'categories' | trans | lower }}</a>
                     </div>
                 </div>
                 <div class="row mb-2" >
@@ -25,7 +25,9 @@
                         <div class="card">
                             <div class="card-body">
                                 {% form_theme form 'bootstrap_4_layout.html.twig' %}
-                                {{ form(form) }}
+                                {{ form_start(form, {'attr': {'id': 'form_upload'}}) }}
+                                {{ form_rest(form) }}
+                                {{ form_end(form) }}
                             </div>
                         </div>
                     </div>
@@ -33,4 +35,14 @@
             </main>
         </div>
     </div>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script >
+
+$("#category_imageFile_file").change(function () {
+    filePreview(this);
+});
+</script>
 {% endblock %}

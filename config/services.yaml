@@ -20,6 +20,7 @@ parameters:
     workshops_documents_directory: '/public/pdf/upload/workshops'
     users_images_directory: '/public/img/upload/users'
     wallpapers_images_directory: '/public/img/upload/wallpapers'
+    categories_images_directory: '/public/img/upload/categories'
 
     # ici vos autres variables
     app.locales: [en, fr]

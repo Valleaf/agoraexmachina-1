@@ -7,14 +7,6 @@ fos_ck_editor:
   configs:
     my_config:
       toolbar: "full"
-      extraPlugins: "markdown,savemarkdown"
-  plugins:
-    markdown:
-      path: "bundles/fosckeditor/plugins/CKEditor-Markdown/markdown/"
-      filename: "plugin.js"
-    savemarkdown:
-      path: "bundles/fosckeditor/plugins/savemarkdown/"
-      filename: "plugin.js"
   toolbars:
     items:
       full.about: [ ]
