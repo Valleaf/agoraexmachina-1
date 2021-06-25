@@ -70,7 +70,8 @@ class WorkshopType extends AbstractType
             ->add('keytext', TextType::class, [
                 'help' => 'keyword.help',
                 'label' => 'keyword',
-                'required' => false
+                'required' => false,
+                'attr'=>['autocomplete' => 'off',],
             ])
             ->add('Submit', SubmitType::class);
     }

@@ -30,10 +30,27 @@ class KeywordRepository extends ServiceEntityRepository
         $query = $entityManager->createQueryBuilder();
         $query
             ->select('k')
-            ->from('App:Keyword','k')
-            ->innerJoin('k.workshops','w')
-            ->andWhere('w.id ='.$id);
+            ->from('App:Keyword', 'k')
+            ->innerJoin('k.workshops', 'w')
+            ->andWhere('w.id =' . $id);
         return $query->getQuery()->getResult();
+    }
+
+    /**
+     * Cette fonction renvoie les mots cles qui commencent par $str envoyé en paramètre
+     * @param string $str
+     */
+    public function findKeywordsStartingWith(string $str)
+    {
+        $entityManager = $this->getEntityManager();
+        $query = $entityManager->createQueryBuilder();
+        $query
+            ->select('k')
+            ->from('App:Keyword', 'k')
+            ->andWhere('k.name LIKE :string')
+            ->setParameter('string', $str.'%');
+        return $query->getQuery()->getResult();
+
     }
 
     // /**

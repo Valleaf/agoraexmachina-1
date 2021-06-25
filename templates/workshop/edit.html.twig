@@ -46,6 +46,23 @@
 									<span id="js_category_theme_name">
                                     </span>
 								</div>
+								{{ form_row(form.name) }}
+								{{ form_row(form.description) }}
+								{{ form_row(form.imageFile) }}
+								{{ form_row(form.dateBegin) }}
+								{{ form_row(form.dateEnd) }}
+								{{ form_row(form.dateVoteBegin) }}
+								{{ form_row(form.dateVoteEnd) }}
+								{{ form_row(form.rightsSeeWorkshop) }}
+								{{ form_row(form.rightsVoteProposals) }}
+								{{ form_row(form.rightsWriteProposals) }}
+								{{ form_row(form.quorumRequired) }}
+								{{ form_row(form.rightsDelegation) }}
+								{{ form_row(form.keytext) }}
+								<div>{{ 'keyword' | trans }} :
+									<span id="js_keywords">
+                                    </span>
+								</div>
 								{{ form_rest(form) }}
 								{{ form_end(form) }}							</div>
 						</div>
@@ -74,7 +91,9 @@ $(document).ready(function () {
         type: 'POST',
         dataType: 'json',
         async: true,
-
+        beforeSend: function(){
+             $('#js_category_theme_name' ).html("<span class='spinner-border'></span>");
+        },
         success: function (data,status) {
             console.log(data);
              $('#js_category_theme_name' ).html("<strong>"+data[0].category+"</strong>");
@@ -93,7 +112,9 @@ $(document).ready(function () {
         type: 'POST',
         dataType: 'json',
         async: true,
-
+        beforeSend: function(){
+             $('#js_category_theme_name' ).html("<span class='spinner-border'></span>");
+        },
         success: function (data,status) {
             console.log(data);
              $('#js_category_theme_name' ).html("<strong>"+data[0].category+"</strong>");
@@ -102,14 +123,46 @@ $(document).ready(function () {
                     alert('Ajax request failed.');
                 }
     });
-
-
-
-
-
-
-
    })
+
+      $('#workshop_keytext').on('input',function () {
+       let text = $('#workshop_keytext').val();
+       let textArray = text.split(',');
+       let length = textArray.length;
+       text = textArray[length-1];
+       text = text.toLowerCase().trim();
+       console.log(text);
+       if (text !== '')
+           {
+           $.ajax({
+        url:"{{ path('keywords_ajax_call') }}/"+text,
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        beforeSend: function(){
+             $('#js_keywords').html("<span class='spinner-border'></span>");
+        },
+        afterSend:  function(){
+        },
+        success: function (data,status) {
+                         $('#js_keywords').html(' ');
+            data.map((e) => {
+              $('#js_keywords').append("<span class='keyword-suggest'>#"+e.key+" </span>");
+            })
+       let keyAnchors = $('.keyword-suggest');
+            keyAnchors.on('click',function () {
+                let chosenWord = $(this).text().slice(1);
+                 let currentInput = textArray.join(',');
+                 currentInput = currentInput.slice(0,-text.length);
+                 $('#workshop_keytext').val(currentInput+chosenWord+',');
+            })
+        },
+        error: function (xhr, textStatus, errorThrown) {
+                    console.log('Ajax request failed.');
+                }
+    })}
+   });
+
 
 })
 

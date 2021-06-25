@@ -84,13 +84,13 @@ function openRightNav(id) {
     $('.proposal-sidebar').hide(500);
     $('#proposal'+id).show(500);
     document.getElementById("mySidebarProposal").style.width = "50vw";
-    document.getElementById("main-content").style.marginRight = "25vw";
+    // document.getElementById("main-content").style.marginRight = "25vw";
 }
 
 function closeRightNav(id) {
     $('#proposal'+id).hide(500);
     document.getElementById("mySidebarProposal").style.width = "0";
-    document.getElementById("main-content").style.marginRight= "0";
+    // document.getElementById("main-content").style.marginRight= "0";
 }
 
 function openAnswers(id) {

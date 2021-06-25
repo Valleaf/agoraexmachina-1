@@ -1,66 +1,90 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	{% set slug =  app.request.get('slug') %}
-	<div class="container-fluid">
-		<div class="row">
+    {% set slug =  app.request.get('slug') %}
+    <div class="container-fluid">
+        <div class="row">
 
 
-			<main class="col" id="content">
-				<div class="row mb-2" >
-					<div class="col-12 d-flex">
-						<h4 class="mr-auto"><i class="bi bi-chevron-left"></i> {{ 'list_of' | trans }} {{ 'workshops' | trans | lower }} {{ theme.name }}</h4>
-						<nav aria-label="breadcrumb text-secondary">
-							<ol class="breadcrumb text-small">
-								<li class="breadcrumb-item"><a href="{{ path('homepage') }}"><i class="bi bi-house-door"></i></a></li>
-								<li class="breadcrumb-item active" aria-current="page">{{ theme.name }}</li>
-							</ol>
-						</nav>
-					</div>
-				</div>
-				<div class="row mb-2" >
-					<div class="col-12">
-						{% include 'flashbag.html.twig' %}
-					</div>
-				</div>
-				<div class="row mb-3" >
-					<div class="col-12">
-						<div class="d-flex">
-							<div class="mr-auto">
-								{% if app.user %}
-									<div class="btn-group" role="group">
-										<a href="{{ path('workshop_index', {'theme' : theme.id, 'slug' : slug }) }}" class="btn btn-secondary"><i class="bi bi-arrow-bar-left"></i> {{ 'back' | trans }}</a>
-									</div>
-								{% endif %}
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row mb-3" >
-					<div class="col-12">	
-						<div class="card">
-							<div class="card-body">
-								{% form_theme form 'bootstrap_4_layout.html.twig' %}
-								{{ form_start(form, {'attr': {'id': 'form_upload'}}) }}
-								{{ form_row(form.theme) }}
-								<div>{{ 'category' | trans }} :
-									<span id="js_category_theme_name">
+            <main class="col" id="content">
+                <div class="row mb-2">
+                    <div class="col-12 d-flex">
+                        <h4 class="mr-auto"><i
+                                    class="bi bi-chevron-left"></i> {{ 'list_of' | trans }} {{ 'workshops' | trans | lower }} {{ theme.name }}
+                        </h4>
+                        <nav aria-label="breadcrumb text-secondary">
+                            <ol class="breadcrumb text-small">
+                                <li class="breadcrumb-item"><a href="{{ path('homepage') }}"><i
+                                                class="bi bi-house-door"></i></a></li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ theme.name }}</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+                <div class="row mb-2">
+                    <div class="col-12">
+                        {% include 'flashbag.html.twig' %}
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="d-flex">
+                            <div class="mr-auto">
+                                {% if app.user %}
+                                    <div class="btn-group" role="group">
+                                        <a href="{{ path('workshop_index', {'theme' : theme.id, 'slug' : slug }) }}"
+                                           class="btn btn-secondary"><i
+                                                    class="bi bi-arrow-bar-left"></i> {{ 'back' | trans }}</a>
+                                    </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                {% form_theme form 'bootstrap_4_layout.html.twig' %}
+                                {{ form_start(form, {'attr': {'id': 'form_upload'}}) }}
+                                {{ form_row(form.theme) }}
+                                <div>{{ 'category' | trans }} :
+                                    <span id="js_category_theme_name">
                                     </span>
-								</div>
-								{{ form_rest(form) }}
-								{{ form_end(form) }}
-							</div>
-						</div>
-					</div>
-				</div>
-		</div>
-	</div>
+                                </div>
+                                {{ form_row(form.name) }}
+                                {{ form_row(form.description) }}
+                                {{ form_row(form.imageFile) }}
+                                {{ form_row(form.dateBegin) }}
+                                {{ form_row(form.dateEnd) }}
+                                {{ form_row(form.dateVoteBegin) }}
+                                {{ form_row(form.dateVoteEnd) }}
+                                {{ form_row(form.rightsSeeWorkshop) }}
+                                {{ form_row(form.rightsVoteProposals) }}
+                                {{ form_row(form.rightsWriteProposals) }}
+                                {{ form_row(form.quorumRequired) }}
+                                {{ form_row(form.rightsDelegation) }}
+                                {{ form_row(form.keytext) }}
+                                <div>{{ 'keyword' | trans }} :
+                                    <span id="js_keywords">
+                                    </span>
+                                </div>
+                                {{ form_rest(form) }}
+                                {{ form_end(form) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
 {% endblock %}
 {% block javascript %}
 {{ parent() }}
 {#  On a besoin de la version non slim de jquery pour avoir acces a l'ajax #}
 			 <script src="{{ asset('js/jquery-3.6.0.min.js') }}"></script>
+
 <script >
+
 
 $("#workshop_imageFile_file").change(function () {
     filePreview(this);
@@ -68,13 +92,16 @@ $("#workshop_imageFile_file").change(function () {
 
 
 $(document).ready(function () {
+
     let theme = $('#workshop_theme option:selected').text();
     $.ajax({
         url: '{{ path('category_ajax_theme') }}/'+theme,
         type: 'POST',
         dataType: 'json',
         async: true,
-
+        beforeSend: function(){
+             $('#js_category_theme_name' ).html("<span class='spinner-border'></span>");
+        },
         success: function (data,status) {
             console.log(data);
              $('#js_category_theme_name' ).html("<strong>"+data[0].category+"</strong>");
@@ -93,7 +120,9 @@ $(document).ready(function () {
         type: 'POST',
         dataType: 'json',
         async: true,
-
+        beforeSend: function(){
+             $('#js_category_theme_name' ).html("<span class='spinner-border'></span>");
+        },
         success: function (data,status) {
             console.log(data);
              $('#js_category_theme_name' ).html("<strong>"+data[0].category+"</strong>");
@@ -102,10 +131,46 @@ $(document).ready(function () {
                     alert('Ajax request failed.');
                 }
     });
-
-
-
    })
+
+   $('#workshop_keytext').on('input',function () {
+       let text = $('#workshop_keytext').val();
+       let textArray = text.split(',');
+       let length = textArray.length;
+       text = textArray[length-1];
+       text = text.toLowerCase().trim();
+       console.log(text);
+       if (text !== '')
+           {
+           $.ajax({
+        url:"{{ path('keywords_ajax_call') }}/"+text,
+        type: 'POST',
+        dataType: 'json',
+        async: true,
+        beforeSend: function(){
+             $('#js_keywords').html("<span class='spinner-border'></span>");
+        },
+        afterSend:  function(){
+        },
+        success: function (data,status) {
+                         $('#js_keywords').html(' ');
+            data.map((e) => {
+              $('#js_keywords').append("<span>"+e.key+", </span>");
+
+            })
+                   let keyAnchors = $('.keyword-suggest');
+            keyAnchors.on('click',function () {
+                let chosenWord = $(this).text().slice(1);
+                 let currentInput = textArray.join(',');
+                 currentInput = currentInput.slice(0,-text.length);
+                 $('#workshop_keytext').val(currentInput+chosenWord+',');
+            })
+        },
+        error: function (xhr, textStatus, errorThrown) {
+                    console.log('Ajax request failed.');
+                }
+    })}
+   });
 
 })
 
