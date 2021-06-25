@@ -60,6 +60,8 @@ class ForumController extends AbstractController
      */
     public function add(Request $request, string $slug, Proposal $proposal, Workshop $workshop): Response
     {
+
+
         # Crée un forum et le suite avec la requête
         $forum = new Forum();
         $forum->setUser($this->getUser());

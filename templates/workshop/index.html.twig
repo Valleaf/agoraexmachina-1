@@ -20,18 +20,22 @@
                         <div class="d-flex">
                             <div class="mr-auto">
                                 {% if app.user %}
+                                {% if app.user in theme.category.users or is_granted('ROLE_ADMIN')%}
                                     <div class="btn-group" role="group">
                                         <a href="{{ path('workshop_add_byuser', {'theme' : theme.id, 'slug' : slug }) }}"
                                            class="btn btn-primary "><i class="bi bi-plus"></i> {{ 'add' | trans }}</a>
                                     </div>
                                 {% endif %}
+                                {% endif %}
                             </div>
                             <div class="mr-5">
                                 <div class="btn-group" role="group">
                                     {% if theme.voteType == 'yes-delegation' %}
+                                    {% if app.user in theme.category.users or is_granted('ROLE_ADMIN')%}
                                         <a href="{{ path('delegation_add_theme', {'theme' : theme.id}) }}"
                                            class="btn btn-info"><i
                                                     class="bi bi-people-plus"></i> {{ 'delegations' | trans }}</a>
+                                    {% endif %}
                                     {% endif %}
                                 </div>
                             </div>

@@ -59,6 +59,8 @@
 
 * Dans un navigateur, se placer dans l’interface d’administration de AEM (http://mondomaine.com/agoraexmachina/public)
 * S'enregistrer en admin
+* Pour configurer le mailer, il faut le changer dans le fichier .env https://symfony.com/doc/current/mailer.html.
+Si les problèmes persistent, il faut changer le regex utilisé pour récupérer l'email dans la fonction sendEmailToUser dans l'entité User
 
 ### Et ensuite
 

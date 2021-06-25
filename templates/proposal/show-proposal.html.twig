@@ -22,7 +22,9 @@
                                             class="bi bi-trash" aria-hidden="true"></i></a>
                             </div>
                         {% endif %}
+                        {% if app.user in workshop.theme.category.users or is_granted('ROLE_ADMIN')%}
                         {% include 'proposal/show-propoal-votes.html.twig' %}
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -31,9 +33,11 @@
 
 
     {% if app.user and date(workshop.dateEnd) > date() %}
+    {% if app.user in workshop.theme.category.users or is_granted('ROLE_ADMIN')%}
         <a href="{{ path('forum_add', {'workshop' : proposal.workshop.id, 'proposal' : proposal.id, 'slug' : slug }) }}"
            class="m-1"><i
                     class="bi bi-plus"></i> {{ 'add' | trans }}</a>
+    {% endif %}
     {% endif %}
     {% if proposal.forums.count != 0 %}
         {% include 'proposal/show-proposal-forums.html.twig' %}

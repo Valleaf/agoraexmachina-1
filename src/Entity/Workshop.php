@@ -32,6 +32,7 @@ class Workshop
                                                                                     		$this->delegations		 = new ArrayCollection();
                                                                                     		$this->documents         = new ArrayCollection();
                                                                                           $this->keywords = new ArrayCollection();
+                                                                                          $this->quorumRequired=51;
                                                                                     	}
 
 	/**

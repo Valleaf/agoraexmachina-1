@@ -30,7 +30,7 @@ class ForumAnswerType extends AbstractType
             ->add('description', CKEditorType::class, [
                 'config' => [
                     'uiColor' => '#ffffff',
-                    'toolbar' => 'full',
+                    'toolbar' => 'basic',
                 ],
             ])->add('parentForum', EntityType::class, [
                 'class' => Forum::class,

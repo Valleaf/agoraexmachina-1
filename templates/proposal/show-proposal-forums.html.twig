@@ -35,7 +35,9 @@
                         </div>
                     </div>
                 </div>
+                {% if app.user in workshop.theme.category.users or is_granted('ROLE_ADMIN')%}
                 {% include 'proposal/show-proposal-buttons.html.twig' %}
+                {% endif %}
             </div>
             {# Ici les forums enfants #}
             {% include 'proposal/show-proposal-forums-answers.html.twig' %}

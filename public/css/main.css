@@ -526,4 +526,5 @@ label {
 
 .keyword-suggest{
     color: #007bff;
+    cursor: pointer;
 }

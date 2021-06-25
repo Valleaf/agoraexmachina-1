@@ -23,9 +23,9 @@
                         {% for theme in themes %}
                             {% if  theme.isPublic or is_granted('ROLE_ADMIN_RESTRICTED') %}
                                 {% if app.user %}
-                                    {% if app.user in theme.category.users or is_granted('ROLE_ADMIN')%}
+{#                                    {% if app.user in theme.category.users or is_granted('ROLE_ADMIN')%}#}
                                         {% include 'default/themes.html.twig' %}
-                                    {% endif %}
+{#                                    {% endif %}#}
                                 {% else %}
                                     {% include 'default/themes.html.twig' %}
                                 {% endif %}

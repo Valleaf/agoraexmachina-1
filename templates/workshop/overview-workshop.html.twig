@@ -13,9 +13,14 @@
                     {# Si le quorum est atteint, on le signale a l'administrateur #}
                     {% set quorumRequired = proposal.workshop.quorumRequired %}
                     {% set nbPossibleVoters = proposal.workshop.theme.category.users.count %}
-                    {% set nbCurrentVoters = proposal.votes.count %}
+                    {% set nbCurrentVotersFor = 0 %}
+                    {% for votes in proposal.votes %}
+                        {% if votes.votedFor %}
+                            {% set nbCurrentVotersFor = nbCurrentVotersFor + 1 %}
+                        {% endif %}
+                    {% endfor %}
                     {% set quorum =  nbPossibleVoters * quorumRequired / 100 %}
-                    {% if nbCurrentVoters >= quorum %}
+                    {% if nbCurrentVotersFor >= quorum %}
                         <div class="alert-success"> Quorum atteint ! </div>
                     {% endif %}
                 {% endif %}

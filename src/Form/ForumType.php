@@ -28,7 +28,7 @@ class ForumType extends AbstractType
             ->add('description', CKEditorType::class, [
                 'config' => [
                     'uiColor' => '#ffffff',
-                    'toolbar' => 'full',
+                    'toolbar' => 'basic',
                 ],
             ])
             ->add('Submit', SubmitType::class);
