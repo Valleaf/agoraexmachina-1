@@ -9,10 +9,8 @@
                 type: 'POST',
                 dataType: 'json',
                 async: true,
-
                 success: function (data, status) {
                     $('#forum').html('');
-
                     for (i = 0; i < data.length; i++) {
                         forum = data[i];
                         let e = $('<div class="card text-center">' +
@@ -39,7 +37,7 @@
                     }
                 },
                 error: function (xhr, textStatus, errorThrown) {
-                    alert('Ajax request failed.');
+                    console.log('Ajax request failed.');
                 }
             });
         });

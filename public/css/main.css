@@ -345,7 +345,6 @@ label {
 }
 #main-content {
     transition: margin-left .5s;
-    transition: margin-right 1s;
     padding: 16px;
 }
 

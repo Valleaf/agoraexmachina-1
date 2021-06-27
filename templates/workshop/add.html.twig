@@ -135,7 +135,7 @@ $(document).ready(function () {
         success: function (data,status) {
                          $('#js_keywords').html(' ');
             data.map((e) => {
-              $('#js_keywords').append("<span>"+e.key+", </span>");
+              $('#js_keywords').append("<span class='keyword-suggest'>#"+e.key+" </span>");
             })
                    let keyAnchors = $('.keyword-suggest');
             keyAnchors.on('click',function () {

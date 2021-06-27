@@ -25,7 +25,7 @@ class KeywordController extends AbstractController
             $jsonData = array();
             $idx = 0;
            foreach($keywords as $keyword) {
-               # On envoie les donnes de chaque forums dans un json
+               # On envoie les donnes de chaque mot clé dans un json
                $temp = array(
                    'key' => $keyword->getName(),
                );

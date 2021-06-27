@@ -48,15 +48,12 @@ class CategoryController extends AbstractController
     public function add(Request $request): Response
     {
         $category = new Category();
-
         #Creation du formulaire à partir de CategoryType
         $form = $this->createForm(CategoryType::class, $category);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-
-            # Pour chaque administrateur, on l'ajoute a la categorie
+            # Pour chaque administrateur, on l'ajoute a la catégorie
             $this->addAllAdminsToCategory($category);
             #On sauvegarde la catégorie dans la BDD
             $entityManager = $this->getDoctrine()->getManager();
@@ -70,7 +67,6 @@ class CategoryController extends AbstractController
                     $user->addCategory($category);
                 }
             }
-
 
             $entityManager->flush();
             #Ajout d'un message flash indiquant le succès de l'opération
@@ -347,7 +343,6 @@ class CategoryController extends AbstractController
         foreach ($admins as $admin) {
             $category->addUser($admin);
         }
-
     }
 
     /**

@@ -165,8 +165,6 @@ class WorkshopController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $theme = $workshop->getTheme();
-
             # On enlève tous les mots-clés, pour ensuite les remettre; pour éviter la duplication ou autres bugs
             # engendrés
             $keysInDb = $this->getDoctrine()->getRepository(Keyword::class)->findByWorkshopId($workshop->getId());
@@ -175,7 +173,6 @@ class WorkshopController extends AbstractController
                     $workshop->removeKeyword($key);
                 }
             }
-
             # Ajout des mots-clés à l'atelier
             # On n'ajoute pas de mot-clé dupliqué grâce à la fonction findKeyWord()
             # Utilisation de explode pour récupérer les mots-clés séparés par des virgules, puis trim() sur chaque

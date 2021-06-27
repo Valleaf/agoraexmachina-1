@@ -548,6 +548,10 @@
                 <source>img.max.size.2048</source>
                 <target>Format image, taille maximale : 2MB</target>
             </trans-unit>
+            <trans-unit id="img.max.size.1024">
+                <source>img.max.size.1024</source>
+                <target>Format image, taille maximale : 1MB</target>
+            </trans-unit>
 
         <!-- ******************************** -->
         <!-- NOTIFICATIONS -->

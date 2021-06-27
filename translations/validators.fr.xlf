@@ -34,7 +34,14 @@
                 <source>pw.regex</source>
                 <target>Le mot de passe doit avoir au moins une miniscule, une majuscule, un caractère special et un nombre </target>
             </trans-unit>
-
+            <trans-unit id="date.not.today">
+                <source>date.not.today</source>
+                <target>La date de début doit au moins être égale ou supérieure à aujourd'hui</target>
+            </trans-unit>
+            <trans-unit id="date.more.than">
+                <source>date.more.than</source>
+                <target>La date de fin doit être après la date de début</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>

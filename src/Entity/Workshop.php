@@ -5,6 +5,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -48,17 +49,35 @@ class Workshop
 	 */
 	private $name;
 	/**
-	 * @ORM\Column(type="text")
-     * @var string Description du sujet de l'atelier
+     * @ORM\Column(type="string", length=1048576)
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *    min = 6,
+     *    minMessage = "length.min.6",
+     *    max = 1048576,
+     *    maxMessage = "length.max.1048576"
+     * )     * @var string Description du sujet de l'atelier
 	 */
 	private $description;
 	/**
 	 * @ORM\Column(type="date")
+     * @Assert\GreaterThanOrEqual(
+     *      value = "today",
+     *      message = "date.not.today"
+     * )
      * @var \DateTimeInterface Le début de la discussion sur l'atelier
 	 */
 	private $dateBegin;
 	/**
 	 * @ORM\Column(type="date")
+     * @Assert\GreaterThanOrEqual(
+     *      value = "today",
+     *      message = "date.not.today"
+     * )
+     * @Assert\Expression(
+     *     "this.getDateEnd() >= this.getDateBegin()",
+     *     message="date.more.than"
+     * )
      * @var \DateTimeInterface La fin de la discussion sur l'atelier
 	 */
 	private $dateEnd;
@@ -140,12 +159,24 @@ class Workshop
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThanOrEqual(
+     *      value = "today",
+     *      message = "date.not.today"
+     * )
      * @var \DateTimeInterface Le début du vote
      */
     private $dateVoteBegin;
 
     /**
      * @ORM\Column(type="date")
+     * @Assert\GreaterThanOrEqual(
+     *      value = "today",
+     *      message = "date.not.today"
+     * )
+     * @Assert\Expression(
+     *     "this.getDateVoteEnd() >= this.getDateVoteBegin()",
+     *     message="date.more.than"
+     * )
      * @var \DateTimeInterface Fin du vote
      */
     private $dateVoteEnd;

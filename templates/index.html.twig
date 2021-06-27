@@ -1,8 +1,6 @@
 {% extends 'base.html.twig' %}
-
 {% block body %}
     <main main="role">
-
         <div class="container main-content">
             {% if themes is empty %}
                 {% include 'default/jumbotron.html.twig' %}
@@ -29,13 +27,10 @@
                                 {% else %}
                                     {% include 'default/themes.html.twig' %}
                                 {% endif %}
-
                             {% endif %}
-
                         {% endfor %}
                         {% if app.user and app.user.categories.count == 0 %}
                             {{ 'no-categories' |trans({'%link_start%' : '<a href="'~path('category_request')~'">', '%link_end%' : '</a>'}) | raw }}
-
                         {% endif %}
                     </div>
                 </div>
@@ -44,8 +39,3 @@
     </main>
 {% endblock %}
 
-{% block javascript %}
-{{ parent() }}
-
-
-{% endblock %}

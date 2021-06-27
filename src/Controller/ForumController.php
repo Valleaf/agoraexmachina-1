@@ -60,8 +60,6 @@ class ForumController extends AbstractController
      */
     public function add(Request $request, string $slug, Proposal $proposal, Workshop $workshop): Response
     {
-
-
         # Crée un forum et le suite avec la requête
         $forum = new Forum();
         $forum->setUser($this->getUser());
@@ -153,6 +151,7 @@ class ForumController extends AbstractController
             ]
         );
     }
+
 
     /**
      * Permet une supression d'un forum depuis un signalement
@@ -297,6 +296,8 @@ class ForumController extends AbstractController
     }
 
     /**
+     * Cette fonction sert a récupérer tous les forums des catégories d'un utilisateur. C'est ensuite renvoyé en JSON
+     * à la vue pour un affichage.
      * @Route ("/forums/ajax", name="forums_ajax_user")
      * @param Request $request
      * @param ForumRepository $forumRepository
@@ -324,6 +325,7 @@ class ForumController extends AbstractController
 
             return new JsonResponse($jsonData);
         }
+        return new JsonResponse();
     }
 
 

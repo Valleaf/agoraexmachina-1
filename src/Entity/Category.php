@@ -29,7 +29,6 @@ class Category
      */
     private $id;
 
-    #TODO: Faire des assert
     /**
      * @ORM\Column(type="string", length=255,unique=true)
      * @Assert\NotBlank()
@@ -66,6 +65,7 @@ class Category
      * @var string Chemin de l'image dans l'arborescence du site
      */
     private $image;
+
     /**
      * @Vich\UploadableField(mapping="categories_images", fileNameProperty="image")
      * @var File L'image elle-même

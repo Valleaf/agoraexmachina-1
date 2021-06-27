@@ -4,20 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="robots" content="noindex, nofollow">
-    <title>{% block title %}
+    <title>
+        {% block title %}
             {% if website.title %}
                 {{ website.title }}
             {% else %}
                 Agora
             {% endif %}
-
-        {% endblock %}</title>
+        {% endblock %}
+    </title>
     <link rel="canonical" href="http://mobile-adenum.fr/demo-bischheim/public">
-    <meta property="og:site_name" content="            {% if website.title %}
+    <meta property="og:site_name" content="
+{% if website.title %}
                 {{ website.title }}
             {% else %}
                 Agora
-            {% endif %}}"/>
+            {% endif %}"/>
     <meta property="og:locale" content="{% block lang %}{{ params.website.lang }}{% endblock %}"/>
     <meta property="og:title" content="            {% if website.title %}
                 {{ website.title }}
@@ -61,9 +63,11 @@
 </head>
 <body>
 {% include 'menu.html.twig' %}
+
 <div id="main-content">
     {% block body %}{% endblock %}
 </div>
+
 {% block javascript %}
 <script src="{{ asset('js/jquery-3.4.1.slim.min.js') }}"></script>
           <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>

@@ -57,7 +57,6 @@ function updateURLParameter(url, param, paramVal)
     return baseURL + "?" + newAdditionalURL + rows_txt;
 }
 
-// Preview image thumbnail on upload for vich
 function filePreview(input) {
     if (input.files && input.files[0]) {
         let reader = new FileReader();
